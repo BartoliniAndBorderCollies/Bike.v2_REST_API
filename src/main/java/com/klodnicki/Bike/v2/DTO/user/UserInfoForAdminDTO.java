@@ -1,4 +1,4 @@
-package com.klodnicki.Bike.v2.DTO.User;
+package com.klodnicki.Bike.v2.DTO.user;
 
 public class UserInfoForAdminDTO {
 
@@ -8,14 +8,17 @@ public class UserInfoForAdminDTO {
     private int accountNumber;
     private boolean isAccountValid;
     private String role;
+    private double balance;
 
-    public UserInfoForAdminDTO(String name, String phoneNumber, String emailAddress, int accountNumber, boolean isAccountValid, String role) {
+    public UserInfoForAdminDTO(String name, String phoneNumber, String emailAddress, int accountNumber,
+                               boolean isAccountValid, String role, double balance) {
         this.name = name;
         this.phoneNumber = phoneNumber;
         this.emailAddress = emailAddress;
         this.accountNumber = accountNumber;
         this.isAccountValid = isAccountValid;
         this.role = role;
+        this.balance = balance;
     }
 
     public String getName() {
@@ -64,5 +67,13 @@ public class UserInfoForAdminDTO {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public double getBalance() {
+        return balance;
+    }
+
+    public void setBalance(double balance) {
+        this.balance = balance;
     }
 }
