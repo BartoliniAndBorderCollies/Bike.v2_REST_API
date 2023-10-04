@@ -1,4 +1,4 @@
-package com.klodnicki.Bike.v2.DTO.User;
+package com.klodnicki.Bike.v2.DTO.user;
 
 public class UserInfoForNormalUserDTO {
 
