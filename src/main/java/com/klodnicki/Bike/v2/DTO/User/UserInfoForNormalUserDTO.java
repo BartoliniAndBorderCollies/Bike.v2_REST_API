@@ -1,14 +1,14 @@
 package com.klodnicki.Bike.v2.DTO.User;
 
-public class UserInfoDTONormalUser {
+public class UserInfoForNormalUserDTO {
 
     private String name;
 
-    public UserInfoDTONormalUser(String name) {
+    public UserInfoForNormalUserDTO(String name) {
         this.name = name;
     }
 
-    public UserInfoDTONormalUser() {
+    public UserInfoForNormalUserDTO() {
     }
 
     public String getName() {

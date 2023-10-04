@@ -2,7 +2,7 @@ package com.klodnicki.Bike.v2.DTO.Bike;
 
 import com.klodnicki.Bike.v2.model.BikeType;
 
-public class BikeInfoDTOAdmin {
+public class BikeInfoForNormalUserDTO {
 
     private String serialNumber;
 
@@ -10,10 +10,7 @@ public class BikeInfoDTOAdmin {
 
     private BikeType bikeType;
 
-    //will have more info about which user is renting and so on
-
-
-    public BikeInfoDTOAdmin(String serialNumber, boolean isRented, BikeType bikeType) {
+    public BikeInfoForNormalUserDTO(String serialNumber, boolean isRented, BikeType bikeType) {
         this.serialNumber = serialNumber;
         this.isRented = isRented;
         this.bikeType = bikeType;

@@ -1,6 +1,6 @@
 package com.klodnicki.Bike.v2.DTO.User;
 
-public class UserInfoDTOAdmin {
+public class UserInfoForAdminDTO {
 
     private String name;
     private String phoneNumber;
@@ -9,7 +9,7 @@ public class UserInfoDTOAdmin {
     private boolean isAccountValid;
     private String role;
 
-    public UserInfoDTOAdmin(String name, String phoneNumber, String emailAddress, int accountNumber, boolean isAccountValid, String role) {
+    public UserInfoForAdminDTO(String name, String phoneNumber, String emailAddress, int accountNumber, boolean isAccountValid, String role) {
         this.name = name;
         this.phoneNumber = phoneNumber;
         this.emailAddress = emailAddress;
