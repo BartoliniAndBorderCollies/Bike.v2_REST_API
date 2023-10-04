@@ -11,17 +11,15 @@ public class User {
     private Long id;
 
     private String name;
-
     private String phoneNumber;
-
     private String emailAddress;
-
     private int accountNumber;
-
     private boolean isAccountValid;
     private String role;
+    private double balance;
 
-    public User(Long id, String name, String phoneNumber, String emailAddress, int accountNumber, boolean isAccountValid, String role) {
+    public User(Long id, String name, String phoneNumber, String emailAddress, int accountNumber,
+                boolean isAccountValid, String role, double balance) {
         this.id = id;
         this.name = name;
         this.phoneNumber = phoneNumber;
@@ -29,6 +27,7 @@ public class User {
         this.accountNumber = accountNumber;
         this.isAccountValid = isAccountValid;
         this.role = role;
+        this.balance = balance;
     }
 
     public User() {
@@ -88,5 +87,13 @@ public class User {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public double getBalance() {
+        return balance;
+    }
+
+    public void setBalance(double balance) {
+        this.balance = balance;
     }
 }
