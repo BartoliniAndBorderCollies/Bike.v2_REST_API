@@ -1,12 +1,14 @@
 package com.klodnicki.Bike.v2.model.entity;
 
 import com.klodnicki.Bike.v2.model.BikeType;
+import com.klodnicki.Bike.v2.model.Vehicle;
+import com.klodnicki.Bike.v2.model.VehicleAction;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 
 @Entity
-public class Bike {
+public class Bike extends Vehicle implements VehicleAction {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -97,5 +99,15 @@ public class Bike {
 
     public void setGpsCoordinates(String gpsCoordinates) {
         this.gpsCoordinates = gpsCoordinates;
+    }
+
+    @Override
+    public void rentVehicle() {
+
+    }
+
+    @Override
+    public void returnVehicle() {
+
     }
 }
