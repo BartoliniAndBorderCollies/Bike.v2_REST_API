@@ -1,13 +1,13 @@
 package com.klodnicki.Bike.v2.DTO.station;
 
-public class StationInfoForAdminDTO {
+public class InfoAboutStationForAdminResponseDTO {
 
     private String name;
     private String address;
     private String city;
     private int freeSlots;
 
-    public StationInfoForAdminDTO(String name, String address, String city, int freeSlots) {
+    public InfoAboutStationForAdminResponseDTO(String name, String address, String city, int freeSlots) {
         this.name = name;
         this.address = address;
         this.city = city;
