@@ -2,13 +2,13 @@ package com.klodnicki.Bike.v2.model.entity;
 
 import com.klodnicki.Bike.v2.model.BikeType;
 import com.klodnicki.Bike.v2.model.Vehicle;
-import com.klodnicki.Bike.v2.model.VehicleAction;
+import com.klodnicki.Bike.v2.model.RentalAction;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 
 @Entity
-public class Bike extends Vehicle implements VehicleAction {
+public class Bike extends Vehicle implements RentalAction {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -102,12 +102,12 @@ public class Bike extends Vehicle implements VehicleAction {
     }
 
     @Override
-    public void rentVehicle() {
+    public void rent() {
 
     }
 
     @Override
-    public void returnVehicle() {
+    public void giveBack() {
 
     }
 }
