@@ -1,6 +1,6 @@
 package com.klodnicki.Bike.v2.service;
 
-public interface ServiceCrudMethods <T> {
+public interface GenericService<T> {
 
     <T> T add();
 
