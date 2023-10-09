@@ -3,7 +3,7 @@ package com.klodnicki.Bike.v2.rest.controller;
 import com.klodnicki.Bike.v2.DTO.bike.BikeForAdminResponseDTO;
 import com.klodnicki.Bike.v2.DTO.bike.BikeRequestDTO;
 import com.klodnicki.Bike.v2.model.entity.Bike;
-import com.klodnicki.Bike.v2.service.BikeService;
+import com.klodnicki.Bike.v2.service.GenericBikeService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -12,9 +12,9 @@ import java.util.List;
 @RequestMapping("/bike")
 public class BikeController {
 
-    private final BikeService bikeService;
+    private final GenericBikeService bikeService;
 
-    public BikeController(BikeService bikeService) {
+    public BikeController(GenericBikeService bikeService) {
         this.bikeService = bikeService;
     }
 
