@@ -13,7 +13,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class BikeService implements GenericService<BikeForAdminResponseDTO, Bike> {
+//public class BikeService implements GenericService<BikeForAdminResponseDTO, Bike> {
+//zamienilismy BikeService dependency wstrzykiwane w controllerze na GenericBikeService
+//Żeby móc podstawić różne implementacje BikeService, nie tylko ten jeden konkretny BikeService. Jak zrobisz klasę
+//        BetterBikeService możesz bez żadnych zmian w kontrolerze z niego korzystać od razu
+public class BikeService implements GenericBikeService {
 
     private final BikeRepository bikeRepository;
 
@@ -31,9 +35,17 @@ public class BikeService implements GenericService<BikeForAdminResponseDTO, Bike
 
         Bike savedBike = bikeRepository.save(bike);
 
-        BikeForAdminResponseDTO bikeDTO = new BikeForAdminResponseDTO(savedBike.getSerialNumber(), savedBike.isRented(),
-                savedBike.getBikeType(), savedBike.getRentalStartTime(), savedBike.getRentalEndTime(),
-                savedBike.getAmountToBePaid(), savedBike.getGpsCoordinates());
+        // Builder is in Lombok dependency
+        // BikeForAdminResponseDTO must have @Builder annotation
+        BikeForAdminResponseDTO bikeDTO = BikeForAdminResponseDTO.builder()
+                .serialNumber(savedBike.getSerialNumber())
+                .isRented(savedBike.isRented())
+                .bikeType(savedBike.getBikeType())
+                .rentalStartTime(savedBike.getRentalStartTime())
+                .rentalEndTime(savedBike.getRentalEndTime())
+                .amountToBePaid(savedBike.getAmountToBePaid())
+                .gpsCoordinates(savedBike.getGpsCoordinates())
+                .build();
 
         return bikeDTO;
     }
@@ -42,9 +54,15 @@ public class BikeService implements GenericService<BikeForAdminResponseDTO, Bike
     public BikeForAdminResponseDTO findById(Long id) {
         Bike savedBike = bikeRepository.findById(id).orElseThrow(IllegalArgumentException::new); //TODO: add custom exception
 
-        BikeForAdminResponseDTO bikeDTO = new BikeForAdminResponseDTO(savedBike.getSerialNumber(), savedBike.isRented(),
-                savedBike.getBikeType(), savedBike.getRentalStartTime(), savedBike.getRentalEndTime(),
-                savedBike.getAmountToBePaid(), savedBike.getGpsCoordinates());
+        BikeForAdminResponseDTO bikeDTO = BikeForAdminResponseDTO.builder()
+                .serialNumber(savedBike.getSerialNumber())
+                .isRented(savedBike.isRented())
+                .bikeType(savedBike.getBikeType())
+                .rentalStartTime(savedBike.getRentalStartTime())
+                .rentalEndTime(savedBike.getRentalEndTime())
+                .amountToBePaid(savedBike.getAmountToBePaid())
+                .gpsCoordinates(savedBike.getGpsCoordinates())
+                .build();
 
         return bikeDTO;
     }
