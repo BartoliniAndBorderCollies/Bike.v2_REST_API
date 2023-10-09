@@ -2,7 +2,6 @@ package com.klodnicki.Bike.v2.rest.controller;
 
 import com.klodnicki.Bike.v2.DTO.bike.BikeForAdminResponseDTO;
 import com.klodnicki.Bike.v2.DTO.bike.BikeRequestDTO;
-import com.klodnicki.Bike.v2.model.entity.Bike;
 import com.klodnicki.Bike.v2.service.GenericBikeService;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,8 +18,8 @@ public class BikeController {
     }
 
     @PostMapping("/admin/add")
-    public BikeForAdminResponseDTO addBike(@RequestBody Bike bike) {
-        return (BikeForAdminResponseDTO) bikeService.add(bike);
+    public BikeForAdminResponseDTO addBike(@RequestBody BikeRequestDTO bikeDTO) {
+        return (BikeForAdminResponseDTO) bikeService.add(bikeDTO);
     }
 
     @GetMapping("/admin/{id}")
@@ -39,8 +38,8 @@ public class BikeController {
     }
 
     @PutMapping("/admin/{id}")
-    public BikeForAdminResponseDTO updateBikeById(@PathVariable Long id, @RequestBody Bike bike) {
-        return bikeService.update(id, bike);
+    public BikeForAdminResponseDTO updateBikeById(@PathVariable Long id, @RequestBody BikeRequestDTO bikeDTO) {
+        return bikeService.update(id, bikeDTO);
     }
 
 
