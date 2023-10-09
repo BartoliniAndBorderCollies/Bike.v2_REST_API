@@ -1,9 +1,11 @@
 package com.klodnicki.Bike.v2.DTO.bike;
 
 import com.klodnicki.Bike.v2.model.BikeType;
+import lombok.Builder;
 
 import java.time.LocalDateTime;
 
+@Builder
 public class BikeForAdminResponseDTO {
 
     private String serialNumber;
@@ -24,6 +26,7 @@ public class BikeForAdminResponseDTO {
         this.amountToBePaid = amountToBePaid;
         this.gpsCoordinates = gpsCoordinates;
     }
+
     public String getSerialNumber() {
         return serialNumber;
     }
