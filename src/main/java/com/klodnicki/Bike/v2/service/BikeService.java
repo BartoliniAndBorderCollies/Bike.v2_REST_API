@@ -5,6 +5,7 @@ import com.klodnicki.Bike.v2.DTO.bike.BikeRequestDTO;
 import com.klodnicki.Bike.v2.model.BikeType;
 import com.klodnicki.Bike.v2.model.entity.Bike;
 import com.klodnicki.Bike.v2.repository.BikeRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -21,7 +22,13 @@ public class BikeService implements GenericService<BikeForAdminResponseDTO, Bike
     }
 
     @Override
-    public BikeForAdminResponseDTO add(Bike bike) {
+    public BikeForAdminResponseDTO add(BikeRequestDTO bikeRequestDTO) {
+
+        //using ModelMapper to convert(map) bikeRequestDTO into bike
+        ModelMapper modelMapper = new ModelMapper();
+        Bike bike = modelMapper.map(bikeRequestDTO, Bike.class);
+
+
         Bike savedBike = bikeRepository.save(bike);
 
         BikeForAdminResponseDTO bikeDTO = new BikeForAdminResponseDTO(savedBike.getSerialNumber(), savedBike.isRented(),
