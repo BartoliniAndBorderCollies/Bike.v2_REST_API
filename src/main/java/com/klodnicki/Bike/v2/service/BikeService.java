@@ -70,7 +70,7 @@ public class BikeService implements GenericBikeService {
     @Override
     public List<BikeForAdminResponseDTO> findAll() {
         List<BikeForAdminResponseDTO> bikeListDto = new ArrayList<>();
-        List<Bike> bikeList = (List<Bike>) bikeRepository.findAll();
+        Iterable<Bike> bikeList = bikeRepository.findAll();
 
         for (Bike bike : bikeList) {
 
