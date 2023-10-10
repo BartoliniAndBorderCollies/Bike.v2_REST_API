@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 
 @Builder
 public class BikeForAdminResponseDTO {
-
+    private Long id;
     private String serialNumber;
     private boolean isRented;
     private BikeType bikeType;
@@ -17,8 +17,10 @@ public class BikeForAdminResponseDTO {
     private double amountToBePaid;
     private GpsCoordinates gpsCoordinates;
 
-    public BikeForAdminResponseDTO(String serialNumber, boolean isRented, BikeType bikeType, LocalDateTime
-            rentalStartTime, LocalDateTime rentalEndTime, double amountToBePaid, GpsCoordinates gpsCoordinates) {
+    public BikeForAdminResponseDTO(Long id, String serialNumber, boolean isRented, BikeType bikeType,
+                                   LocalDateTime rentalStartTime, LocalDateTime rentalEndTime, double amountToBePaid,
+                                   GpsCoordinates gpsCoordinates) {
+        this.id = id;
         this.serialNumber = serialNumber;
         this.isRented = isRented;
         this.bikeType = bikeType;
@@ -26,6 +28,14 @@ public class BikeForAdminResponseDTO {
         this.rentalEndTime = rentalEndTime;
         this.amountToBePaid = amountToBePaid;
         this.gpsCoordinates = gpsCoordinates;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getSerialNumber() {

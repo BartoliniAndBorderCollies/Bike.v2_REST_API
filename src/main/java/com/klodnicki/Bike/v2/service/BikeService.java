@@ -51,6 +51,7 @@ public class BikeService implements GenericBikeService {
 
         for (Bike bike : bikeList) {
 
+            Long id = bike.getId();
             String serialNumber = bike.getSerialNumber();
             boolean isRented = bike.isRented();
             BikeType type = bike.getBikeType();
@@ -59,7 +60,7 @@ public class BikeService implements GenericBikeService {
             double toBePaid = bike.getAmountToBePaid();
             GpsCoordinates gps = bike.getGpsCoordinates();
 
-            BikeForAdminResponseDTO bikeDto = new BikeForAdminResponseDTO(serialNumber, isRented, type, rentalStartTime,
+            BikeForAdminResponseDTO bikeDto = new BikeForAdminResponseDTO(id, serialNumber, isRented, type, rentalStartTime,
                     rentalEndTime, toBePaid, gps);
             bikeListDto.add(bikeDto);
         }
@@ -110,6 +111,7 @@ public class BikeService implements GenericBikeService {
         // Builder is in Lombok dependency
         // BikeForAdminResponseDTO must have @Builder annotation
         BikeForAdminResponseDTO bikeDTO = BikeForAdminResponseDTO.builder()
+                .id(savedBike.getId())
                 .serialNumber(savedBike.getSerialNumber())
                 .isRented(savedBike.isRented())
                 .bikeType(savedBike.getBikeType())
