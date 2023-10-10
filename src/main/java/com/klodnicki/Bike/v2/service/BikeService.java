@@ -72,24 +72,37 @@ public class BikeService implements GenericBikeService {
     }
 
     @Override
-    public BikeForAdminResponseDTO update(Long id, Bike updatedBike) {
-        Bike savedBike = bikeRepository.findById(id).orElseThrow(IllegalArgumentException::new);//TODO: make custom exception
+    public BikeForAdminResponseDTO update(Long id, BikeRequestDTO updatedBikeRequestDTO) {
 
-        savedBike.setSerialNumber(updatedBike.getSerialNumber());
-        savedBike.setRented(updatedBike.isRented());
-        savedBike.setBikeType(updatedBike.getBikeType());
-        savedBike.setRentalStartTime(updatedBike.getRentalStartTime());
-        savedBike.setRentalEndTime(updatedBike.getRentalEndTime());
-        savedBike.setAmountToBePaid(updatedBike.getAmountToBePaid());
-        savedBike.setGpsCoordinates(updatedBike.getGpsCoordinates());
+        //converting updatedBikeRequestDTO into Bike using mapper (to be able to save it in repo)
+        Bike bike = modelMapper.map(updatedBikeRequestDTO, Bike.class);
 
-        bikeRepository.save(savedBike);
+        if (updatedBikeRequestDTO.getSerialNumber() != null) {
+            bike.setSerialNumber(updatedBikeRequestDTO.getSerialNumber());
+        }
 
-        BikeForAdminResponseDTO bikeDto = new BikeForAdminResponseDTO(savedBike.getSerialNumber(), savedBike.isRented(),
-                savedBike.getBikeType(), savedBike.getRentalStartTime(), savedBike.getRentalEndTime(),
-                savedBike.getAmountToBePaid(), savedBike.getGpsCoordinates());
+        bike.setRented(updatedBikeRequestDTO.isRented());
 
-        return bikeDto;
+        if (updatedBikeRequestDTO.getBikeType() != null) {
+            bike.setBikeType(updatedBikeRequestDTO.getBikeType());
+        }
+        if (updatedBikeRequestDTO.getRentalStartTime() != null) {
+            bike.setRentalStartTime(updatedBikeRequestDTO.getRentalStartTime());
+        }
+        if (updatedBikeRequestDTO.getRentalEndTime() != null) {
+            bike.setRentalEndTime(updatedBikeRequestDTO.getRentalEndTime());
+        }
+        if (updatedBikeRequestDTO.getAmountToBePaid() != 0) {
+            bike.setAmountToBePaid(updatedBikeRequestDTO.getAmountToBePaid());
+        }
+        if (updatedBikeRequestDTO.getGpsCoordinates() != null) {
+            bike.setGpsCoordinates(updatedBikeRequestDTO.getGpsCoordinates());
+        }
+
+        bikeRepository.save(bike);
+
+        //converting Bike into BikeForAdminResponseDTO using builder
+        return convertBikeIntoBikeForAdminResponseDTO(bike);
     }
 
     private static BikeForAdminResponseDTO convertBikeIntoBikeForAdminResponseDTO(Bike savedBike) {
