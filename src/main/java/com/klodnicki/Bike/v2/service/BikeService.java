@@ -29,26 +29,11 @@ public class BikeService implements GenericBikeService {
 
     @Override
     public BikeForAdminResponseDTO add(BikeRequestDTO bikeRequestDTO) {
-
         //using ModelMapper to convert(map) bikeRequestDTO into bike. I need Bike to be able to save it in repo
-        ModelMapper modelMapper = new ModelMapper();
         Bike bike = modelMapper.map(bikeRequestDTO, Bike.class);
-
         Bike savedBike = bikeRepository.save(bike);
 
-        // Builder is in Lombok dependency
-        // BikeForAdminResponseDTO must have @Builder annotation
-        BikeForAdminResponseDTO bikeDTO = BikeForAdminResponseDTO.builder()
-                .serialNumber(savedBike.getSerialNumber())
-                .isRented(savedBike.isRented())
-                .bikeType(savedBike.getBikeType())
-                .rentalStartTime(savedBike.getRentalStartTime())
-                .rentalEndTime(savedBike.getRentalEndTime())
-                .amountToBePaid(savedBike.getAmountToBePaid())
-                .gpsCoordinates(savedBike.getGpsCoordinates())
-                .build();
-
-        return bikeDTO;
+        return convertBikeIntoBikeForAdminResponseDTO(savedBike);
     }
 
     @Override
