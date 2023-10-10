@@ -19,7 +19,7 @@ public class BikeController {
 
     @PostMapping("/admin/add")
     public BikeForAdminResponseDTO addBike(@RequestBody BikeRequestDTO bikeDTO) {
-        return (BikeForAdminResponseDTO) bikeService.add(bikeDTO);
+        return bikeService.add(bikeDTO);
     }
 
     @GetMapping("/admin/{id}")
