@@ -1,15 +1,17 @@
 package com.klodnicki.Bike.v2.service;
 
-public interface GenericService<T> {
+import java.util.List;
 
-    <T> T add();
+public interface GenericService<T, G> {
 
-    <T> T findById(Long id);
+    T add(G obj);
 
-    <T> Iterable<T> findAll();
+    T findById(Long id);
 
-    <T> void deleteById(Long id);
+    List<T> findAll();
 
-    <T> T update(Long id);
+    void deleteById(Long id);
+
+    T update(Long id, G obj);
 
 }
