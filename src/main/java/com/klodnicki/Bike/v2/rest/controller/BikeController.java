@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/bike")
+@RequestMapping("/bike/admin")
 public class BikeController {
 
     private final GenericBikeService bikeService;
@@ -17,31 +17,28 @@ public class BikeController {
         this.bikeService = bikeService;
     }
 
-    @PostMapping("/admin/add")
+    @PostMapping("/add")
     public BikeForAdminResponseDTO addBike(@RequestBody BikeRequestDTO bikeDTO) {
         return bikeService.add(bikeDTO);
     }
 
-    @GetMapping("/admin/{id}")
+    @GetMapping("/{id}")
     public BikeForAdminResponseDTO findBikeById (@PathVariable Long id) {
         return bikeService.findById(id);
     }
 
-    @GetMapping("/admin")
+    @GetMapping
     public List<BikeForAdminResponseDTO> findAllBikes() {
         return bikeService.findAll();
     }
 
-    @DeleteMapping("/admin/{id}")
+    @DeleteMapping("/{id}")
     public void deleteBikeById(@PathVariable Long id) {
         bikeService.deleteById(id);
     }
 
-    @PutMapping("/admin/{id}")
+    @PutMapping("/{id}")
     public BikeForAdminResponseDTO updateBikeById(@PathVariable Long id, @RequestBody BikeRequestDTO bikeDTO) {
         return bikeService.update(id, bikeDTO);
     }
-
-
-
 }
