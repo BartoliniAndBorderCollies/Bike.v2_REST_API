@@ -3,6 +3,7 @@ package com.klodnicki.Bike.v2.service;
 import com.klodnicki.Bike.v2.DTO.bike.BikeForAdminResponseDTO;
 import com.klodnicki.Bike.v2.DTO.bike.BikeRequestDTO;
 import com.klodnicki.Bike.v2.model.BikeType;
+import com.klodnicki.Bike.v2.model.GpsCoordinates;
 import com.klodnicki.Bike.v2.model.entity.Bike;
 import com.klodnicki.Bike.v2.repository.BikeRepository;
 import org.modelmapper.ModelMapper;
@@ -56,7 +57,7 @@ public class BikeService implements GenericBikeService {
             LocalDateTime rentalStartTime = bike.getRentalStartTime();
             LocalDateTime rentalEndTime = bike.getRentalEndTime();
             double toBePaid = bike.getAmountToBePaid();
-            String gps = bike.getGpsCoordinates();
+            GpsCoordinates gps = bike.getGpsCoordinates();
 
             BikeForAdminResponseDTO bikeDto = new BikeForAdminResponseDTO(serialNumber, isRented, type, rentalStartTime,
                     rentalEndTime, toBePaid, gps);
