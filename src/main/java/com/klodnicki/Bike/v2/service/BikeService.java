@@ -21,6 +21,8 @@ public class BikeService implements GenericBikeService {
 
     private final BikeRepository bikeRepository;
 
+    ModelMapper modelMapper = new ModelMapper();
+
     public BikeService(BikeRepository bikeRepository) {
         this.bikeRepository = bikeRepository;
     }
