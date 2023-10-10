@@ -40,17 +40,7 @@ public class BikeService implements GenericBikeService {
     public BikeForAdminResponseDTO findById(Long id) {
         Bike savedBike = bikeRepository.findById(id).orElseThrow(IllegalArgumentException::new); //TODO: add custom exception
 
-        BikeForAdminResponseDTO bikeDTO = BikeForAdminResponseDTO.builder()
-                .serialNumber(savedBike.getSerialNumber())
-                .isRented(savedBike.isRented())
-                .bikeType(savedBike.getBikeType())
-                .rentalStartTime(savedBike.getRentalStartTime())
-                .rentalEndTime(savedBike.getRentalEndTime())
-                .amountToBePaid(savedBike.getAmountToBePaid())
-                .gpsCoordinates(savedBike.getGpsCoordinates())
-                .build();
-
-        return bikeDTO;
+        return convertBikeIntoBikeForAdminResponseDTO(savedBike);
     }
 
     @Override
