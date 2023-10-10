@@ -9,11 +9,11 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/bike/admin")
-public class BikeController {
+public class AdminBikeController {
 
     private final GenericBikeService bikeService;
 
-    public BikeController(GenericBikeService bikeService) {
+    public AdminBikeController(GenericBikeService bikeService) {
         this.bikeService = bikeService;
     }
 
