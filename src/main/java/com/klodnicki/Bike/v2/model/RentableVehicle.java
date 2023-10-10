@@ -9,10 +9,10 @@ public abstract class RentableVehicle {
     protected LocalDateTime rentalStartTime;
     protected LocalDateTime rentalEndTime;
     protected double amountToBePaid;
-    protected String gpsCoordinates;
+    protected GpsCoordinates gpsCoordinates;
 
-    public RentableVehicle(String serialNumber, boolean isRented, LocalDateTime rentalStartTime, LocalDateTime rentalEndTime,
-                           double amountToBePaid, String gpsCoordinates) {
+    public RentableVehicle(String serialNumber, boolean isRented, LocalDateTime rentalStartTime,
+                           LocalDateTime rentalEndTime, double amountToBePaid, GpsCoordinates gpsCoordinates) {
         this.serialNumber = serialNumber;
         this.isRented = isRented;
         this.rentalStartTime = rentalStartTime;
@@ -64,11 +64,11 @@ public abstract class RentableVehicle {
         this.amountToBePaid = amountToBePaid;
     }
 
-    public String getGpsCoordinates() {
+    public GpsCoordinates getGpsCoordinates() {
         return gpsCoordinates;
     }
 
-    public void setGpsCoordinates(String gpsCoordinates) {
+    public void setGpsCoordinates(GpsCoordinates gpsCoordinates) {
         this.gpsCoordinates = gpsCoordinates;
     }
 }

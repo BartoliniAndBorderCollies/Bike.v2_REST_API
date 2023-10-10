@@ -1,6 +1,7 @@
 package com.klodnicki.Bike.v2.DTO.bike;
 
 import com.klodnicki.Bike.v2.model.BikeType;
+import com.klodnicki.Bike.v2.model.GpsCoordinates;
 
 import java.time.LocalDateTime;
 
@@ -13,11 +14,11 @@ public class BikeRequestDTO {
     private LocalDateTime rentalStartTime;
     private LocalDateTime rentalEndTime;
     private double amountToBePaid;
-    private String gpsCoordinates;
+    private GpsCoordinates gpsCoordinates;
 
     public BikeRequestDTO(Long id, String serialNumber, boolean isRented, BikeType bikeType,
                           LocalDateTime rentalStartTime, LocalDateTime rentalEndTime, double amountToBePaid,
-                          String gpsCoordinates) {
+                          GpsCoordinates gpsCoordinates) {
         this.id = id;
         this.serialNumber = serialNumber;
         this.isRented = isRented;
@@ -84,11 +85,11 @@ public class BikeRequestDTO {
         this.amountToBePaid = amountToBePaid;
     }
 
-    public String getGpsCoordinates() {
+    public GpsCoordinates getGpsCoordinates() {
         return gpsCoordinates;
     }
 
-    public void setGpsCoordinates(String gpsCoordinates) {
+    public void setGpsCoordinates(GpsCoordinates gpsCoordinates) {
         this.gpsCoordinates = gpsCoordinates;
     }
 }
