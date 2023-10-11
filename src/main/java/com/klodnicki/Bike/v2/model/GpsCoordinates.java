@@ -8,6 +8,11 @@ public class GpsCoordinates {
     private String longitude;
     private String latitude;
 
+    public GpsCoordinates(String longitude, String latitude) {
+        this.longitude = longitude;
+        this.latitude = latitude;
+    }
+
     public GpsCoordinates() {
     }
 

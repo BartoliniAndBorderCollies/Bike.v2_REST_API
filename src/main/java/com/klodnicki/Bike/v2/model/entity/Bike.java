@@ -16,8 +16,8 @@ public class Bike extends RentableVehicle implements VehicleRentalAction {
     private Long id;
     private BikeType bikeType;
 
-    public Bike(Long id, BikeType bikeType, String serialNumber, boolean isRented, LocalDateTime rentalStartTime,
-                LocalDateTime rentalEndTime, double amountToBePaid, GpsCoordinates gpsCoordinates) {
+    public Bike(String serialNumber, boolean isRented, LocalDateTime rentalStartTime, LocalDateTime rentalEndTime,
+                double amountToBePaid, GpsCoordinates gpsCoordinates, Long id, BikeType bikeType) {
         super(serialNumber, isRented, rentalStartTime, rentalEndTime, amountToBePaid, gpsCoordinates);
         this.id = id;
         this.bikeType = bikeType;
