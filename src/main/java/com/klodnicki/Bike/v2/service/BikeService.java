@@ -77,8 +77,7 @@ public class BikeService implements GenericBikeService {
     @Override
     public BikeForAdminResponseDTO update(Long id, BikeRequestDTO updatedBikeRequestDTO) {
 
-        //converting updatedBikeRequestDTO into Bike using mapper (to be able to save it in repo)
-        Bike bike = modelMapper.map(updatedBikeRequestDTO, Bike.class);
+        Bike bike = bikeRepository.findById(id).orElseThrow(IllegalAccessError::new);
 
         if (updatedBikeRequestDTO.getSerialNumber() != null) {
             bike.setSerialNumber(updatedBikeRequestDTO.getSerialNumber());
