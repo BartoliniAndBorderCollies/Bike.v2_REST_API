@@ -1,14 +1,16 @@
 package com.klodnicki.Bike.v2.model;
 
+import jakarta.persistence.Embeddable;
+
+@Embeddable
 public class GpsCoordinates {
 
     private String longitude;
     private String latitude;
 
-    public GpsCoordinates(String longitude, String latitude) {
-        this.longitude = longitude;
-        this.latitude = latitude;
+    public GpsCoordinates() {
     }
+
 
     public String getLongitude() {
         return longitude;
