@@ -1,5 +1,4 @@
 package com.klodnicki.Bike.v2.service;
-
 import java.util.List;
 
 public interface GenericService<T, G> {
