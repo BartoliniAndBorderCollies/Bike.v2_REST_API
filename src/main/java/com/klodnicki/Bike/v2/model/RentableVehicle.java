@@ -1,7 +1,11 @@
 package com.klodnicki.Bike.v2.model;
 
+import jakarta.persistence.Embedded;
+import jakarta.persistence.MappedSuperclass;
+
 import java.time.LocalDateTime;
 
+@MappedSuperclass
 public abstract class RentableVehicle {
 
     protected String serialNumber;
@@ -9,6 +13,7 @@ public abstract class RentableVehicle {
     protected LocalDateTime rentalStartTime;
     protected LocalDateTime rentalEndTime;
     protected double amountToBePaid;
+    @Embedded
     protected GpsCoordinates gpsCoordinates;
 
     public RentableVehicle(String serialNumber, boolean isRented, LocalDateTime rentalStartTime,
