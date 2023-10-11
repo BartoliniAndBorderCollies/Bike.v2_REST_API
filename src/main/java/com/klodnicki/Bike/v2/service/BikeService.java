@@ -34,7 +34,8 @@ public class BikeService implements GenericBikeService {
         Bike bike = modelMapper.map(bikeRequestDTO, Bike.class);
         Bike savedBike = bikeRepository.save(bike);
 
-        return convertBikeIntoBikeForAdminResponseDTO(savedBike);
+        return convertBikeIntoBikeForAdminResponseDTO(savedBike); // gdyby tutaj brał bike (a nie savedBike) to by klasa
+        //abstrakcyjna nie musiała mieć adnotacji @MappedSuperclass
     }
 
     @Override

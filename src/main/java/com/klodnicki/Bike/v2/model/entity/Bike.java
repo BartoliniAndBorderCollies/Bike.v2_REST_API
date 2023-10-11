@@ -9,6 +9,7 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
+//@DiscriminatorValue("bike")
 public class Bike extends RentableVehicle implements VehicleRentalAction {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
