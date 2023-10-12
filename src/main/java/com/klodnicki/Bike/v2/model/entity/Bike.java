@@ -3,14 +3,14 @@ package com.klodnicki.Bike.v2.model.entity;
 import com.klodnicki.Bike.v2.model.BikeType;
 import com.klodnicki.Bike.v2.model.GpsCoordinates;
 import com.klodnicki.Bike.v2.model.RentableVehicle;
-import com.klodnicki.Bike.v2.model.VehicleRentalAction;
+import com.klodnicki.Bike.v2.model.RentalAction;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 
 @Entity
 //@DiscriminatorValue("bike")
-public class Bike extends RentableVehicle implements VehicleRentalAction {
+public class Bike extends RentableVehicle implements RentalAction {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
