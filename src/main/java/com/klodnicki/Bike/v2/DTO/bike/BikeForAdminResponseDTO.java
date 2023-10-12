@@ -93,4 +93,5 @@ public class BikeForAdminResponseDTO {
     public void setGpsCoordinates(GpsCoordinates gpsCoordinates) {
         this.gpsCoordinates = gpsCoordinates;
     }
+
 }
