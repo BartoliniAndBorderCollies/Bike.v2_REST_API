@@ -9,16 +9,15 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-//@DiscriminatorValue("bike")
-public class Bike extends RentableVehicle implements VehicleRentalAction {
+public class Bike extends RentableVehicle implements RentalAction {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
     private BikeType bikeType;
 
-    public Bike(String serialNumber, boolean isRented, LocalDateTime rentalStartTime, LocalDateTime rentalEndTime,
-                double amountToBePaid, GpsCoordinates gpsCoordinates, Long id, BikeType bikeType) {
+    public Bike(Long id, BikeType bikeType, String serialNumber, boolean isRented, LocalDateTime rentalStartTime,
+                LocalDateTime rentalEndTime, double amountToBePaid, GpsCoordinates gpsCoordinates) {
         super(serialNumber, isRented, rentalStartTime, rentalEndTime, amountToBePaid, gpsCoordinates);
         this.id = id;
         this.bikeType = bikeType;
