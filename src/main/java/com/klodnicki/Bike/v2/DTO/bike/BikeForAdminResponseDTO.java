@@ -30,6 +30,9 @@ public class BikeForAdminResponseDTO {
         this.gpsCoordinates = gpsCoordinates;
     }
 
+    public BikeForAdminResponseDTO() {
+    }
+
     public Long getId() {
         return id;
     }
@@ -93,5 +96,4 @@ public class BikeForAdminResponseDTO {
     public void setGpsCoordinates(GpsCoordinates gpsCoordinates) {
         this.gpsCoordinates = gpsCoordinates;
     }
-
 }
