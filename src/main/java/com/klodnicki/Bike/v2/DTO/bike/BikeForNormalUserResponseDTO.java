@@ -1,9 +1,11 @@
 package com.klodnicki.Bike.v2.DTO.bike;
 
 import com.klodnicki.Bike.v2.model.BikeType;
+import lombok.Builder;
 
 import java.time.LocalDateTime;
 
+@Builder
 public class BikeForNormalUserResponseDTO {
     private Long id;
     private String serialNumber;
