@@ -1,6 +1,7 @@
 package com.klodnicki.Bike.v2.service;
 
 import com.klodnicki.Bike.v2.DTO.bike.BikeForAdminResponseDTO;
+import com.klodnicki.Bike.v2.DTO.bike.BikeForNormalUserResponseDTO;
 import com.klodnicki.Bike.v2.DTO.bike.BikeRequestDTO;
 import com.klodnicki.Bike.v2.model.entity.Bike;
 import com.klodnicki.Bike.v2.repository.BikeRepository;
@@ -92,4 +93,26 @@ public class BikeService implements GenericBikeService {
         Optional.ofNullable(updatedBikeRequestDTO.getRentalEndTime()).ifPresent(bike::setRentalEndTime);
         Optional.ofNullable(updatedBikeRequestDTO.getGpsCoordinates()).ifPresent(bike::setGpsCoordinates);
     }
+
+    public List<BikeForNormalUserResponseDTO> findAvailableBikes() {
+        List<Bike> availableBikes = bikeRepository.findByIsRentedFalse();
+        List<BikeForNormalUserResponseDTO> bikesForNormalUserDTO = new ArrayList<>();
+
+        for (Bike bike: availableBikes) {
+
+            BikeForNormalUserResponseDTO bikeForNormalDTO = BikeForNormalUserResponseDTO.builder()
+                    .id(bike.getId())
+                    .serialNumber(bike.getSerialNumber())
+                    .isRented(bike.isRented())
+                    .bikeType(bike.getBikeType())
+                    .rentalStartTime(bike.getRentalStartTime())
+                    .rentalEndTime(bike.getRentalEndTime())
+                    .build();
+
+            bikesForNormalUserDTO.add(bikeForNormalDTO);
+
+        }
+        return bikesForNormalUserDTO;
+    }
+
 }
