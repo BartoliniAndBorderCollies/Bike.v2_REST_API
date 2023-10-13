@@ -2,16 +2,14 @@ package com.klodnicki.Bike.v2.service;
 
 import com.klodnicki.Bike.v2.DTO.bike.BikeForAdminResponseDTO;
 import com.klodnicki.Bike.v2.DTO.bike.BikeRequestDTO;
-import com.klodnicki.Bike.v2.model.BikeType;
-import com.klodnicki.Bike.v2.model.GpsCoordinates;
 import com.klodnicki.Bike.v2.model.entity.Bike;
 import com.klodnicki.Bike.v2.repository.BikeRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 //public class BikeService implements GenericService<BikeForAdminResponseDTO, Bike> {
@@ -80,33 +78,26 @@ public class BikeService implements GenericBikeService {
     @Override
     public BikeForAdminResponseDTO update(Long id, BikeRequestDTO updatedBikeRequestDTO) {
 
-        Bike bike = bikeRepository.findById(id).orElseThrow(IllegalAccessError::new);
+        Bike bike = bikeRepository.findById(id).orElseThrow(IllegalArgumentException::new);
 
-        if (updatedBikeRequestDTO.getSerialNumber() != null) {
-            bike.setSerialNumber(updatedBikeRequestDTO.getSerialNumber());
-        }
-
+        updateBikeIfValuesAreNotNulls(updatedBikeRequestDTO, bike);
         bike.setRented(updatedBikeRequestDTO.isRented());
-
-        if (updatedBikeRequestDTO.getBikeType() != null) {
-            bike.setBikeType(updatedBikeRequestDTO.getBikeType());
-        }
-        if (updatedBikeRequestDTO.getRentalStartTime() != null) {
-            bike.setRentalStartTime(updatedBikeRequestDTO.getRentalStartTime());
-        }
-        if (updatedBikeRequestDTO.getRentalEndTime() != null) {
-            bike.setRentalEndTime(updatedBikeRequestDTO.getRentalEndTime());
-        }
-        if (updatedBikeRequestDTO.getAmountToBePaid() != 0) {
-            bike.setAmountToBePaid(updatedBikeRequestDTO.getAmountToBePaid());
-        }
-        if (updatedBikeRequestDTO.getGpsCoordinates() != null) {
-            bike.setGpsCoordinates(updatedBikeRequestDTO.getGpsCoordinates());
-        }
 
         bikeRepository.save(bike);
 
         //converting Bike into BikeForAdminResponseDTO using model mapper
         return modelMapper.map(bike, BikeForAdminResponseDTO.class);
+    }
+
+    private static void updateBikeIfValuesAreNotNulls(BikeRequestDTO updatedBikeRequestDTO, Bike bike) {
+
+        Optional.ofNullable(updatedBikeRequestDTO.getSerialNumber()).ifPresent(bike::setSerialNumber);
+        Optional.ofNullable(updatedBikeRequestDTO.getBikeType()).ifPresent(bike::setBikeType);
+        Optional.ofNullable(updatedBikeRequestDTO.getRentalStartTime()).ifPresent(bike::setRentalStartTime);
+        Optional.ofNullable(updatedBikeRequestDTO.getRentalEndTime()).ifPresent(bike::setRentalEndTime);
+        if (updatedBikeRequestDTO.getAmountToBePaid() != 0) {
+            bike.setAmountToBePaid(updatedBikeRequestDTO.getAmountToBePaid());
+        }
+        Optional.ofNullable(updatedBikeRequestDTO.getGpsCoordinates()).ifPresent(bike::setGpsCoordinates);
     }
 }
