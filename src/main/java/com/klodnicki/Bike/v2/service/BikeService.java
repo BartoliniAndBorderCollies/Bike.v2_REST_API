@@ -109,21 +109,4 @@ public class BikeService implements GenericBikeService {
         //converting Bike into BikeForAdminResponseDTO using model mapper
         return modelMapper.map(bike, BikeForAdminResponseDTO.class);
     }
-
-    private static BikeForAdminResponseDTO convertBikeIntoBikeForAdminResponseDTO(Bike savedBike) {
-        // Builder is in Lombok dependency
-        // BikeForAdminResponseDTO must have @Builder annotation
-        BikeForAdminResponseDTO bikeDTO = BikeForAdminResponseDTO.builder()
-                .id(savedBike.getId())
-                .serialNumber(savedBike.getSerialNumber())
-                .isRented(savedBike.isRented())
-                .bikeType(savedBike.getBikeType())
-                .rentalStartTime(savedBike.getRentalStartTime())
-                .rentalEndTime(savedBike.getRentalEndTime())
-                .amountToBePaid(savedBike.getAmountToBePaid())
-                .gpsCoordinates(savedBike.getGpsCoordinates())
-                .build();
-        return bikeDTO;
-    }
-
 }
