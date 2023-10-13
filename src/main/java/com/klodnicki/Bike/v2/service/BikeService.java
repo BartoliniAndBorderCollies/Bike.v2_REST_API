@@ -36,7 +36,7 @@ public class BikeService implements GenericBikeService {
         //converting back to BikeForAdminResponseDTO using modelMapper
         BikeForAdminResponseDTO bikeDto = modelMapper.map(savedBike, BikeForAdminResponseDTO.class);
 
-      return bikeDto;
+        return bikeDto;
     }
 
     @Override
@@ -53,18 +53,20 @@ public class BikeService implements GenericBikeService {
 
         for (Bike bike : bikeList) {
 
-            Long id = bike.getId();
-            String serialNumber = bike.getSerialNumber();
-            boolean isRented = bike.isRented();
-            BikeType type = bike.getBikeType();
-            LocalDateTime rentalStartTime = bike.getRentalStartTime();
-            LocalDateTime rentalEndTime = bike.getRentalEndTime();
-            double toBePaid = bike.getAmountToBePaid();
-            GpsCoordinates gps = bike.getGpsCoordinates();
+            // Builder is in Lombok dependency
+            // BikeForAdminResponseDTO must have @Builder annotation
+            BikeForAdminResponseDTO bikeDTO = BikeForAdminResponseDTO.builder()
+                    .id(bike.getId())
+                    .serialNumber(bike.getSerialNumber())
+                    .isRented(bike.isRented())
+                    .bikeType(bike.getBikeType())
+                    .rentalStartTime(bike.getRentalStartTime())
+                    .rentalEndTime(bike.getRentalEndTime())
+                    .amountToBePaid(bike.getAmountToBePaid())
+                    .gpsCoordinates(bike.getGpsCoordinates())
+                    .build();
 
-            BikeForAdminResponseDTO bikeDto = new BikeForAdminResponseDTO(id, serialNumber, isRented, type, rentalStartTime,
-                    rentalEndTime, toBePaid, gps);
-            bikeListDto.add(bikeDto);
+            bikeListDto.add(bikeDTO);
         }
 
         return bikeListDto;
