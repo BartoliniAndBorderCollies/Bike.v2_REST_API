@@ -16,7 +16,6 @@ public class GpsCoordinates {
     public GpsCoordinates() {
     }
 
-
     public String getLongitude() {
         return longitude;
     }
