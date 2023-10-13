@@ -5,20 +5,29 @@ import com.klodnicki.Bike.v2.model.BikeType;
 import java.time.LocalDateTime;
 
 public class BikeForNormalUserResponseDTO {
-
+    private Long id;
     private String serialNumber;
     private boolean isRented;
     private BikeType bikeType;
     private LocalDateTime rentalStartTime;
     private LocalDateTime rentalEndTime;
 
-    public BikeForNormalUserResponseDTO(String serialNumber, boolean isRented, BikeType bikeType,
+    public BikeForNormalUserResponseDTO(Long id, String serialNumber, boolean isRented, BikeType bikeType,
                                         LocalDateTime rentalStartTime, LocalDateTime rentalEndTime) {
+        this.id = id;
         this.serialNumber = serialNumber;
         this.isRented = isRented;
         this.bikeType = bikeType;
         this.rentalStartTime = rentalStartTime;
         this.rentalEndTime = rentalEndTime;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getSerialNumber() {
