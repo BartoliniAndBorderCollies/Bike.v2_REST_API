@@ -33,16 +33,17 @@ public class BikeService implements GenericBikeService {
         //using ModelMapper to convert(map) bikeRequestDTO into bike. I need Bike to be able to save it in repo
         Bike bike = modelMapper.map(bikeRequestDTO, Bike.class);
         Bike savedBike = bikeRepository.save(bike);
+        //converting back to BikeForAdminResponseDTO using modelMapper
+        BikeForAdminResponseDTO bikeDto = modelMapper.map(savedBike, BikeForAdminResponseDTO.class);
 
-        return convertBikeIntoBikeForAdminResponseDTO(savedBike); // gdyby tutaj brał bike (a nie savedBike) to by klasa
-        //abstrakcyjna nie musiała mieć adnotacji @MappedSuperclass
+      return bikeDto;
     }
 
     @Override
     public BikeForAdminResponseDTO findById(Long id) {
         Bike savedBike = bikeRepository.findById(id).orElseThrow(IllegalArgumentException::new); //TODO: add custom exception
 
-        return convertBikeIntoBikeForAdminResponseDTO(savedBike);
+        return modelMapper.map(savedBike, BikeForAdminResponseDTO.class);
     }
 
     @Override
@@ -103,8 +104,8 @@ public class BikeService implements GenericBikeService {
 
         bikeRepository.save(bike);
 
-        //converting Bike into BikeForAdminResponseDTO using builder
-        return convertBikeIntoBikeForAdminResponseDTO(bike);
+        //converting Bike into BikeForAdminResponseDTO using model mapper
+        return modelMapper.map(bike, BikeForAdminResponseDTO.class);
     }
 
     private static BikeForAdminResponseDTO convertBikeIntoBikeForAdminResponseDTO(Bike savedBike) {
