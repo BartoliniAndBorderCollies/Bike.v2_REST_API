@@ -82,6 +82,9 @@ public class BikeService implements GenericBikeService {
 
         updateBikeIfValuesAreNotNulls(updatedBikeRequestDTO, bike);
         bike.setRented(updatedBikeRequestDTO.isRented());
+        if (updatedBikeRequestDTO.getAmountToBePaid() != 0) {
+            bike.setAmountToBePaid(updatedBikeRequestDTO.getAmountToBePaid());
+        }
 
         bikeRepository.save(bike);
 
@@ -95,9 +98,6 @@ public class BikeService implements GenericBikeService {
         Optional.ofNullable(updatedBikeRequestDTO.getBikeType()).ifPresent(bike::setBikeType);
         Optional.ofNullable(updatedBikeRequestDTO.getRentalStartTime()).ifPresent(bike::setRentalStartTime);
         Optional.ofNullable(updatedBikeRequestDTO.getRentalEndTime()).ifPresent(bike::setRentalEndTime);
-        if (updatedBikeRequestDTO.getAmountToBePaid() != 0) {
-            bike.setAmountToBePaid(updatedBikeRequestDTO.getAmountToBePaid());
-        }
         Optional.ofNullable(updatedBikeRequestDTO.getGpsCoordinates()).ifPresent(bike::setGpsCoordinates);
     }
 }
