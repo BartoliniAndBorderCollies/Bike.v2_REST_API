@@ -24,6 +24,9 @@ public class BikeForNormalUserResponseDTO {
         this.rentalEndTime = rentalEndTime;
     }
 
+    public BikeForNormalUserResponseDTO() {
+    }
+
     public Long getId() {
         return id;
     }
