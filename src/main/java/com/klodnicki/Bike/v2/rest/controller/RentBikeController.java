@@ -1,11 +1,12 @@
 package com.klodnicki.Bike.v2.rest.controller;
 
 import com.klodnicki.Bike.v2.DTO.bike.BikeForNormalUserResponseDTO;
-import com.klodnicki.Bike.v2.service.GenericBikeService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.klodnicki.Bike.v2.model.entity.Bike;
+import com.klodnicki.Bike.v2.model.entity.ChargingStation;
+import com.klodnicki.Bike.v2.model.entity.Rent;
+import com.klodnicki.Bike.v2.model.entity.User;
+import com.klodnicki.Bike.v2.service.RentBikeGenericService;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -13,21 +14,26 @@ import java.util.List;
 @RequestMapping("/api")
 public class RentBikeController {
 
-    private final GenericBikeService bikeService;
+    private final RentBikeGenericService rentBikeService;
 
-    public RentBikeController(GenericBikeService bikeService) {
-        this.bikeService = bikeService;
+    public RentBikeController(RentBikeGenericService rentBikeService) {
+        this.rentBikeService = rentBikeService;
     }
 
 
     @GetMapping("/bicycles")
     public List<BikeForNormalUserResponseDTO> findAvailableBikes() {
-        return bikeService.findAvailableBikes();
+        return rentBikeService.findAvailableBikes();
     }
 
     @GetMapping("/bicycles/{id}")
     public BikeForNormalUserResponseDTO findBikeForNormalUserById(@PathVariable Long id) {
-        return bikeService.findBikeForNormalUserById(id);
+        return rentBikeService.findBikeForNormalUserById(id);
+    }
+
+    @PostMapping("/rentals")
+    public Rent rentBike(User user, Bike bike, ChargingStation chargingStation) {
+        return null; //TODO: to be continued
     }
 
 
