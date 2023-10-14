@@ -93,31 +93,4 @@ public class BikeService implements GenericBikeService {
         Optional.ofNullable(updatedBikeRequestDTO.getRentalEndTime()).ifPresent(bike::setRentalEndTime);
         Optional.ofNullable(updatedBikeRequestDTO.getGpsCoordinates()).ifPresent(bike::setGpsCoordinates);
     }
-
-    public List<BikeForNormalUserResponseDTO> findAvailableBikes() {
-        List<Bike> availableBikes = bikeRepository.findByIsRentedFalse();
-        List<BikeForNormalUserResponseDTO> bikesForNormalUserDTO = new ArrayList<>();
-
-        for (Bike bike: availableBikes) {
-
-            BikeForNormalUserResponseDTO bikeForNormalDTO = BikeForNormalUserResponseDTO.builder()
-                    .id(bike.getId())
-                    .serialNumber(bike.getSerialNumber())
-                    .isRented(bike.isRented())
-                    .bikeType(bike.getBikeType())
-                    .rentalStartTime(bike.getRentalStartTime())
-                    .rentalEndTime(bike.getRentalEndTime())
-                    .build();
-
-            bikesForNormalUserDTO.add(bikeForNormalDTO);
-
-        }
-        return bikesForNormalUserDTO;
-    }
-
-    public BikeForNormalUserResponseDTO findBikeForNormalUserById(Long id) {
-        return modelMapper.map(findById(id), BikeForNormalUserResponseDTO.class);
-    }
-
-
 }
