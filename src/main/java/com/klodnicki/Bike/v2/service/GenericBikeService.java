@@ -8,4 +8,6 @@ import java.util.List;
 
 public interface GenericBikeService extends GenericService<BikeForAdminResponseDTO, BikeRequestDTO> {
     List<BikeForNormalUserResponseDTO> findAvailableBikes();
+
+    BikeForNormalUserResponseDTO findBikeForNormalUserById(Long id);
 }
