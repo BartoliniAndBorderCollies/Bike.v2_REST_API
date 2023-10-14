@@ -78,7 +78,7 @@ public class BikeService implements GenericBikeService {
     @Override
     public BikeForAdminResponseDTO update(Long id, BikeRequestDTO updatedBikeRequestDTO) {
 
-        Bike bike = bikeRepository.findById(id).orElseThrow(IllegalArgumentException::new);
+        Bike bike = modelMapper.map(findById(id), Bike.class);
 
         updateBikeIfValuesAreNotNulls(updatedBikeRequestDTO, bike);
         bike.setRented(updatedBikeRequestDTO.isRented());
