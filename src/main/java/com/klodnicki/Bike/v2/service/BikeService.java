@@ -115,4 +115,9 @@ public class BikeService implements GenericBikeService {
         return bikesForNormalUserDTO;
     }
 
+    public BikeForNormalUserResponseDTO findBikeForNormalUserById(Long id) {
+        return modelMapper.map(findById(id), BikeForNormalUserResponseDTO.class);
+    }
+
+
 }
