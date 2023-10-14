@@ -17,6 +17,10 @@ public class Bike extends RentableVehicle implements RentalAction {
     private Long id;
     private BikeType bikeType;
 
+    //Bike is a parent class (owning side) of the relation
+    @OneToOne (mappedBy = "bike")
+    private Rent rent;
+
     public Bike(Long id, BikeType bikeType, String serialNumber, boolean isRented, LocalDateTime rentalStartTime, LocalDateTime rentalEndTime,
                 double amountToBePaid, GpsCoordinates gpsCoordinates) {
         super(serialNumber, isRented, rentalStartTime, rentalEndTime, amountToBePaid, gpsCoordinates);
@@ -41,6 +45,14 @@ public class Bike extends RentableVehicle implements RentalAction {
 
     public void setBikeType(BikeType bikeType) {
         this.bikeType = bikeType;
+    }
+
+    public Rent getRent() {
+        return rent;
+    }
+
+    public void setRent(Rent rent) {
+        this.rent = rent;
     }
 
     @Override

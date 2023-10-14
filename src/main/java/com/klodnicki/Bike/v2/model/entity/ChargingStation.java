@@ -14,6 +14,10 @@ public class ChargingStation {
     private String city;
     private int freeSlots;
 
+    //ChargingStation is a parent class (owning side) of the relation
+    @OneToOne(mappedBy = "chargingStation")
+    private Rent rent;
+
     public ChargingStation(Long id, String name, String address, String city, int freeSlots) {
         this.id = id;
         this.name = name;
@@ -63,5 +67,13 @@ public class ChargingStation {
 
     public void setCity(String city) {
         this.city = city;
+    }
+
+    public Rent getRent() {
+        return rent;
+    }
+
+    public void setRent(Rent rent) {
+        this.rent = rent;
     }
 }

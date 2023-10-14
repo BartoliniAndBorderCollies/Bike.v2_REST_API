@@ -18,6 +18,10 @@ public class User {
     private String role;
     private double balance;
 
+    //User is a parent class (owning side) of the relation
+    @OneToOne(mappedBy = "user")
+    private Rent rent;
+
     public User(Long id, String name, String phoneNumber, String emailAddress, int accountNumber,
                 boolean isAccountValid, String role, double balance) {
         this.id = id;
@@ -95,5 +99,13 @@ public class User {
 
     public void setBalance(double balance) {
         this.balance = balance;
+    }
+
+    public Rent getRent() {
+        return rent;
+    }
+
+    public void setRent(Rent rent) {
+        this.rent = rent;
     }
 }
