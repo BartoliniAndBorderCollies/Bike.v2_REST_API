@@ -25,7 +25,7 @@ public class RentBikeController {
         return bikeService.findAvailableBikes();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/bicycles/{id}")
     public BikeForNormalUserResponseDTO findBikeForNormalUserById(@PathVariable Long id) {
         return bikeService.findBikeForNormalUserById(id);
     }
