@@ -3,6 +3,7 @@ package com.klodnicki.Bike.v2.rest.controller;
 import com.klodnicki.Bike.v2.DTO.bike.BikeForNormalUserResponseDTO;
 import com.klodnicki.Bike.v2.service.GenericBikeService;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -22,6 +23,11 @@ public class RentBikeController {
     @GetMapping("/bicycles")
     public List<BikeForNormalUserResponseDTO> findAvailableBikes() {
         return bikeService.findAvailableBikes();
+    }
+
+    @GetMapping("/{id}")
+    public BikeForNormalUserResponseDTO findBikeForNormalUserById(@PathVariable Long id) {
+        return bikeService.findBikeForNormalUserById(id);
     }
 
 
