@@ -9,7 +9,10 @@ import com.klodnicki.Bike.v2.model.entity.Rent;
 import com.klodnicki.Bike.v2.model.entity.User;
 import com.klodnicki.Bike.v2.repository.BikeRepository;
 import com.klodnicki.Bike.v2.repository.RentRepository;
+import jakarta.persistence.EntityManager;
+import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
@@ -89,6 +92,7 @@ public class RentBikeService implements RentBikeGenericService{
     }
 
     @Override
+    @Transactional
     public Rent rentBike(User user, Bike bike, ChargingStation chargingStation) {
         bike = entityManager.merge(bike);
         user = entityManager.merge(user);
