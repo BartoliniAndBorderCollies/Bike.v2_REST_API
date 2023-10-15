@@ -104,7 +104,9 @@ public class RentBikeService implements RentBikeGenericService{
         bike.setChargingStation(null);
         bike.setUser(user); //it is a relation @OneToOne therefore setting should be on both sides of owning
         user.setBike(bike);
-        chargingStation.getBikeList().remove(bike);
+        if(chargingStation.getBikeList() != null && !chargingStation.getBikeList().isEmpty()) {
+            chargingStation.getBikeList().remove(bike);
+        }
         chargingStation.setFreeSlots(chargingStation.getFreeSlots()+1);
 
         Rent rent = new Rent(bike, user, chargingStation);
