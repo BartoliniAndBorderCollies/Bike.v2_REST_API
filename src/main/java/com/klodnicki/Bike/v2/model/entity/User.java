@@ -22,6 +22,9 @@ public class User {
     @OneToOne(mappedBy = "user")
     private Rent rent;
 
+    @OneToOne(mappedBy = "user")
+    private Bike bike;
+
     public User(Long id, String name, String phoneNumber, String emailAddress, int accountNumber,
                 boolean isAccountValid, String role, double balance) {
         this.id = id;
@@ -107,5 +110,13 @@ public class User {
 
     public void setRent(Rent rent) {
         this.rent = rent;
+    }
+
+    public Bike getBike() {
+        return bike;
+    }
+
+    public void setBike(Bike bike) {
+        this.bike = bike;
     }
 }
