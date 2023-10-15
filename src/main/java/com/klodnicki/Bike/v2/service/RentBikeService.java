@@ -24,6 +24,9 @@ public class RentBikeService implements RentBikeGenericService{
 
     private final RentRepository rentRepository;
 
+    @Autowired
+    private EntityManager entityManager;
+
     ModelMapper modelMapper = new ModelMapper();
 
     public RentBikeService(BikeRepository bikeRepository, RentRepository rentRepository) {
@@ -87,6 +90,11 @@ public class RentBikeService implements RentBikeGenericService{
 
     @Override
     public Rent rentBike(User user, Bike bike, ChargingStation chargingStation) {
+        bike = entityManager.merge(bike);
+        user = entityManager.merge(user);
+        chargingStation = entityManager.merge(chargingStation);
+
+
         bike.setRented(true);
         bike.setRentalStartTime(LocalDateTime.now());
         bike.setChargingStation(null);
