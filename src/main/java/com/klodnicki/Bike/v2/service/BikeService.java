@@ -39,7 +39,7 @@ public class BikeService implements GenericBikeService {
 
     @Override
     public BikeForAdminResponseDTO findById(Long id) {
-        Bike savedBike = bikeRepository.findById(id).orElseThrow(IllegalArgumentException::new); //TODO: add custom exception
+        Bike savedBike = getBike(id);
 
         return modelMapper.map(savedBike, BikeForAdminResponseDTO.class);
     }
@@ -66,7 +66,7 @@ public class BikeService implements GenericBikeService {
     @Override
     public BikeForAdminResponseDTO update(Long id, BikeRequestDTO updatedBikeRequestDTO) {
 
-        Bike bike = modelMapper.map(findById(id), Bike.class);
+        Bike bike = getBike(id);
 
         updateBikeIfValuesAreNotNulls(updatedBikeRequestDTO, bike);
         bike.setRented(updatedBikeRequestDTO.isRented());
@@ -78,6 +78,10 @@ public class BikeService implements GenericBikeService {
 
         //converting Bike into BikeForAdminResponseDTO using model mapper
         return modelMapper.map(bike, BikeForAdminResponseDTO.class);
+    }
+
+    private Bike getBike(Long id) {
+        return bikeRepository.findById(id).orElseThrow(IllegalArgumentException::new);
     }
 
     private void updateBikeIfValuesAreNotNulls(BikeRequestDTO updatedBikeRequestDTO, Bike bike) {
