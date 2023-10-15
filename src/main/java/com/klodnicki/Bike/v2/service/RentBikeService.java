@@ -4,12 +4,16 @@ package com.klodnicki.Bike.v2.service;
 import com.klodnicki.Bike.v2.DTO.bike.BikeForNormalUserResponseDTO;
 import com.klodnicki.Bike.v2.DTO.bike.BikeRequestDTO;
 import com.klodnicki.Bike.v2.model.entity.Bike;
+import com.klodnicki.Bike.v2.model.entity.ChargingStation;
+import com.klodnicki.Bike.v2.model.entity.Rent;
+import com.klodnicki.Bike.v2.model.entity.User;
 import com.klodnicki.Bike.v2.repository.BikeRepository;
 import com.klodnicki.Bike.v2.repository.RentRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -81,6 +85,18 @@ public class RentBikeService implements RentBikeGenericService{
         return modelMapper.map(bike, BikeForNormalUserResponseDTO.class);
     }
 
+    @Override
+    public Rent rentBike(User user, Bike bike, ChargingStation chargingStation) {
+        bike.setRented(true);
+        bike.setRentalStartTime(LocalDateTime.now());
+        bike.setChargingStation(null);
+        bike.setUser(user); //it is a relation @OneToOne therefore setting should be on both sides of owning
+        user.setBike(bike);
+        chargingStation.getBikeList().remove(bike);
+        chargingStation.setFreeSlots(chargingStation.getFreeSlots()+1);
+
+       return rentRepository.saveRent(user, bike, chargingStation);
+    }
 
 
 }
