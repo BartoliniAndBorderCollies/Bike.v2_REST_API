@@ -21,6 +21,14 @@ public class Bike extends RentableVehicle implements RentalAction {
     @OneToOne (mappedBy = "bike")
     private Rent rent;
 
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    @ManyToOne
+    @JoinColumn(name = "charging_station_id")
+    private ChargingStation chargingStation;
+
     public Bike(Long id, BikeType bikeType, String serialNumber, boolean isRented, LocalDateTime rentalStartTime, LocalDateTime rentalEndTime,
                 double amountToBePaid, GpsCoordinates gpsCoordinates) {
         super(serialNumber, isRented, rentalStartTime, rentalEndTime, amountToBePaid, gpsCoordinates);
@@ -53,6 +61,22 @@ public class Bike extends RentableVehicle implements RentalAction {
 
     public void setRent(Rent rent) {
         this.rent = rent;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public ChargingStation getChargingStation() {
+        return chargingStation;
+    }
+
+    public void setChargingStation(ChargingStation chargingStation) {
+        this.chargingStation = chargingStation;
     }
 
     @Override
