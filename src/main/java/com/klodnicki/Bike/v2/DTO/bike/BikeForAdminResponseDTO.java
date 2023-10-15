@@ -2,6 +2,8 @@ package com.klodnicki.Bike.v2.DTO.bike;
 
 import com.klodnicki.Bike.v2.model.BikeType;
 import com.klodnicki.Bike.v2.model.GpsCoordinates;
+import com.klodnicki.Bike.v2.model.entity.ChargingStation;
+import com.klodnicki.Bike.v2.model.entity.User;
 import lombok.Builder;
 
 import java.time.LocalDateTime;
@@ -16,10 +18,12 @@ public class BikeForAdminResponseDTO {
     private LocalDateTime rentalEndTime;
     private double amountToBePaid;
     private GpsCoordinates gpsCoordinates;
+    private User user;
+    private ChargingStation chargingStation;
 
     public BikeForAdminResponseDTO(Long id, String serialNumber, boolean isRented, BikeType bikeType,
                                    LocalDateTime rentalStartTime, LocalDateTime rentalEndTime, double amountToBePaid,
-                                   GpsCoordinates gpsCoordinates) {
+                                   GpsCoordinates gpsCoordinates, User user, ChargingStation chargingStation) {
         this.id = id;
         this.serialNumber = serialNumber;
         this.isRented = isRented;
@@ -28,6 +32,8 @@ public class BikeForAdminResponseDTO {
         this.rentalEndTime = rentalEndTime;
         this.amountToBePaid = amountToBePaid;
         this.gpsCoordinates = gpsCoordinates;
+        this.user = user;
+        this.chargingStation = chargingStation;
     }
 
     public BikeForAdminResponseDTO() {
@@ -95,5 +101,21 @@ public class BikeForAdminResponseDTO {
 
     public void setGpsCoordinates(GpsCoordinates gpsCoordinates) {
         this.gpsCoordinates = gpsCoordinates;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public ChargingStation getChargingStation() {
+        return chargingStation;
+    }
+
+    public void setChargingStation(ChargingStation chargingStation) {
+        this.chargingStation = chargingStation;
     }
 }
