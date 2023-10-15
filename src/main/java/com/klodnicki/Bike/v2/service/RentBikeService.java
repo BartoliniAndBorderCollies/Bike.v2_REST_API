@@ -5,6 +5,7 @@ import com.klodnicki.Bike.v2.DTO.bike.BikeForNormalUserResponseDTO;
 import com.klodnicki.Bike.v2.DTO.bike.BikeRequestDTO;
 import com.klodnicki.Bike.v2.model.entity.Bike;
 import com.klodnicki.Bike.v2.repository.BikeRepository;
+import com.klodnicki.Bike.v2.repository.RentRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
@@ -17,10 +18,13 @@ public class RentBikeService implements RentBikeGenericService{
 
     private final BikeRepository bikeRepository;
 
+    private final RentRepository rentRepository;
+
     ModelMapper modelMapper = new ModelMapper();
 
-    public RentBikeService(BikeRepository bikeRepository) {
+    public RentBikeService(BikeRepository bikeRepository, RentRepository rentRepository) {
         this.bikeRepository = bikeRepository;
+        this.rentRepository = rentRepository;
     }
 
 
