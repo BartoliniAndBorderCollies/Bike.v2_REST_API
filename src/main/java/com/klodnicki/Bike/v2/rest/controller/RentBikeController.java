@@ -31,9 +31,9 @@ public class RentBikeController {
         return rentBikeService.findBikeForNormalUserById(id);
     }
 
-    @PostMapping("/rentals")
+    @PostMapping("/rentals/add")
     public Rent rentBike(User user, Bike bike, ChargingStation chargingStation) {
-        return null; //TODO: to be continued
+       return rentBikeService.rentBike(user, bike, chargingStation);
     }
 
 
