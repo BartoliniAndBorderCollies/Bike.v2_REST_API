@@ -21,8 +21,7 @@ public class Rent {
     @JoinColumn(name = "chargingStation_id")
     private ChargingStation chargingStation;
 
-    public Rent(Long id, Bike bike, User user, ChargingStation chargingStation) {
-        this.id = id;
+    public Rent(Bike bike, User user, ChargingStation chargingStation) {
         this.bike = bike;
         this.user = user;
         this.chargingStation = chargingStation;
