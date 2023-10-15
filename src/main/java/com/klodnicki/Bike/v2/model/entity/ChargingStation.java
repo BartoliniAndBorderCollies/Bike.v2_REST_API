@@ -17,7 +17,7 @@ public class ChargingStation {
     private int freeSlots;
 
     //ChargingStation is a parent class (owning side) of the relation
-    @OneToOne(mappedBy = "chargingStation")
+    @OneToOne(mappedBy = "chargingStation", cascade = CascadeType.ALL)
     private Rent rent;
 
     @OneToMany(mappedBy = "chargingStation")

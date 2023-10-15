@@ -9,15 +9,15 @@ public class Rent {
     @Column(name = "id", nullable = false)
     private Long id;
 //Rent class is a child class - or no-owning side - therefore it contains FK, therefore it joins columns
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL) //TODO: not sure about this
     @JoinColumn(name = "bike_id")
     private Bike bike;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL) //TODO: not sure about this
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL) //TODO: not sure about this
     @JoinColumn(name = "chargingStation_id")
     private ChargingStation chargingStation;
 

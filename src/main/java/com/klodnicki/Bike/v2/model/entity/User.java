@@ -19,7 +19,7 @@ public class User {
     private double balance;
 
     //User is a parent class (owning side) of the relation
-    @OneToOne(mappedBy = "user")
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private Rent rent;
 
     @OneToOne(mappedBy = "user")

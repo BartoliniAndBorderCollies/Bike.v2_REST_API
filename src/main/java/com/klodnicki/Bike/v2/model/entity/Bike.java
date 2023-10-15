@@ -18,7 +18,7 @@ public class Bike extends RentableVehicle implements RentalAction {
     private BikeType bikeType;
 
     //Bike is a parent class (owning side) of the relation
-    @OneToOne (mappedBy = "bike")
+    @OneToOne (mappedBy = "bike", cascade = CascadeType.ALL)
     private Rent rent;
 
     @OneToOne
