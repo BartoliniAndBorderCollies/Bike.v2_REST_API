@@ -94,10 +94,6 @@ public class RentBikeService implements RentBikeGenericService{
     @Override
     @Transactional
     public Rent rentBike(User user, Bike bike, ChargingStation chargingStation) {
-        bike = entityManager.merge(bike);
-        user = entityManager.merge(user);
-        chargingStation = entityManager.merge(chargingStation);
-
 
         bike.setRented(true);
         bike.setRentalStartTime(LocalDateTime.now());
