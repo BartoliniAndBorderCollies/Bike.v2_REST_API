@@ -26,6 +26,8 @@ public class ChargingStationController {
         return chargingStationService.findAll();
     }
 
-
-
+    @GetMapping("/{id}")
+    public ChargingStation findById(@PathVariable("id") Long id) {
+        return chargingStationService.findById(id);
+    }
 }
