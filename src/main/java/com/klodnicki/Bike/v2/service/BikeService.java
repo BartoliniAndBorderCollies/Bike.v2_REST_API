@@ -94,8 +94,6 @@ public class BikeService implements GenericBikeService {
 
         Optional.ofNullable(updatedBikeRequestDTO.getSerialNumber()).ifPresent(bike::setSerialNumber);
         Optional.ofNullable(updatedBikeRequestDTO.getBikeType()).ifPresent(bike::setBikeType);
-        Optional.ofNullable(updatedBikeRequestDTO.getRentalStartTime()).ifPresent(bike::setRentalStartTime);
-        Optional.ofNullable(updatedBikeRequestDTO.getRentalEndTime()).ifPresent(bike::setRentalEndTime);
         Optional.ofNullable(updatedBikeRequestDTO.getGpsCoordinates()).ifPresent(bike::setGpsCoordinates);
     }
 }
