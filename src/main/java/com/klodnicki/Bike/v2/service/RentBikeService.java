@@ -3,16 +3,17 @@ package com.klodnicki.Bike.v2.service;
 
 import com.klodnicki.Bike.v2.DTO.bike.BikeForNormalUserResponseDTO;
 import com.klodnicki.Bike.v2.DTO.bike.BikeRequestDTO;
+import com.klodnicki.Bike.v2.model.RentRequest;
 import com.klodnicki.Bike.v2.model.entity.Bike;
 import com.klodnicki.Bike.v2.model.entity.ChargingStation;
 import com.klodnicki.Bike.v2.model.entity.Rent;
 import com.klodnicki.Bike.v2.model.entity.User;
 import com.klodnicki.Bike.v2.repository.BikeRepository;
+import com.klodnicki.Bike.v2.repository.ChargingStationRepository;
 import com.klodnicki.Bike.v2.repository.RentRepository;
-import jakarta.persistence.EntityManager;
+import com.klodnicki.Bike.v2.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
@@ -27,14 +28,25 @@ public class RentBikeService implements RentBikeGenericService{
 
     private final RentRepository rentRepository;
 
-    @Autowired
-    private EntityManager entityManager;
+    private final GenericBikeService bikeService;
+    private final UserService userService;
+    private final ChargingStationService chargingStationService;
+
 
     ModelMapper modelMapper = new ModelMapper();
+    private final UserRepository userRepository;
+    private final ChargingStationRepository chargingStationRepository;
 
-    public RentBikeService(BikeRepository bikeRepository, RentRepository rentRepository) {
+    public RentBikeService(BikeRepository bikeRepository, RentRepository rentRepository,
+                           GenericBikeService bikeService, UserService userService, ChargingStationService chargingStationService, UserRepository userRepository,
+                           ChargingStationRepository chargingStationRepository) {
         this.bikeRepository = bikeRepository;
         this.rentRepository = rentRepository;
+        this.bikeService = bikeService;
+        this.userService = userService;
+        this.chargingStationService = chargingStationService;
+        this.userRepository = userRepository;
+        this.chargingStationRepository = chargingStationRepository;
     }
 
 
