@@ -25,28 +25,19 @@ import java.util.List;
 public class RentBikeService implements RentBikeGenericService{
 
     private final BikeRepository bikeRepository;
-
     private final RentRepository rentRepository;
-
     private final GenericBikeService bikeService;
     private final UserService userService;
     private final ChargingStationService chargingStationService;
-
-
     ModelMapper modelMapper = new ModelMapper();
-    private final UserRepository userRepository;
-    private final ChargingStationRepository chargingStationRepository;
 
     public RentBikeService(BikeRepository bikeRepository, RentRepository rentRepository,
-                           GenericBikeService bikeService, UserService userService, ChargingStationService chargingStationService, UserRepository userRepository,
-                           ChargingStationRepository chargingStationRepository) {
+                           GenericBikeService bikeService, UserService userService, ChargingStationService chargingStationService) {
         this.bikeRepository = bikeRepository;
         this.rentRepository = rentRepository;
         this.bikeService = bikeService;
         this.userService = userService;
         this.chargingStationService = chargingStationService;
-        this.userRepository = userRepository;
-        this.chargingStationRepository = chargingStationRepository;
     }
 
 
@@ -124,6 +115,4 @@ public class RentBikeService implements RentBikeGenericService{
 
        return rentRepository.save(rent);
     }
-
-
 }
