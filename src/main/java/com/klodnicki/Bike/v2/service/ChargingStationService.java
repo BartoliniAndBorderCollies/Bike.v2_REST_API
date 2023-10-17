@@ -22,4 +22,8 @@ public class ChargingStationService {
     public Iterable<ChargingStation> findAll() {
         return chargingStationRepository.findAll();
     }
+
+    public ChargingStation findById(Long id) {
+        return chargingStationRepository.findById(id).orElseThrow(IllegalArgumentException::new);
+    }
 }
