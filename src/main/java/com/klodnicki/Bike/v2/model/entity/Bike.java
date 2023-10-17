@@ -1,5 +1,7 @@
 package com.klodnicki.Bike.v2.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.klodnicki.Bike.v2.model.BikeType;
 import com.klodnicki.Bike.v2.model.GpsCoordinates;
 import com.klodnicki.Bike.v2.model.RentableVehicle;
@@ -9,6 +11,7 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 //@DiscriminatorValue("bike")
 public class Bike extends RentableVehicle implements RentalAction {
     @Id
