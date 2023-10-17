@@ -100,7 +100,6 @@ public class RentBikeService implements RentBikeGenericService{
         ChargingStation chargingStation = chargingStationService.findById(rentRequest.getChargingStationId());
 
         bike.setRented(true);
-        bike.setRentalStartTime(LocalDateTime.now());
         bike.setChargingStation(null);
         bike.setAmountToBePaid(0.0);
         bike.setUser(user); //it is a relation @OneToOne therefore setting should be on both sides of owning
