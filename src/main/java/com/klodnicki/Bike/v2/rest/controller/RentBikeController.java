@@ -34,7 +34,7 @@ public class RentBikeController {
 
     @PostMapping("/rentals/add")
     public Rent rentBike(@RequestBody RentRequest rentRequest) {
-        return rentBikeService.rentBike(rentRequest.getUser(), rentRequest.getBike(), rentRequest.getChargingStation());
+        return rentBikeService.rentBike(rentRequest);
     }
 
 
