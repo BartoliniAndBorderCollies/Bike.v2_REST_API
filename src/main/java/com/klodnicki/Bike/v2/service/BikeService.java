@@ -85,7 +85,8 @@ public class BikeService implements GenericBikeService {
         return modelMapper.map(bike, BikeForAdminResponseDTO.class);
     }
 
-    private Bike getBike(Long id) {
+    @Override
+    public Bike getBike(Long id) {
         return bikeRepository.findById(id).orElseThrow(IllegalArgumentException::new);
     }
 
