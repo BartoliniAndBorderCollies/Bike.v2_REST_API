@@ -5,6 +5,7 @@ import com.klodnicki.Bike.v2.DTO.bike.BikeForNormalUserResponseDTO;
 import com.klodnicki.Bike.v2.DTO.bike.BikeRequestDTO;
 import com.klodnicki.Bike.v2.model.entity.Bike;
 import com.klodnicki.Bike.v2.repository.BikeRepository;
+import lombok.NonNull;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
@@ -28,7 +29,10 @@ public class BikeService implements GenericBikeService {
     }
 
     @Override
-    public BikeForAdminResponseDTO add(BikeRequestDTO bikeRequestDTO) {
+    public BikeForAdminResponseDTO add(@NonNull BikeRequestDTO bikeRequestDTO) {
+//        if (bikeRequestDTO == null) {
+//            throw new NullPointerException();
+//        }
         //using ModelMapper to convert(map) bikeRequestDTO into bike. I need Bike to be able to save it in repo
         Bike bike = modelMapper.map(bikeRequestDTO, Bike.class);
         Bike savedBike = bikeRepository.save(bike);
