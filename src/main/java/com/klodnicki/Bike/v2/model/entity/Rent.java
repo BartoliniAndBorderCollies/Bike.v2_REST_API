@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Getter
 @Setter
@@ -12,6 +14,8 @@ public class Rent {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
+    private LocalDateTime rentalStartTime;
+    private LocalDateTime rentalEndTime;
 //Rent class is a child class - or no-owning side - therefore it contains FK, therefore it joins columns
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "bike_id")
@@ -25,7 +29,9 @@ public class Rent {
     @JoinColumn(name = "chargingStation_id")
     private ChargingStation chargingStation;
 
-    public Rent(Bike bike, User user, ChargingStation chargingStation) {
+    public Rent(LocalDateTime rentalStartTime, LocalDateTime rentalEndTime, Bike bike, User user, ChargingStation chargingStation) {
+        this.rentalStartTime = rentalStartTime;
+        this.rentalEndTime = rentalEndTime;
         this.bike = bike;
         this.user = user;
         this.chargingStation = chargingStation;
