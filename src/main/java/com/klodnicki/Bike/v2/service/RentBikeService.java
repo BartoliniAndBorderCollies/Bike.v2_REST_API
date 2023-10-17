@@ -109,7 +109,7 @@ public class RentBikeService implements RentBikeGenericService{
         }
         chargingStation.setFreeSlots(chargingStation.getFreeSlots()+1);
 
-        Rent rent = new Rent(LocalDateTime.now(), null, bike, user, chargingStation);
+        Rent rent = new Rent(LocalDateTime.now(), null, bike, user, null);
 
        return rentRepository.save(rent);
     }
