@@ -16,8 +16,6 @@ public abstract class RentableVehicle {
 
     private String serialNumber;
     private boolean isRented;
-    private LocalDateTime rentalStartTime;
-    private LocalDateTime rentalEndTime;
     private double amountToBePaid;
     @Embedded
     private GpsCoordinates gpsCoordinates;
@@ -26,8 +24,6 @@ public abstract class RentableVehicle {
                            LocalDateTime rentalEndTime, double amountToBePaid, GpsCoordinates gpsCoordinates) {
         this.serialNumber = serialNumber;
         this.isRented = isRented;
-        this.rentalStartTime = rentalStartTime;
-        this.rentalEndTime = rentalEndTime;
         this.amountToBePaid = amountToBePaid;
         this.gpsCoordinates = gpsCoordinates;
     }
@@ -49,22 +45,6 @@ public abstract class RentableVehicle {
 
     public void setRented(boolean rented) {
         isRented = rented;
-    }
-
-    public LocalDateTime getRentalStartTime() {
-        return rentalStartTime;
-    }
-
-    public void setRentalStartTime(LocalDateTime rentalStartTime) {
-        this.rentalStartTime = rentalStartTime;
-    }
-
-    public LocalDateTime getRentalEndTime() {
-        return rentalEndTime;
-    }
-
-    public void setRentalEndTime(LocalDateTime rentalEndTime) {
-        this.rentalEndTime = rentalEndTime;
     }
 
     public double getAmountToBePaid() {
