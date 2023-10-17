@@ -78,8 +78,6 @@ public class RentBikeService implements RentBikeGenericService{
                     .serialNumber(bike.getSerialNumber())
                     .isRented(bike.isRented())
                     .bikeType(bike.getBikeType())
-                    .rentalStartTime(bike.getRentalStartTime())
-                    .rentalEndTime(bike.getRentalEndTime())
                     .build();
 
             bikesForNormalUserDTO.add(bikeForNormalDTO);
