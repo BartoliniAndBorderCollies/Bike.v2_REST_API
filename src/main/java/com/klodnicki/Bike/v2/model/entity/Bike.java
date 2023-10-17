@@ -7,12 +7,16 @@ import com.klodnicki.Bike.v2.model.GpsCoordinates;
 import com.klodnicki.Bike.v2.model.RentableVehicle;
 import com.klodnicki.Bike.v2.model.RentalAction;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 
 @Entity
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 //@DiscriminatorValue("bike")
+@Getter
+@Setter
 public class Bike extends RentableVehicle implements RentalAction {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,46 +44,6 @@ public class Bike extends RentableVehicle implements RentalAction {
     }
 
     public Bike() {
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public BikeType getBikeType() {
-        return bikeType;
-    }
-
-    public void setBikeType(BikeType bikeType) {
-        this.bikeType = bikeType;
-    }
-
-    public Rent getRent() {
-        return rent;
-    }
-
-    public void setRent(Rent rent) {
-        this.rent = rent;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public ChargingStation getChargingStation() {
-        return chargingStation;
-    }
-
-    public void setChargingStation(ChargingStation chargingStation) {
-        this.chargingStation = chargingStation;
     }
 
     @Override

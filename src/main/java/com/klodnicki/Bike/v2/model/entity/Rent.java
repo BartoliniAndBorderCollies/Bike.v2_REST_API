@@ -1,8 +1,12 @@
 package com.klodnicki.Bike.v2.model.entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
+@Getter
+@Setter
 public class Rent {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,37 +32,5 @@ public class Rent {
     }
 
     public Rent() {
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Bike getBike() {
-        return bike;
-    }
-
-    public void setBike(Bike bike) {
-        this.bike = bike;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public ChargingStation getChargingStation() {
-        return chargingStation;
-    }
-
-    public void setChargingStation(ChargingStation chargingStation) {
-        this.chargingStation = chargingStation;
     }
 }

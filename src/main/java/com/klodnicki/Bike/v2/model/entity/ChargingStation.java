@@ -3,11 +3,15 @@ package com.klodnicki.Bike.v2.model.entity;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
 
 @Entity
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+@Getter
+@Setter
 public class ChargingStation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,61 +40,5 @@ public class ChargingStation {
     }
 
     public ChargingStation() {
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getFreeSlots() {
-        return freeSlots;
-    }
-
-    public void setFreeSlots(int freeSlots) {
-        this.freeSlots = freeSlots;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public Rent getRent() {
-        return rent;
-    }
-
-    public void setRent(Rent rent) {
-        this.rent = rent;
-    }
-
-    public List<Bike> getBikeList() {
-        return bikeList;
-    }
-
-    public void setBikeList(List<Bike> bikeList) {
-        this.bikeList = bikeList;
     }
 }
