@@ -6,32 +6,32 @@ import com.klodnicki.Bike.v2.model.entity.User;
 
 public class RentRequest {
 
-    private User user;
-    private Bike bike;
+    private Long userId;
+    private Long bikeId;
 
-    private ChargingStation chargingStation;
+    private Long chargingStationId;
 
-    public User getUser() {
-        return user;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
-    public Bike getBike() {
-        return bike;
+    public Long getBikeId() {
+        return bikeId;
     }
 
-    public void setBike(Bike bike) {
-        this.bike = bike;
+    public void setBikeId(Long bikeId) {
+        this.bikeId = bikeId;
     }
 
-    public ChargingStation getChargingStation() {
-        return chargingStation;
+    public Long getChargingStationId() {
+        return chargingStationId;
     }
 
-    public void setChargingStation(ChargingStation chargingStation) {
-        this.chargingStation = chargingStation;
+    public void setChargingStationId(Long chargingStationId) {
+        this.chargingStationId = chargingStationId;
     }
 }
