@@ -23,22 +23,19 @@ public class Bike extends RentableVehicle implements RentalAction {
     @Column(name = "id", nullable = false)
     private Long id;
     private BikeType bikeType;
-
     //Bike is a parent class (owning side) of the relation
     @OneToOne (mappedBy = "bike", cascade = CascadeType.ALL)
     private Rent rent;
-
     @OneToOne
     @JoinColumn(name = "user_id")
     private User user;
-
     @ManyToOne
     @JoinColumn(name = "charging_station_id")
     private ChargingStation chargingStation;
 
     public Bike(Long id, BikeType bikeType, String serialNumber, boolean isRented, LocalDateTime rentalStartTime, LocalDateTime rentalEndTime,
                 double amountToBePaid, GpsCoordinates gpsCoordinates) {
-        super(serialNumber, isRented, rentalStartTime, rentalEndTime, amountToBePaid, gpsCoordinates);
+        super(serialNumber, isRented, amountToBePaid, gpsCoordinates);
         this.id = id;
         this.bikeType = bikeType;
     }
