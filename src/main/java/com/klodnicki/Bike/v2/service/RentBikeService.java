@@ -11,8 +11,10 @@ import com.klodnicki.Bike.v2.model.entity.User;
 import com.klodnicki.Bike.v2.repository.BikeRepository;
 import com.klodnicki.Bike.v2.repository.ChargingStationRepository;
 import com.klodnicki.Bike.v2.repository.RentRepository;
+import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
@@ -30,6 +32,9 @@ public class RentBikeService implements RentBikeGenericService{
     private final ChargingStationService chargingStationService;
     ModelMapper modelMapper = new ModelMapper();
     private final ChargingStationRepository chargingStationRepository;
+
+    @Autowired
+    private EntityManager entityManager;
 
     public RentBikeService(BikeRepository bikeRepository, RentRepository rentRepository,
                            GenericBikeService bikeService, UserService userService, ChargingStationService chargingStationService,
@@ -141,8 +146,8 @@ public class RentBikeService implements RentBikeGenericService{
 
     @Override
     @Transactional
-    public void returnBike(Long rentId, Long returnChargingStationId, RentRequest rentRequest) {
-        Bike bike = bikeService.getBike(rentRequest.getBikeId());
+    public void returnBike(Long rentId, Long returnChargingStationId, Long bikeId) {
+        Bike bike = bikeService.getBike(bikeId);
         ChargingStation returnChargingStation = chargingStationService.findById(returnChargingStationId);
 
         bike.setRented(false);
@@ -153,9 +158,10 @@ public class RentBikeService implements RentBikeGenericService{
         bike.setChargingStation(returnChargingStation);
         returnChargingStation.setFreeSlots(returnChargingStation.getFreeSlots()-1);
 
-        rentRepository.deleteById(rentId);
         bikeRepository.save(bike);
         chargingStationRepository.save(returnChargingStation);
+        rentRepository.deleteById(rentId);
+        entityManager.flush();
     }
 
     private double countRentalCost(Long rentId) {
