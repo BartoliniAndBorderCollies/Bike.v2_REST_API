@@ -26,7 +26,7 @@ public class ChargingStation {
     @OneToOne(mappedBy = "chargingStation", cascade = CascadeType.ALL)
     private Rent rent;
 
-    @OneToMany(mappedBy = "chargingStation")
+    @OneToMany(mappedBy = "chargingStation", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Bike> bikeList;
 
     public ChargingStation(Long id, String name, String address, String city, int freeSlots, List<Bike> bikeList) {
