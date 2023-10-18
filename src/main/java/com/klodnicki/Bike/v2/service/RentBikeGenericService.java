@@ -20,4 +20,6 @@ public interface RentBikeGenericService extends GenericService<BikeForNormalUser
     ChargingStation addBikeToList(Long chargingStationId, Bike bike);
 
     Rent updateRent(Long id, Rent rent);
+
+    void returnBike(Long rentId, Long returnChargingStationId, RentRequest rentRequest);
 }
