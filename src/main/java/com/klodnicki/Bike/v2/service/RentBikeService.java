@@ -138,4 +138,23 @@ public class RentBikeService implements RentBikeGenericService{
         }
         return rentRepository.save(rent);
     }
+
+    @Override
+    @Transactional
+    public void returnBike(Long rentId, Long returnChargingStationId, RentRequest rentRequest) {
+        Bike bike = bikeService.getBike(rentRequest.getBikeId());
+        ChargingStation returnChargingStation = chargingStationService.findById(returnChargingStationId);
+
+        bike.setRented(false);
+        bike.setChargingStation(returnChargingStation);
+        bike.setAmountToBePaid(countRentalCost(rentId));
+        bike.setUser(null);
+        returnChargingStation.getBikeList().add(bike); //Bike is an owning side, so I must add below line to save it in db
+        bike.setChargingStation(returnChargingStation);
+        returnChargingStation.setFreeSlots(returnChargingStation.getFreeSlots()-1);
+
+        rentRepository.deleteById(rentId);
+        bikeRepository.save(bike);
+        chargingStationRepository.save(returnChargingStation);
+    }
 }
