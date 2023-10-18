@@ -13,4 +13,5 @@ public class RentRequest {
     private Long userId;
     private Long bikeId;
     private Long chargingStationId;
+    private int daysOfRent;
 }

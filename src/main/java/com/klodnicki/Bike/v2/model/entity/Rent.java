@@ -16,7 +16,7 @@ public class Rent {
     private Long id;
     private LocalDateTime rentalStartTime;
     private LocalDateTime rentalEndTime;
-//Rent class is a child class - or no-owning side - therefore it contains FK, therefore it joins columns
+    private int daysOfRent;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "bike_id")
     private Bike bike;
@@ -29,12 +29,14 @@ public class Rent {
     @JoinColumn(name = "chargingStation_id")
     private ChargingStation chargingStation;
 
-    public Rent(LocalDateTime rentalStartTime, LocalDateTime rentalEndTime, Bike bike, User user, ChargingStation chargingStation) {
+    public Rent(LocalDateTime rentalStartTime, LocalDateTime rentalEndTime, Bike bike, User user,
+                ChargingStation chargingStation, int daysOfRent) {
         this.rentalStartTime = rentalStartTime;
         this.rentalEndTime = rentalEndTime;
         this.bike = bike;
         this.user = user;
         this.chargingStation = chargingStation;
+        this.daysOfRent = daysOfRent;
     }
 
     public Rent() {
