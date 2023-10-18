@@ -157,4 +157,10 @@ public class RentBikeService implements RentBikeGenericService{
         bikeRepository.save(bike);
         chargingStationRepository.save(returnChargingStation);
     }
+
+    private double countRentalCost(Long rentId) {
+        Rent rent = rentRepository.findById(rentId).orElseThrow(IllegalArgumentException::new);
+        int rentalDays = rent.getDaysOfRent();
+        return rentalDays * 10;
+    }
 }
