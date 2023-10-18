@@ -23,7 +23,8 @@ public class Bike extends RentableVehicle implements RentalAction {
     @Column(name = "id", nullable = false)
     private Long id;
     private BikeType bikeType;
-    //Bike is a parent class (owning side) of the relation
+    //Bike is a parent class (owning side) of the relation with User and ChargingStation
+    //Bike is non-owning side of the relation with Rent
 
     //mam kaskadę obustronną. Każda zmiana w Rent wpływa na Bike, każda zmiana w Bike wpływa na Rent.
     @OneToOne (mappedBy = "bike", cascade = CascadeType.ALL)
