@@ -128,4 +128,14 @@ public class RentBikeService implements RentBikeGenericService{
 
         return chargingStationRepository.save(chargingStation);
     }
+
+    @Override
+    public Rent updateRent(Long id, Rent rentToBeUpdated) {
+        Rent rent = rentRepository.findById(id).orElseThrow(IllegalArgumentException::new);
+
+        if(rentToBeUpdated.getDaysOfRent() != 0) {
+            rent.setDaysOfRent(rentToBeUpdated.getDaysOfRent());
+        }
+        return rentRepository.save(rent);
+    }
 }
