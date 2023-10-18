@@ -42,5 +42,10 @@ public class RentBikeController {
         return rentBikeService.addBikeToList(chargingStationId, bike);
     }
 
+    @PutMapping("/rentals/{id}")
+    public Rent updateRent(@PathVariable Long id, @RequestBody Rent rent) {
+        return rentBikeService.updateRent(id, rent);
+    }
+
 
 }
