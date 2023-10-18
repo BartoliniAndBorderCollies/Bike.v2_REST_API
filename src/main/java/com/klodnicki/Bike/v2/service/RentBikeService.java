@@ -11,7 +11,6 @@ import com.klodnicki.Bike.v2.model.entity.User;
 import com.klodnicki.Bike.v2.repository.BikeRepository;
 import com.klodnicki.Bike.v2.repository.ChargingStationRepository;
 import com.klodnicki.Bike.v2.repository.RentRepository;
-import com.klodnicki.Bike.v2.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -30,14 +29,17 @@ public class RentBikeService implements RentBikeGenericService{
     private final UserService userService;
     private final ChargingStationService chargingStationService;
     ModelMapper modelMapper = new ModelMapper();
+    private final ChargingStationRepository chargingStationRepository;
 
     public RentBikeService(BikeRepository bikeRepository, RentRepository rentRepository,
-                           GenericBikeService bikeService, UserService userService, ChargingStationService chargingStationService) {
+                           GenericBikeService bikeService, UserService userService, ChargingStationService chargingStationService,
+                           ChargingStationRepository chargingStationRepository) {
         this.bikeRepository = bikeRepository;
         this.rentRepository = rentRepository;
         this.bikeService = bikeService;
         this.userService = userService;
         this.chargingStationService = chargingStationService;
+        this.chargingStationRepository = chargingStationRepository;
     }
 
 
@@ -112,5 +114,17 @@ public class RentBikeService implements RentBikeGenericService{
         Rent rent = new Rent(LocalDateTime.now(), null, bike, user, null);
 
        return rentRepository.save(rent);
+    }
+
+    @Override
+    public ChargingStation addBikeToList(Long chargingStationId, Bike bike) {
+        ChargingStation chargingStation = chargingStationService.findById(chargingStationId);
+        chargingStation.getBikeList().add(bike);
+        //In JPA, only the owning side of the relationship is used when writing to the database.
+        //which means this will not be saved in database. Charging station still will have an empty bike list.
+        //because ChargingStation is NOT the owning-side. Therefore, I must add line below to fix this problem
+        bike.setChargingStation(chargingStation);
+
+        return chargingStationRepository.save(chargingStation);
     }
 }
