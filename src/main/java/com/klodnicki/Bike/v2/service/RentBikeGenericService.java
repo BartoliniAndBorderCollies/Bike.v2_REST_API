@@ -18,4 +18,6 @@ public interface RentBikeGenericService extends GenericService<BikeForNormalUser
     Rent rentBike(RentRequest rentRequest);
 
     ChargingStation addBikeToList(Long chargingStationId, Bike bike);
+
+    Rent updateRent(Long id, Rent rent);
 }
