@@ -17,15 +17,15 @@ public class Rent {
     private LocalDateTime rentalStartTime;
     private LocalDateTime rentalEndTime;
     private int daysOfRent;
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     @JoinColumn(name = "bike_id")
     private Bike bike;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     @JoinColumn(name = "chargingStation_id")
     private ChargingStation chargingStation;
 
