@@ -11,6 +11,7 @@ import com.klodnicki.Bike.v2.model.entity.User;
 import com.klodnicki.Bike.v2.repository.BikeRepository;
 import com.klodnicki.Bike.v2.repository.ChargingStationRepository;
 import com.klodnicki.Bike.v2.repository.RentRepository;
+import com.klodnicki.Bike.v2.repository.UserRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
@@ -35,6 +36,8 @@ public class RentBikeService implements RentBikeGenericService{
 
     @Autowired
     private EntityManager entityManager;
+    @Autowired
+    private UserRepository userRepository;
 
     public RentBikeService(BikeRepository bikeRepository, RentRepository rentRepository,
                            GenericBikeService bikeService, UserService userService, ChargingStationService chargingStationService,
@@ -149,19 +152,33 @@ public class RentBikeService implements RentBikeGenericService{
     public void returnBike(Long rentId, Long returnChargingStationId, Long bikeId) {
         Bike bike = bikeService.getBike(bikeId);
         ChargingStation returnChargingStation = chargingStationService.findById(returnChargingStationId);
+        Rent rent = rentRepository.findById(rentId).orElseThrow(IllegalArgumentException::new);
+        User user = userService.findById(bike.getUser().getId());
+
+        rent.setBike(null); //I deleted cascades because all entities were gone together with Rent, so I set nulls,
+        // save it in repo and then delete -> otherwise Rent record will not be deleted in db, because it holds FK.
+        //I must do it on both sides because Rent is not-owning side of the relationship.
+        bike.setRent(null);
+
+        rent.setUser(null);
+        user.setRent(null);
 
         bike.setRented(false);
-        bike.setChargingStation(returnChargingStation);
         bike.setAmountToBePaid(countRentalCost(rentId));
         bike.setUser(null);
+
         returnChargingStation.getBikeList().add(bike); //Bike is an owning side, so I must add below line to save it in db
         bike.setChargingStation(returnChargingStation);
+
         returnChargingStation.setFreeSlots(returnChargingStation.getFreeSlots()-1);
 
         bikeRepository.save(bike);
         chargingStationRepository.save(returnChargingStation);
-        rentRepository.deleteById(rentId);
+        userRepository.save(user);
+        rentRepository.save(rent);
+
         entityManager.flush();
+        rentRepository.deleteById(rentId);
     }
 
     private double countRentalCost(Long rentId) {
