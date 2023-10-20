@@ -2,7 +2,9 @@ package com.klodnicki.Bike.v2.rest.controller;
 
 import com.klodnicki.Bike.v2.DTO.bike.BikeForAdminResponseDTO;
 import com.klodnicki.Bike.v2.DTO.bike.BikeRequestDTO;
+import com.klodnicki.Bike.v2.DTO.user.UserForAdminResponseDTO;
 import com.klodnicki.Bike.v2.service.GenericBikeService;
+import com.klodnicki.Bike.v2.service.UserService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,8 +15,11 @@ public class AdminController {
 
     private final GenericBikeService bikeService;
 
-    public AdminController(GenericBikeService bikeService) {
+    private final UserService userService;
+
+    public AdminController(GenericBikeService bikeService, UserService userService) {
         this.bikeService = bikeService;
+        this.userService = userService;
     }
 
     @PostMapping("/bicycles/add")
@@ -40,5 +45,10 @@ public class AdminController {
     @PutMapping("/bicycles/{id}")
     public BikeForAdminResponseDTO updateBikeById(@PathVariable Long id, @RequestBody BikeRequestDTO bikeDTO) {
         return bikeService.update(id, bikeDTO);
+    }
+
+    @GetMapping("/users")
+    public List<UserForAdminResponseDTO> findAllUsers() {
+        return userService.findAll();
     }
 }
