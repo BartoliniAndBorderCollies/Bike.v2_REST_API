@@ -9,7 +9,7 @@ import com.klodnicki.Bike.v2.model.entity.Rent;
 
 import java.util.List;
 
-public interface RentBikeGenericService extends GenericService<BikeForNormalUserResponseDTO, BikeRequestDTO>{
+public interface RentBikeGenericService {
 
     List<BikeForNormalUserResponseDTO> findAvailableBikes();
 
