@@ -177,7 +177,6 @@ public class RentBikeService implements RentBikeGenericService{
         userRepository.save(user);
         rentRepository.save(rent);
 
-        entityManager.flush();
         rentRepository.deleteById(rentId);
     }
 
