@@ -28,22 +28,20 @@ public class RentBikeService implements RentBikeGenericService{
 
     private final BikeRepository bikeRepository;
     private final RentRepository rentRepository;
+    private final UserRepository userRepository;
+    private final ChargingStationRepository chargingStationRepository;
     private final GenericBikeService bikeService;
     private final UserService userService;
     private final ChargingStationService chargingStationService;
     ModelMapper modelMapper = new ModelMapper();
-    private final ChargingStationRepository chargingStationRepository;
 
-    @Autowired
-    private EntityManager entityManager;
-    @Autowired
-    private UserRepository userRepository;
 
     public RentBikeService(BikeRepository bikeRepository, RentRepository rentRepository,
-                           GenericBikeService bikeService, UserService userService, ChargingStationService chargingStationService,
+                           UserRepository userRepository, GenericBikeService bikeService, UserService userService, ChargingStationService chargingStationService,
                            ChargingStationRepository chargingStationRepository) {
         this.bikeRepository = bikeRepository;
         this.rentRepository = rentRepository;
+        this.userRepository = userRepository;
         this.bikeService = bikeService;
         this.userService = userService;
         this.chargingStationService = chargingStationService;
