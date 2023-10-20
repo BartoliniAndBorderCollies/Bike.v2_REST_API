@@ -57,4 +57,9 @@ public class AdminController {
     public ResponseEntity<?> banUser(@PathVariable Long id) {
         return userService.banUser(id);
     }
+
+    @DeleteMapping("/users/{id}")
+    public void deleteUser(@PathVariable Long id) {
+        userService.deleteUser(id);
+    }
 }
