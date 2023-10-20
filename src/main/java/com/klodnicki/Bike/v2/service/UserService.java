@@ -4,6 +4,8 @@ import com.klodnicki.Bike.v2.DTO.user.UserForAdminResponseDTO;
 import com.klodnicki.Bike.v2.model.entity.User;
 import com.klodnicki.Bike.v2.repository.UserRepository;
 import org.modelmapper.ModelMapper;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -36,6 +38,10 @@ public class UserService {
     }
 
     public User findById(Long id) {
+        return getUser(id);
+    }
+
+    private User getUser(Long id) {
         return userRepository.findById(id).orElseThrow(IllegalArgumentException::new);
     }
 }
