@@ -8,12 +8,12 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/bike/admin")
-public class AdminBikeController {
+@RequestMapping("/api/admin")
+public class AdminController {
 
     private final GenericBikeService bikeService;
 
-    public AdminBikeController(GenericBikeService bikeService) {
+    public AdminController(GenericBikeService bikeService) {
         this.bikeService = bikeService;
     }
 
