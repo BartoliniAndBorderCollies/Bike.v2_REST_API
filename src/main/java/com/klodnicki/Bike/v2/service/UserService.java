@@ -56,4 +56,8 @@ public class UserService {
         }
         return new ResponseEntity<>("User banned successfully", HttpStatus.OK);
     }
+
+    public void deleteUser(Long id) {
+        userRepository.deleteById(id);
+    }
 }
