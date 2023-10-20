@@ -46,32 +46,6 @@ public class RentBikeService implements RentBikeGenericService{
         this.chargingStationRepository = chargingStationRepository;
     }
 
-
-    @Override
-    public BikeForNormalUserResponseDTO add(BikeRequestDTO obj) {
-        return null;
-    }
-
-    @Override
-    public BikeForNormalUserResponseDTO findById(Long id) {
-        return null;
-    }
-
-    @Override
-    public List<BikeForNormalUserResponseDTO> findAll() {
-        return null;
-    }
-
-    @Override
-    public void deleteById(Long id) {
-
-    }
-
-    @Override
-    public BikeForNormalUserResponseDTO update(Long id, BikeRequestDTO obj) {
-        return null;
-    }
-
     @Override
     public List<BikeForNormalUserResponseDTO> findAvailableBikes() {
         List<Bike> availableBikes = bikeRepository.findByIsRentedFalse();
