@@ -5,6 +5,7 @@ import com.klodnicki.Bike.v2.DTO.bike.BikeRequestDTO;
 import com.klodnicki.Bike.v2.DTO.user.UserForAdminResponseDTO;
 import com.klodnicki.Bike.v2.service.GenericBikeService;
 import com.klodnicki.Bike.v2.service.UserService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -50,5 +51,10 @@ public class AdminController {
     @GetMapping("/users")
     public List<UserForAdminResponseDTO> findAllUsers() {
         return userService.findAll();
+    }
+
+    @PutMapping("/users/{id}")
+    public ResponseEntity<?> banUser(@PathVariable Long id) {
+        return userService.banUser(id);
     }
 }
