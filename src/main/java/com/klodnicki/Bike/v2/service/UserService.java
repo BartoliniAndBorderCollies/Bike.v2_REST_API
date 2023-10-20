@@ -44,4 +44,16 @@ public class UserService {
     private User getUser(Long id) {
         return userRepository.findById(id).orElseThrow(IllegalArgumentException::new);
     }
+
+    public ResponseEntity<?> banUser(Long id) {
+        User user = getUser(id);
+
+        user.setAccountValid(false);
+        userRepository.save(user);
+
+        if(user.isAccountValid()) {
+            return new ResponseEntity<>("Failed to ban user", HttpStatus.I_AM_A_TEAPOT);
+        }
+        return new ResponseEntity<>("User banned successfully", HttpStatus.OK);
+    }
 }
