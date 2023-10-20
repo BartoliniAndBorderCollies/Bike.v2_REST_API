@@ -135,7 +135,7 @@ public class RentBikeService implements RentBikeGenericService{
 
     @Override
     public Rent updateRent(Long id, Rent rentToBeUpdated) {
-        Rent rent = rentRepository.findById(id).orElseThrow(IllegalArgumentException::new);
+        Rent rent = getRent(id);
 
         if(rentToBeUpdated.getDaysOfRent() != 0) {
             rent.setDaysOfRent(rentToBeUpdated.getDaysOfRent());
@@ -143,12 +143,16 @@ public class RentBikeService implements RentBikeGenericService{
         return rentRepository.save(rent);
     }
 
+    private Rent getRent(Long id) {
+        return rentRepository.findById(id).orElseThrow(IllegalArgumentException::new);
+    }
+
     @Override
     @Transactional
     public void returnBike(Long rentId, Long returnChargingStationId, Long bikeId) {
         Bike bike = bikeService.getBike(bikeId);
         ChargingStation returnChargingStation = chargingStationService.findById(returnChargingStationId);
-        Rent rent = rentRepository.findById(rentId).orElseThrow(IllegalArgumentException::new);
+        Rent rent = getRent(rentId);
         User user = userService.findById(bike.getUser().getId());
 
         rent.setBike(null); //I deleted cascades because all entities were gone together with Rent, so I set nulls,
@@ -178,7 +182,7 @@ public class RentBikeService implements RentBikeGenericService{
     }
 
     private double countRentalCost(Long rentId) {
-        Rent rent = rentRepository.findById(rentId).orElseThrow(IllegalArgumentException::new);
+        Rent rent = getRent(rentId);
         int rentalDays = rent.getDaysOfRent();
         return rentalDays * 10;
     }
