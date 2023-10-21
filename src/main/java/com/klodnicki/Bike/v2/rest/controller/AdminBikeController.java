@@ -45,19 +45,4 @@ public class AdminBikeController {
     public BikeForAdminResponseDTO updateBikeById(@PathVariable Long id, @RequestBody BikeRequestDTO bikeDTO) {
         return bikeService.update(id, bikeDTO);
     }
-
-    @GetMapping("/users")
-    public List<UserForAdminResponseDTO> findAllUsers() {
-        return userService.findAll();
-    }
-
-    @PutMapping("/users/{id}")
-    public ResponseEntity<?> banUser(@PathVariable Long id) {
-        return userService.banUser(id);
-    }
-
-    @DeleteMapping("/users/{id}")
-    public void deleteUser(@PathVariable Long id) {
-        userService.deleteUser(id);
-    }
 }
