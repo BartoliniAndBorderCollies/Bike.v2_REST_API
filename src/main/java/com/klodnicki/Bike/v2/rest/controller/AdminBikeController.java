@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/admin")
+@RequestMapping("/api/admin/bikes")
 public class AdminBikeController {
 
     private final GenericBikeService bikeService;
@@ -21,27 +21,27 @@ public class AdminBikeController {
         this.userService = userService;
     }
 
-    @PostMapping("/bikes/add")
+    @PostMapping("/add")
     public BikeForAdminResponseDTO addBike(@RequestBody BikeRequestDTO bikeDTO) {
         return bikeService.add(bikeDTO);
     }
 
-    @GetMapping("/bikes/{id}")
+    @GetMapping("/{id}")
     public BikeForAdminResponseDTO findBikeById (@PathVariable Long id) {
         return bikeService.findById(id);
     }
 
-    @GetMapping("/bikes")
+    @GetMapping
     public List<BikeForAdminResponseDTO> findAllBikes() {
         return bikeService.findAll();
     }
 
-    @DeleteMapping("/bikes/{id}")
+    @DeleteMapping("/{id}")
     public void deleteBikeById(@PathVariable Long id) {
         bikeService.deleteById(id);
     }
 
-    @PutMapping("/bikes/{id}")
+    @PutMapping("/{id}")
     public BikeForAdminResponseDTO updateBikeById(@PathVariable Long id, @RequestBody BikeRequestDTO bikeDTO) {
         return bikeService.update(id, bikeDTO);
     }
