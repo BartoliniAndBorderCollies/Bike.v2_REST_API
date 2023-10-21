@@ -23,27 +23,27 @@ public class AdminController {
         this.userService = userService;
     }
 
-    @PostMapping("/bicycles/add")
+    @PostMapping("/bikes/add")
     public BikeForAdminResponseDTO addBike(@RequestBody BikeRequestDTO bikeDTO) {
         return bikeService.add(bikeDTO);
     }
 
-    @GetMapping("/bicycles/{id}")
+    @GetMapping("/bikes/{id}")
     public BikeForAdminResponseDTO findBikeById (@PathVariable Long id) {
         return bikeService.findById(id);
     }
 
-    @GetMapping("/bicycles")
+    @GetMapping("/bikes")
     public List<BikeForAdminResponseDTO> findAllBikes() {
         return bikeService.findAll();
     }
 
-    @DeleteMapping("/bicycles/{id}")
+    @DeleteMapping("/bikes/{id}")
     public void deleteBikeById(@PathVariable Long id) {
         bikeService.deleteById(id);
     }
 
-    @PutMapping("/bicycles/{id}")
+    @PutMapping("/bikes/{id}")
     public BikeForAdminResponseDTO updateBikeById(@PathVariable Long id, @RequestBody BikeRequestDTO bikeDTO) {
         return bikeService.update(id, bikeDTO);
     }
