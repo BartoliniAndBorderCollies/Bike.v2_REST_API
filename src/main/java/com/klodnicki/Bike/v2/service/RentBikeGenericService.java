@@ -20,7 +20,7 @@ public interface RentBikeGenericService {
 
     ChargingStation addBikeToList(Long chargingStationId, Bike bike);
 
-    Rent updateRent(Long id, Rent rent);
+    RentResponseDTO updateRent(Long id, Rent rent);
 
     void returnBike(Long rentId, Long returnChargingStationId, Long bikeId);
 }

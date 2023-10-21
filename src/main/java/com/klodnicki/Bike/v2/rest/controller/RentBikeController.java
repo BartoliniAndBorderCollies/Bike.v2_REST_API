@@ -44,7 +44,7 @@ public class RentBikeController {
     }
 
     @PutMapping("/rentals/{id}")
-    public Rent updateRent(@PathVariable Long id, @RequestBody Rent rent) {
+    public RentResponseDTO updateRent(@PathVariable Long id, @RequestBody Rent rent) {
         return rentBikeService.updateRent(id, rent);
     }
 

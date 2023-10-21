@@ -110,13 +110,14 @@ public class RentBikeService implements RentBikeGenericService{
     }
 
     @Override
-    public Rent updateRent(Long id, Rent rentToBeUpdated) {
+    public RentResponseDTO updateRent(Long id, Rent rentToBeUpdated) {
         Rent rent = getRent(id);
 
         if(rentToBeUpdated.getDaysOfRent() != 0) {
             rent.setDaysOfRent(rentToBeUpdated.getDaysOfRent());
         }
-        return rentRepository.save(rent);
+        rentRepository.save(rent);
+        return modelMapper.map(rent, RentResponseDTO.class);
     }
 
     private Rent getRent(Long id) {
