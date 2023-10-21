@@ -3,6 +3,7 @@ package com.klodnicki.Bike.v2.service;
 
 import com.klodnicki.Bike.v2.DTO.bike.BikeForNormalUserResponseDTO;
 import com.klodnicki.Bike.v2.DTO.bike.BikeRequestDTO;
+import com.klodnicki.Bike.v2.DTO.rent.RentResponseDTO;
 import com.klodnicki.Bike.v2.model.RentRequest;
 import com.klodnicki.Bike.v2.model.entity.Bike;
 import com.klodnicki.Bike.v2.model.entity.ChargingStation;
@@ -74,7 +75,7 @@ public class RentBikeService implements RentBikeGenericService{
 
     @Override
     @Transactional
-    public Rent rentBike(RentRequest rentRequest) {
+    public RentResponseDTO rentBike(RentRequest rentRequest) {
         Bike bike = bikeService.getBike(rentRequest.getBikeId());
         User user = userService.findById(rentRequest.getUserId());
         ChargingStation chargingStation = chargingStationService.findById(rentRequest.getChargingStationId());
@@ -91,8 +92,9 @@ public class RentBikeService implements RentBikeGenericService{
         int daysOfRent = rentRequest.getDaysOfRent();
 
         Rent rent = new Rent(LocalDateTime.now(), null, bike, user, null, daysOfRent);
+        rentRepository.save(rent);
 
-       return rentRepository.save(rent);
+        return modelMapper.map(rent, RentResponseDTO.class);
     }
 
     @Override

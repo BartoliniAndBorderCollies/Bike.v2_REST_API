@@ -1,6 +1,7 @@
 package com.klodnicki.Bike.v2.rest.controller;
 
 import com.klodnicki.Bike.v2.DTO.bike.BikeForNormalUserResponseDTO;
+import com.klodnicki.Bike.v2.DTO.rent.RentResponseDTO;
 import com.klodnicki.Bike.v2.model.RentRequest;
 import com.klodnicki.Bike.v2.model.entity.Bike;
 import com.klodnicki.Bike.v2.model.entity.ChargingStation;
@@ -33,7 +34,7 @@ public class RentBikeController {
     }
 
     @PostMapping("/rentals/add")
-    public Rent rentBike(@RequestBody RentRequest rentRequest) {
+    public RentResponseDTO rentBike(@RequestBody RentRequest rentRequest) {
         return rentBikeService.rentBike(rentRequest);
     }
 

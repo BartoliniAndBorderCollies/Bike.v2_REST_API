@@ -2,6 +2,7 @@ package com.klodnicki.Bike.v2.service;
 
 import com.klodnicki.Bike.v2.DTO.bike.BikeForNormalUserResponseDTO;
 import com.klodnicki.Bike.v2.DTO.bike.BikeRequestDTO;
+import com.klodnicki.Bike.v2.DTO.rent.RentResponseDTO;
 import com.klodnicki.Bike.v2.model.RentRequest;
 import com.klodnicki.Bike.v2.model.entity.Bike;
 import com.klodnicki.Bike.v2.model.entity.ChargingStation;
@@ -15,7 +16,7 @@ public interface RentBikeGenericService {
 
     BikeForNormalUserResponseDTO findBikeForNormalUserById(Long id);
 
-    Rent rentBike(RentRequest rentRequest);
+    RentResponseDTO rentBike(RentRequest rentRequest);
 
     ChargingStation addBikeToList(Long chargingStationId, Bike bike);
 
