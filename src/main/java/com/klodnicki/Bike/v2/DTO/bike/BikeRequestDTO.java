@@ -17,22 +17,17 @@ public class BikeRequestDTO {
     private String serialNumber;
     private boolean isRented;
     private BikeType bikeType;
-    private LocalDateTime rentalStartTime;
-    private LocalDateTime rentalEndTime;
     private double amountToBePaid;
     private GpsCoordinates gpsCoordinates;
     private User user;
     private ChargingStation chargingStation;
 
-    public BikeRequestDTO(Long id, String serialNumber, boolean isRented, BikeType bikeType, LocalDateTime rentalStartTime,
-                          LocalDateTime rentalEndTime, double amountToBePaid, GpsCoordinates gpsCoordinates, User user,
+    public BikeRequestDTO(Long id, String serialNumber, boolean isRented, BikeType bikeType, double amountToBePaid, GpsCoordinates gpsCoordinates, User user,
                           ChargingStation chargingStation) {
         this.id = id;
         this.serialNumber = serialNumber;
         this.isRented = isRented;
         this.bikeType = bikeType;
-        this.rentalStartTime = rentalStartTime;
-        this.rentalEndTime = rentalEndTime;
         this.amountToBePaid = amountToBePaid;
         this.gpsCoordinates = gpsCoordinates;
         this.user = user;
