@@ -29,7 +29,8 @@ public class ChargingStationService {
         return chargingStationRepository.findAll();
     }
 
-    public ChargingStation findById(Long id) {
-        return chargingStationRepository.findById(id).orElseThrow(IllegalArgumentException::new);
+    public StationForAdminResponseDTO findById(Long id) {
+        ChargingStation chargingStation = chargingStationRepository.findById(id).orElseThrow(IllegalArgumentException::new);
+        return modelMapper.map(chargingStation, StationForAdminResponseDTO.class);
     }
 }
