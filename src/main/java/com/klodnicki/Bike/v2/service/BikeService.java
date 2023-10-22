@@ -7,6 +7,7 @@ import com.klodnicki.Bike.v2.model.entity.Bike;
 import com.klodnicki.Bike.v2.repository.BikeRepository;
 import lombok.NonNull;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -21,8 +22,8 @@ import java.util.Optional;
 public class BikeService implements GenericBikeService {
 
     private final BikeRepository bikeRepository;
-
-    ModelMapper modelMapper = new ModelMapper();
+    @Autowired
+    private ModelMapper modelMapper;
 
     public BikeService(BikeRepository bikeRepository) {
         this.bikeRepository = bikeRepository;
