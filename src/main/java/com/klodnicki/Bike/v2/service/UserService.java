@@ -40,8 +40,10 @@ public class UserService {
         return listUsersDTO;
     }
 
-    public User findById(Long id) {
-        return getUser(id);
+    public UserForNormalUserResponseDTO findById(Long id) {
+        User user = getUser(id);
+
+        return modelMapper.map(user, UserForNormalUserResponseDTO.class);
     }
 
     private User getUser(Long id) {
