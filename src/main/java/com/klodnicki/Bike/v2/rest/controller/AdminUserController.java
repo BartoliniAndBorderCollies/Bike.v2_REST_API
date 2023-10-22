@@ -1,5 +1,6 @@
 package com.klodnicki.Bike.v2.rest.controller;
 
+import com.klodnicki.Bike.v2.DTO.user.ListUsersForAdminResponseDTO;
 import com.klodnicki.Bike.v2.DTO.user.UserForAdminResponseDTO;
 import com.klodnicki.Bike.v2.service.UserService;
 import org.springframework.http.ResponseEntity;
@@ -18,8 +19,10 @@ public class AdminUserController {
     }
 
     @GetMapping
-    public List<UserForAdminResponseDTO> findAllUsers() {
-        return userService.findAll();
+    public ListUsersForAdminResponseDTO findAllUsers() {
+        List<UserForAdminResponseDTO> listOfUsers =  userService.findAll();
+
+        return new ListUsersForAdminResponseDTO(listOfUsers);
     }
 
     @PutMapping("/{id}")
