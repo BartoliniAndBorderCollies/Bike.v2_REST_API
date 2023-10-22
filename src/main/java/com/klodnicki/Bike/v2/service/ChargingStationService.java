@@ -6,6 +6,7 @@ import com.klodnicki.Bike.v2.repository.ChargingStationRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -25,8 +26,15 @@ public class ChargingStationService {
         return modelMapper.map(chargingStation1, StationForAdminResponseDTO.class);
     }
 
-    public Iterable<ChargingStation> findAll() {
-        return chargingStationRepository.findAll();
+    public List<StationForAdminResponseDTO> findAll() {
+        Iterable<ChargingStation> chargingStations = chargingStationRepository.findAll();
+        List<StationForAdminResponseDTO> stationsDTO = new ArrayList<>();
+
+        for (ChargingStation station: chargingStations) {
+            StationForAdminResponseDTO stationDTO = modelMapper.map(station, StationForAdminResponseDTO.class);
+            stationsDTO.add(stationDTO);
+        }
+        return stationsDTO;
     }
 
     public StationForAdminResponseDTO findById(Long id) {
