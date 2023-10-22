@@ -2,7 +2,7 @@ package com.klodnicki.Bike.v2.rest.controller;
 
 import com.klodnicki.Bike.v2.DTO.bike.BikeForAdminResponseDTO;
 import com.klodnicki.Bike.v2.DTO.bike.BikeRequestDTO;
-import com.klodnicki.Bike.v2.DTO.bike.BikesForAdminResponseDTO;
+import com.klodnicki.Bike.v2.DTO.bike.ListBikesForAdminResponseDTO;
 import com.klodnicki.Bike.v2.service.GenericBikeService;
 import com.klodnicki.Bike.v2.service.UserService;
 import org.springframework.web.bind.annotation.*;
@@ -33,10 +33,10 @@ public class AdminBikeController {
     }
 
     @GetMapping
-    public BikesForAdminResponseDTO findAllBikes() {
+    public ListBikesForAdminResponseDTO findAllBikes() {
         List<BikeForAdminResponseDTO> listBikesDTO = bikeService.findAll();
 
-        return new BikesForAdminResponseDTO(listBikesDTO);
+        return new ListBikesForAdminResponseDTO(listBikesDTO);
     }
 
     @DeleteMapping("/{id}")

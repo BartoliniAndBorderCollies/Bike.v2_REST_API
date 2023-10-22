@@ -2,11 +2,11 @@ package com.klodnicki.Bike.v2.DTO.bike;
 
 import java.util.List;
 
-public class BikesForAdminResponseDTO {
+public class ListBikesForAdminResponseDTO {
 
     private List<BikeForAdminResponseDTO> dtosList;
 
-    public BikesForAdminResponseDTO(List<BikeForAdminResponseDTO> dtosList) {
+    public ListBikesForAdminResponseDTO(List<BikeForAdminResponseDTO> dtosList) {
         this.dtosList = dtosList;
     }
 
