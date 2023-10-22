@@ -4,17 +4,17 @@ import java.util.List;
 
 public class ListBikesForAdminResponseDTO {
 
-    private List<BikeForAdminResponseDTO> dtosList;
+    private List<BikeForAdminResponseDTO> bikesListDTOs;
 
-    public ListBikesForAdminResponseDTO(List<BikeForAdminResponseDTO> dtosList) {
-        this.dtosList = dtosList;
+    public ListBikesForAdminResponseDTO(List<BikeForAdminResponseDTO> bikesListDTOs) {
+        this.bikesListDTOs = bikesListDTOs;
     }
 
-    public List<BikeForAdminResponseDTO> getDtosList() {
-        return dtosList;
+    public List<BikeForAdminResponseDTO> getBikesListDTOs() {
+        return bikesListDTOs;
     }
 
-    public void setDtosList(List<BikeForAdminResponseDTO> dtosList) {
-        this.dtosList = dtosList;
+    public void setBikesListDTOs(List<BikeForAdminResponseDTO> bikesListDTOs) {
+        this.bikesListDTOs = bikesListDTOs;
     }
 }
