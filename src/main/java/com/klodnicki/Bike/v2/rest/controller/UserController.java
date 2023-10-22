@@ -1,5 +1,6 @@
 package com.klodnicki.Bike.v2.rest.controller;
 
+import com.klodnicki.Bike.v2.DTO.user.UserForAdminResponseDTO;
 import com.klodnicki.Bike.v2.DTO.user.UserForNormalUserResponseDTO;
 import com.klodnicki.Bike.v2.model.entity.User;
 import com.klodnicki.Bike.v2.service.UserService;
@@ -16,7 +17,7 @@ public class UserController {
     }
 
     @PostMapping("/add")
-    public UserForNormalUserResponseDTO add(@RequestBody User user) {
+    public UserForAdminResponseDTO add(@RequestBody User user) {
         return userService.add(user);
     }
 
