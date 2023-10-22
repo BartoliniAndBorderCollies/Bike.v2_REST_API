@@ -149,6 +149,8 @@ public class RentBikeService implements RentBikeGenericService{
 
         returnChargingStation.setFreeSlots(returnChargingStation.getFreeSlots()-1);
 
+        user.setBalance(user.getBalance() - countRentalCost(rentId)); //reducing the user balance by rental cost
+
         bikeRepository.save(bike);
         chargingStationRepository.save(returnChargingStation);
         userRepository.save(user);
