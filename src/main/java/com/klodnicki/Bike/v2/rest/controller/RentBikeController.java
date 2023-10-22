@@ -1,12 +1,12 @@
 package com.klodnicki.Bike.v2.rest.controller;
 
 import com.klodnicki.Bike.v2.DTO.bike.BikeForNormalUserResponseDTO;
+import com.klodnicki.Bike.v2.DTO.bike.ListBikesForNormalUserResponseDTO;
 import com.klodnicki.Bike.v2.DTO.rent.RentResponseDTO;
 import com.klodnicki.Bike.v2.model.RentRequest;
 import com.klodnicki.Bike.v2.model.entity.Bike;
 import com.klodnicki.Bike.v2.model.entity.ChargingStation;
 import com.klodnicki.Bike.v2.model.entity.Rent;
-import com.klodnicki.Bike.v2.model.entity.User;
 import com.klodnicki.Bike.v2.service.RentBikeGenericService;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,9 +23,11 @@ public class RentBikeController {
     }
 
 
-    @GetMapping("/bicycles")
-    public List<BikeForNormalUserResponseDTO> findAvailableBikes() {
-        return rentBikeService.findAvailableBikes();
+    @GetMapping("/bikes")
+    public ListBikesForNormalUserResponseDTO findAvailableBikes() {
+        List<BikeForNormalUserResponseDTO> bikeDTOs = rentBikeService.findAvailableBikes();
+
+        return new ListBikesForNormalUserResponseDTO(bikeDTOs);
     }
 
     @GetMapping("/bikes/{id}")
@@ -52,6 +54,4 @@ public class RentBikeController {
     public void returnBike(@PathVariable Long rentId, @RequestParam Long returnChargingStationId, @RequestBody Long bikeId) {
         rentBikeService.returnBike(rentId, returnChargingStationId, bikeId);
     }
-
-
 }
