@@ -2,7 +2,6 @@ package com.klodnicki.Bike.v2.service;
 
 
 import com.klodnicki.Bike.v2.DTO.bike.BikeForNormalUserResponseDTO;
-import com.klodnicki.Bike.v2.DTO.bike.BikeRequestDTO;
 import com.klodnicki.Bike.v2.DTO.rent.RentResponseDTO;
 import com.klodnicki.Bike.v2.model.RentRequest;
 import com.klodnicki.Bike.v2.model.entity.Bike;
@@ -23,7 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class RentBikeService implements RentBikeGenericService{
+public class RentBikeService implements RentBikeGenericService {
 
     private final BikeRepository bikeRepository;
     private final RentRepository rentRepository;
@@ -52,7 +51,7 @@ public class RentBikeService implements RentBikeGenericService{
         List<Bike> availableBikes = bikeRepository.findByIsRentedFalse();
         List<BikeForNormalUserResponseDTO> bikesForNormalUserDTO = new ArrayList<>();
 
-        for (Bike bike: availableBikes) {
+        for (Bike bike : availableBikes) {
 
             BikeForNormalUserResponseDTO bikeForNormalDTO = BikeForNormalUserResponseDTO.builder()
                     .id(bike.getId())
@@ -77,7 +76,7 @@ public class RentBikeService implements RentBikeGenericService{
     @Transactional
     public RentResponseDTO rentBike(RentRequest rentRequest) {
         Bike bike = bikeService.getBike(rentRequest.getBikeId());
-        User user = userService.findById(rentRequest.getUserId());
+        User user = getUser(rentRequest.getUserId());
         ChargingStation chargingStation = getChargingStation(rentRequest.getChargingStationId());
 
         bike.setRented(true);
@@ -85,10 +84,10 @@ public class RentBikeService implements RentBikeGenericService{
         bike.setAmountToBePaid(0.0);
         bike.setUser(user); //it is a relation @OneToOne therefore setting should be on both sides of owning
         user.setBike(bike);
-        if(chargingStation.getBikeList() != null && !chargingStation.getBikeList().isEmpty()) {
+        if (chargingStation.getBikeList() != null && !chargingStation.getBikeList().isEmpty()) {
             chargingStation.getBikeList().remove(bike);
         }
-        chargingStation.setFreeSlots(chargingStation.getFreeSlots()+1);
+        chargingStation.setFreeSlots(chargingStation.getFreeSlots() + 1);
         int daysOfRent = rentRequest.getDaysOfRent();
 
         Rent rent = new Rent(LocalDateTime.now(), null, bike, user, null, daysOfRent);
@@ -113,15 +112,11 @@ public class RentBikeService implements RentBikeGenericService{
     public RentResponseDTO updateRent(Long id, Rent rentToBeUpdated) {
         Rent rent = getRent(id);
 
-        if(rentToBeUpdated.getDaysOfRent() != 0) {
+        if (rentToBeUpdated.getDaysOfRent() != 0) {
             rent.setDaysOfRent(rentToBeUpdated.getDaysOfRent());
         }
         rentRepository.save(rent);
         return modelMapper.map(rent, RentResponseDTO.class);
-    }
-
-    private Rent getRent(Long id) {
-        return rentRepository.findById(id).orElseThrow(IllegalArgumentException::new);
     }
 
     @Override
@@ -130,7 +125,7 @@ public class RentBikeService implements RentBikeGenericService{
         Bike bike = bikeService.getBike(bikeId);
         ChargingStation returnChargingStation = getChargingStation(returnChargingStationId);
         Rent rent = getRent(rentId);
-        User user = userService.findById(bike.getUser().getId());
+        User user = getUser(rentId);
 
         rent.setBike(null); //I deleted cascades because all entities were gone together with Rent, so I set nulls,
         // save it in repo and then delete -> otherwise Rent record will not be deleted in db, because it holds FK.
@@ -147,7 +142,7 @@ public class RentBikeService implements RentBikeGenericService{
         returnChargingStation.getBikeList().add(bike); //Bike is an owning side, so I must add below line to save it in db
         bike.setChargingStation(returnChargingStation);
 
-        returnChargingStation.setFreeSlots(returnChargingStation.getFreeSlots()-1);
+        returnChargingStation.setFreeSlots(returnChargingStation.getFreeSlots() - 1);
 
         user.setBalance(user.getBalance() - countRentalCost(rentId)); //reducing the user balance by rental cost
 
@@ -159,14 +154,21 @@ public class RentBikeService implements RentBikeGenericService{
         rentRepository.deleteById(rentId);
     }
 
-    private ChargingStation getChargingStation(Long returnChargingStationId) {
-
-        return chargingStationRepository.findById(returnChargingStationId).orElseThrow(IllegalArgumentException::new);
-    }
-
     private double countRentalCost(Long rentId) {
         Rent rent = getRent(rentId);
         int rentalDays = rent.getDaysOfRent();
         return rentalDays * 10;
+    }
+
+    private Rent getRent(Long id) {
+        return rentRepository.findById(id).orElseThrow(IllegalArgumentException::new);
+    }
+
+    private User getUser(Long id) {
+        return userRepository.findById(id).orElseThrow(IllegalArgumentException::new);
+    }
+
+    private ChargingStation getChargingStation(Long returnChargingStationId) {
+        return chargingStationRepository.findById(returnChargingStationId).orElseThrow(IllegalArgumentException::new);
     }
 }
