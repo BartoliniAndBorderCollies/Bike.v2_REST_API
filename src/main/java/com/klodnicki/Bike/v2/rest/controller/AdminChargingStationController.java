@@ -21,7 +21,7 @@ public class AdminChargingStationController {
     }
 
     @GetMapping("/{id}")
-    public ChargingStation findById(@PathVariable("id") Long id) {
+    public StationForAdminResponseDTO findById(@PathVariable("id") Long id) {
         return chargingStationService.findById(id);
     }
 
