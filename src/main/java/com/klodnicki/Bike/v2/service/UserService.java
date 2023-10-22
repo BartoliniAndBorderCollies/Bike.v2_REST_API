@@ -1,6 +1,7 @@
 package com.klodnicki.Bike.v2.service;
 
 import com.klodnicki.Bike.v2.DTO.user.UserForAdminResponseDTO;
+import com.klodnicki.Bike.v2.DTO.user.UserForNormalUserResponseDTO;
 import com.klodnicki.Bike.v2.model.entity.User;
 import com.klodnicki.Bike.v2.repository.UserRepository;
 import org.modelmapper.ModelMapper;
@@ -22,8 +23,10 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public User add(User user) {
-        return userRepository.save(user);
+    public UserForNormalUserResponseDTO add(User user) {
+        User user1 = userRepository.save(user);
+
+        return modelMapper.map(user1, UserForNormalUserResponseDTO.class);
     }
 
     public List<UserForAdminResponseDTO> findAll() {
