@@ -1,7 +1,9 @@
 package com.klodnicki.Bike.v2.service;
 
+import com.klodnicki.Bike.v2.DTO.station.StationForAdminResponseDTO;
 import com.klodnicki.Bike.v2.model.entity.ChargingStation;
 import com.klodnicki.Bike.v2.repository.ChargingStationRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,12 +13,16 @@ public class ChargingStationService {
 
     private final ChargingStationRepository chargingStationRepository;
 
+    ModelMapper modelMapper = new ModelMapper();
+
     public ChargingStationService(ChargingStationRepository chargingStationRepository) {
         this.chargingStationRepository = chargingStationRepository;
     }
 
-    public ChargingStation add(ChargingStation chargingStation) {
-        return chargingStationRepository.save(chargingStation);
+    public StationForAdminResponseDTO add(ChargingStation chargingStation) {
+        ChargingStation chargingStation1 = chargingStationRepository.save(chargingStation);
+
+        return modelMapper.map(chargingStation1, StationForAdminResponseDTO.class);
     }
 
     public Iterable<ChargingStation> findAll() {
