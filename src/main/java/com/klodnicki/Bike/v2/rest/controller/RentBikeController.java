@@ -28,7 +28,7 @@ public class RentBikeController {
         return rentBikeService.findAvailableBikes();
     }
 
-    @GetMapping("/bicycles/{id}")
+    @GetMapping("/bikes/{id}")
     public BikeForNormalUserResponseDTO findBikeForNormalUserById(@PathVariable Long id) {
         return rentBikeService.findBikeForNormalUserById(id);
     }
@@ -38,7 +38,7 @@ public class RentBikeController {
         return rentBikeService.rentBike(rentRequest);
     }
 
-    @PutMapping("/bicycles/list/add/{id}")
+    @PutMapping("/bikes/list/add/{id}")
     public ChargingStation addBikeToList(@PathVariable("id") Long chargingStationId, @RequestBody Bike bike) {
         return rentBikeService.addBikeToList(chargingStationId, bike);
     }
