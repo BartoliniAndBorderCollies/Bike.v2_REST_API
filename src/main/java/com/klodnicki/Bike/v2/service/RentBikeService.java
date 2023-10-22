@@ -78,7 +78,7 @@ public class RentBikeService implements RentBikeGenericService{
     public RentResponseDTO rentBike(RentRequest rentRequest) {
         Bike bike = bikeService.getBike(rentRequest.getBikeId());
         User user = userService.findById(rentRequest.getUserId());
-        ChargingStation chargingStation = chargingStationService.findById(rentRequest.getChargingStationId());
+        ChargingStation chargingStation = getChargingStation(rentRequest.getChargingStationId());
 
         bike.setRented(true);
         bike.setChargingStation(null);
@@ -99,7 +99,7 @@ public class RentBikeService implements RentBikeGenericService{
 
     @Override
     public ChargingStation addBikeToList(Long chargingStationId, Bike bike) {
-        ChargingStation chargingStation = chargingStationService.findById(chargingStationId);
+        ChargingStation chargingStation = getChargingStation(chargingStationId);
         chargingStation.getBikeList().add(bike);
         //In JPA, only the owning side of the relationship is used when writing to the database.
         //which means this will not be saved in database. Charging station still will have an empty bike list.
@@ -128,7 +128,7 @@ public class RentBikeService implements RentBikeGenericService{
     @Transactional
     public void returnBike(Long rentId, Long returnChargingStationId, Long bikeId) {
         Bike bike = bikeService.getBike(bikeId);
-        ChargingStation returnChargingStation = chargingStationService.findById(returnChargingStationId);
+        ChargingStation returnChargingStation = getChargingStation(returnChargingStationId);
         Rent rent = getRent(rentId);
         User user = userService.findById(bike.getUser().getId());
 
@@ -155,6 +155,11 @@ public class RentBikeService implements RentBikeGenericService{
         rentRepository.save(rent);
 
         rentRepository.deleteById(rentId);
+    }
+
+    private ChargingStation getChargingStation(Long returnChargingStationId) {
+
+        return chargingStationRepository.findById(returnChargingStationId).orElseThrow(IllegalArgumentException::new);
     }
 
     private double countRentalCost(Long rentId) {
