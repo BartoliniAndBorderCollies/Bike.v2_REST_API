@@ -23,10 +23,10 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public UserForNormalUserResponseDTO add(User user) {
+    public UserForAdminResponseDTO add(User user) {
         User user1 = userRepository.save(user);
 
-        return modelMapper.map(user1, UserForNormalUserResponseDTO.class);
+        return modelMapper.map(user1, UserForAdminResponseDTO.class);
     }
 
     public List<UserForAdminResponseDTO> findAll() {
