@@ -1,9 +1,12 @@
 package com.klodnicki.Bike.v2.rest.controller;
 
+import com.klodnicki.Bike.v2.DTO.station.ListStationsForAdminResponseDTO;
 import com.klodnicki.Bike.v2.DTO.station.StationForAdminResponseDTO;
 import com.klodnicki.Bike.v2.model.entity.ChargingStation;
 import com.klodnicki.Bike.v2.service.ChargingStationService;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/admin/stations")
@@ -26,7 +29,9 @@ public class AdminChargingStationController {
     }
 
     @GetMapping
-    public Iterable<ChargingStation> findAll() {
-        return chargingStationService.findAll();
+    public ListStationsForAdminResponseDTO findAll() {
+        List<StationForAdminResponseDTO> stations = chargingStationService.findAll();
+
+        return new ListStationsForAdminResponseDTO(stations);
     }
 }
