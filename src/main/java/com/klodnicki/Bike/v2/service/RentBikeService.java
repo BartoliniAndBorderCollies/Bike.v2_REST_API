@@ -14,7 +14,6 @@ import com.klodnicki.Bike.v2.repository.RentRepository;
 import com.klodnicki.Bike.v2.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
@@ -30,22 +29,18 @@ public class RentBikeService implements RentBikeGenericService {
     private final UserRepository userRepository;
     private final ChargingStationRepository chargingStationRepository;
     private final GenericBikeService bikeService;
-    private final UserService userService;
-    private final ChargingStationService chargingStationService;
-    @Autowired
-    private ModelMapper modelMapper;
+    private final ModelMapper modelMapper;
 
 
     public RentBikeService(BikeRepository bikeRepository, RentRepository rentRepository,
                            UserRepository userRepository, GenericBikeService bikeService, UserService userService, ChargingStationService chargingStationService,
-                           ChargingStationRepository chargingStationRepository) {
+                           ChargingStationRepository chargingStationRepository, ModelMapper modelMapper) {
         this.bikeRepository = bikeRepository;
         this.rentRepository = rentRepository;
         this.userRepository = userRepository;
         this.bikeService = bikeService;
-        this.userService = userService;
-        this.chargingStationService = chargingStationService;
         this.chargingStationRepository = chargingStationRepository;
+        this.modelMapper = modelMapper;
     }
 
     @Override

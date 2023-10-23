@@ -1,13 +1,11 @@
 package com.klodnicki.Bike.v2.service;
 
 import com.klodnicki.Bike.v2.DTO.bike.BikeForAdminResponseDTO;
-import com.klodnicki.Bike.v2.DTO.bike.BikeForNormalUserResponseDTO;
 import com.klodnicki.Bike.v2.DTO.bike.BikeRequestDTO;
 import com.klodnicki.Bike.v2.model.entity.Bike;
 import com.klodnicki.Bike.v2.repository.BikeRepository;
 import lombok.NonNull;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -22,11 +20,12 @@ import java.util.Optional;
 public class BikeService implements GenericBikeService {
 
     private final BikeRepository bikeRepository;
-    @Autowired
-    private ModelMapper modelMapper;
 
-    public BikeService(BikeRepository bikeRepository) {
+    private final ModelMapper modelMapper;
+
+    public BikeService(BikeRepository bikeRepository, ModelMapper modelMapper) {
         this.bikeRepository = bikeRepository;
+        this.modelMapper = modelMapper;
     }
 
     @Override

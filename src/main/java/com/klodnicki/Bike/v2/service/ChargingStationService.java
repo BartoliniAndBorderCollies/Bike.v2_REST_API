@@ -4,7 +4,6 @@ import com.klodnicki.Bike.v2.DTO.station.StationForAdminResponseDTO;
 import com.klodnicki.Bike.v2.model.entity.ChargingStation;
 import com.klodnicki.Bike.v2.repository.ChargingStationRepository;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -14,11 +13,11 @@ import java.util.List;
 public class ChargingStationService {
 
     private final ChargingStationRepository chargingStationRepository;
-    @Autowired
-    private ModelMapper modelMapper;
+    private final ModelMapper modelMapper;
 
-    public ChargingStationService(ChargingStationRepository chargingStationRepository) {
+    public ChargingStationService(ChargingStationRepository chargingStationRepository, ModelMapper modelMapper) {
         this.chargingStationRepository = chargingStationRepository;
+        this.modelMapper = modelMapper;
     }
 
     public StationForAdminResponseDTO add(ChargingStation chargingStation) {
