@@ -92,7 +92,13 @@ public class RentBikeService implements RentBikeGenericService {
         Rent rent = new Rent(LocalDateTime.now(), null, bike, user, null, daysOfRent);
         rentRepository.save(rent);
 
-        return modelMapper.map(rent, RentResponseDTO.class);
+        return new RentResponseDTO(
+                rent.getId(),
+                rent.getRentalStartTime(),
+                null,
+                rent.getDaysOfRent(),
+                modelMapper.map(rent, BikeForNormalUserResponseDTO.class),
+                modelMapper.map(rent, UserForNormalUserResponseDTO.class), null);
     }
 
     @Override
