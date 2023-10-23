@@ -14,6 +14,9 @@ public class StationForNormalUserResponseDTO {
         this.freeSlots = freeSlots;
     }
 
+    public StationForNormalUserResponseDTO() {
+    }
+
     public String getName() {
         return name;
     }
