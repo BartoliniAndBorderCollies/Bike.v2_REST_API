@@ -2,7 +2,9 @@ package com.klodnicki.Bike.v2.service;
 
 
 import com.klodnicki.Bike.v2.DTO.bike.BikeForNormalUserResponseDTO;
+import com.klodnicki.Bike.v2.DTO.rent.RentRequestDTO;
 import com.klodnicki.Bike.v2.DTO.rent.RentResponseDTO;
+import com.klodnicki.Bike.v2.DTO.user.UserForNormalUserResponseDTO;
 import com.klodnicki.Bike.v2.model.RentRequest;
 import com.klodnicki.Bike.v2.model.entity.Bike;
 import com.klodnicki.Bike.v2.model.entity.ChargingStation;
@@ -106,11 +108,11 @@ public class RentBikeService implements RentBikeGenericService {
     }
 
     @Override
-    public RentResponseDTO updateRent(Long id, Rent rentToBeUpdated) {
+    public RentResponseDTO updateRent(Long id, RentRequestDTO rentRequestDTO) {
         Rent rent = getRent(id);
 
-        if (rentToBeUpdated.getDaysOfRent() != 0) {
-            rent.setDaysOfRent(rentToBeUpdated.getDaysOfRent());
+        if (rentRequestDTO.getDaysOfRent() > 0) {
+            rent.setDaysOfRent(rentRequestDTO.getDaysOfRent());
         }
         rentRepository.save(rent);
         return modelMapper.map(rent, RentResponseDTO.class);
