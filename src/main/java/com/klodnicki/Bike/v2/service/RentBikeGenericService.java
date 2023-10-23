@@ -6,6 +6,7 @@ import com.klodnicki.Bike.v2.DTO.rent.RentResponseDTO;
 import com.klodnicki.Bike.v2.model.RentRequest;
 import com.klodnicki.Bike.v2.model.entity.Bike;
 import com.klodnicki.Bike.v2.model.entity.ChargingStation;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
@@ -21,5 +22,5 @@ public interface RentBikeGenericService {
 
     RentResponseDTO updateRent(Long id, RentRequestDTO rentRequestDTO);
 
-    void returnBike(Long rentId, Long returnChargingStationId, Long bikeId);
+    ResponseEntity<?> returnBike(Long rentId, Long returnChargingStationId, Long bikeId);
 }

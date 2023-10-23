@@ -16,6 +16,8 @@ import com.klodnicki.Bike.v2.repository.RentRepository;
 import com.klodnicki.Bike.v2.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 
@@ -126,7 +128,7 @@ public class RentBikeService implements RentBikeGenericService {
 
     @Override
     @Transactional
-    public void returnBike(Long rentId, Long returnChargingStationId, Long bikeId) {
+    public ResponseEntity<?> returnBike(Long rentId, Long returnChargingStationId, Long bikeId) {
         Bike bike = bikeService.getBike(bikeId);
         ChargingStation returnChargingStation = getChargingStation(returnChargingStationId);
         Rent rent = getRent(rentId);
@@ -157,6 +159,12 @@ public class RentBikeService implements RentBikeGenericService {
         rentRepository.save(rent);
 
         rentRepository.deleteById(rentId);
+
+        if(rentRepository.findById(rentId).isEmpty()) {
+            return new ResponseEntity<>("Bike successfully returned.", HttpStatus.OK);
+        }
+
+        return new ResponseEntity<>("Try again!", HttpStatus.I_AM_A_TEAPOT);
     }
 
     private double countRentalCost(Long rentId) {

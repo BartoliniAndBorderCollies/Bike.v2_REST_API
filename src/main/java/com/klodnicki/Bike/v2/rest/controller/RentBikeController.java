@@ -8,6 +8,7 @@ import com.klodnicki.Bike.v2.model.RentRequest;
 import com.klodnicki.Bike.v2.model.entity.Bike;
 import com.klodnicki.Bike.v2.model.entity.ChargingStation;
 import com.klodnicki.Bike.v2.service.RentBikeGenericService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -51,7 +52,7 @@ public class RentBikeController {
     }
 
     @PutMapping("/returns/{rentId}")
-    public void returnBike(@PathVariable Long rentId, @RequestParam Long returnChargingStationId, @RequestBody Long bikeId) {
-        rentBikeService.returnBike(rentId, returnChargingStationId, bikeId);
+    public ResponseEntity<?> returnBike(@PathVariable Long rentId, @RequestParam Long returnChargingStationId, @RequestBody Long bikeId) {
+        return rentBikeService.returnBike(rentId, returnChargingStationId, bikeId);
     }
 }
