@@ -1,8 +1,8 @@
 package com.klodnicki.Bike.v2.DTO.rent;
 
-import com.klodnicki.Bike.v2.model.entity.Bike;
-import com.klodnicki.Bike.v2.model.entity.ChargingStation;
-import com.klodnicki.Bike.v2.model.entity.User;
+import com.klodnicki.Bike.v2.DTO.bike.BikeForNormalUserResponseDTO;
+import com.klodnicki.Bike.v2.DTO.station.StationForNormalUserResponseDTO;
+import com.klodnicki.Bike.v2.DTO.user.UserForNormalUserResponseDTO;
 
 import java.time.LocalDateTime;
 
@@ -12,9 +12,25 @@ public class RentResponseDTO {
     private LocalDateTime rentalStartTime;
     private LocalDateTime rentalEndTime;
     private int daysOfRent;
-    private Bike bike;
-    private User user;
-    private ChargingStation chargingStation;
+    private BikeForNormalUserResponseDTO bikeForNormalUserResponseDTO;
+    private UserForNormalUserResponseDTO userForNormalUserResponseDTO;
+    private StationForNormalUserResponseDTO stationForNormalUserResponseDTO;
+
+    public RentResponseDTO(Long id, LocalDateTime rentalStartTime, LocalDateTime rentalEndTime, int daysOfRent,
+                           BikeForNormalUserResponseDTO bikeForNormalUserResponseDTO,
+                           UserForNormalUserResponseDTO userForNormalUserResponseDTO,
+                           StationForNormalUserResponseDTO stationForNormalUserResponseDTO) {
+        this.id = id;
+        this.rentalStartTime = rentalStartTime;
+        this.rentalEndTime = rentalEndTime;
+        this.daysOfRent = daysOfRent;
+        this.bikeForNormalUserResponseDTO = bikeForNormalUserResponseDTO;
+        this.userForNormalUserResponseDTO = userForNormalUserResponseDTO;
+        this.stationForNormalUserResponseDTO = stationForNormalUserResponseDTO;
+    }
+
+    public RentResponseDTO() {
+    }
 
     public Long getId() {
         return id;
@@ -48,27 +64,27 @@ public class RentResponseDTO {
         this.daysOfRent = daysOfRent;
     }
 
-    public Bike getBike() {
-        return bike;
+    public BikeForNormalUserResponseDTO getBikeForNormalUserResponseDTO() {
+        return bikeForNormalUserResponseDTO;
     }
 
-    public void setBike(Bike bike) {
-        this.bike = bike;
+    public void setBikeForNormalUserResponseDTO(BikeForNormalUserResponseDTO bikeForNormalUserResponseDTO) {
+        this.bikeForNormalUserResponseDTO = bikeForNormalUserResponseDTO;
     }
 
-    public User getUser() {
-        return user;
+    public UserForNormalUserResponseDTO getUserForNormalUserResponseDTO() {
+        return userForNormalUserResponseDTO;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUserForNormalUserResponseDTO(UserForNormalUserResponseDTO userForNormalUserResponseDTO) {
+        this.userForNormalUserResponseDTO = userForNormalUserResponseDTO;
     }
 
-    public ChargingStation getChargingStation() {
-        return chargingStation;
+    public StationForNormalUserResponseDTO getStationForNormalUserResponseDTO() {
+        return stationForNormalUserResponseDTO;
     }
 
-    public void setChargingStation(ChargingStation chargingStation) {
-        this.chargingStation = chargingStation;
+    public void setStationForNormalUserResponseDTO(StationForNormalUserResponseDTO stationForNormalUserResponseDTO) {
+        this.stationForNormalUserResponseDTO = stationForNormalUserResponseDTO;
     }
 }
