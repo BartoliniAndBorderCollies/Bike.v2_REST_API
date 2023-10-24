@@ -1,7 +1,9 @@
 package com.klodnicki.Bike.v2.model;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
@@ -16,6 +18,8 @@ import java.time.LocalDateTime;
 //@Inheritance(strategy = InheritanceType.JOINED)
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public abstract class RentableVehicle {
 
     private String serialNumber;
@@ -23,14 +27,4 @@ public abstract class RentableVehicle {
     private double amountToBePaid;
     @Embedded
     private GpsCoordinates gpsCoordinates;
-
-    public RentableVehicle(String serialNumber, boolean isRented, double amountToBePaid, GpsCoordinates gpsCoordinates) {
-        this.serialNumber = serialNumber;
-        this.isRented = isRented;
-        this.amountToBePaid = amountToBePaid;
-        this.gpsCoordinates = gpsCoordinates;
-    }
-
-    public RentableVehicle() {
-    }
 }
