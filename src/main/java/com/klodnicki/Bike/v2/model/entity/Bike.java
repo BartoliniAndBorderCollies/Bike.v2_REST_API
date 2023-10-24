@@ -8,6 +8,7 @@ import com.klodnicki.Bike.v2.model.RentableVehicle;
 import com.klodnicki.Bike.v2.model.RentalAction;
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
@@ -17,6 +18,7 @@ import java.time.LocalDateTime;
 //@DiscriminatorValue("bike")
 @Getter
 @Setter
+@NoArgsConstructor
 public class Bike extends RentableVehicle implements RentalAction {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -41,9 +43,6 @@ public class Bike extends RentableVehicle implements RentalAction {
         super(serialNumber, isRented, amountToBePaid, gpsCoordinates);
         this.id = id;
         this.bikeType = bikeType;
-    }
-
-    public Bike() {
     }
 
     @Override
