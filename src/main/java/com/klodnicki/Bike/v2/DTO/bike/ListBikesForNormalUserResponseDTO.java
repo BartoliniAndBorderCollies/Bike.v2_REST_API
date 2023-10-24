@@ -1,20 +1,16 @@
 package com.klodnicki.Bike.v2.DTO.bike;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.List;
+
+@Getter
+@Setter
+@AllArgsConstructor
 
 public class ListBikesForNormalUserResponseDTO {
 
     private List<BikeForNormalUserResponseDTO> listOfBikesDTOs;
-
-    public ListBikesForNormalUserResponseDTO(List<BikeForNormalUserResponseDTO> listOfBikesDTOs) {
-        this.listOfBikesDTOs = listOfBikesDTOs;
-    }
-
-    public List<BikeForNormalUserResponseDTO> getListOfBikesDTOs() {
-        return listOfBikesDTOs;
-    }
-
-    public void setListOfBikesDTOs(List<BikeForNormalUserResponseDTO> listOfBikesDTOs) {
-        this.listOfBikesDTOs = listOfBikesDTOs;
-    }
 }
