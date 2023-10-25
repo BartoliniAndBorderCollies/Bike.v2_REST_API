@@ -63,14 +63,14 @@ public class RentBikeService implements RentBikeGenericService {
 
     @Override
     public BikeForNormalUserResponseDTO findBikeForNormalUserById(Long id) {
-        Bike bike = bikeRepository.findById(id).orElseThrow(IllegalArgumentException::new);
+        Bike bike = bikeService.findBikeById(id);
         return modelMapper.map(bike, BikeForNormalUserResponseDTO.class);
     }
 
     @Override
     @Transactional
     public RentResponseDTO rentBike(RentRequest rentRequest) {
-        Bike bike = bikeService.getBike(rentRequest.getBikeId());
+        Bike bike = bikeService.findBikeById(rentRequest.getBikeId());
         User user = findUserById(rentRequest.getUserId());
         ChargingStation chargingStation = findStationById(rentRequest.getChargingStationId());
 
@@ -123,7 +123,7 @@ public class RentBikeService implements RentBikeGenericService {
     @Override
     @Transactional
     public ResponseEntity<?> returnBike(Long rentId, Long returnChargingStationId, Long bikeId) {
-        Bike bike = bikeService.getBike(bikeId);
+        Bike bike = bikeService.findBikeById(bikeId);
         ChargingStation returnChargingStation = findStationById(returnChargingStationId);
         Rent rent = findRentById(rentId);
         User user = findUserById(rentId);
@@ -167,15 +167,15 @@ public class RentBikeService implements RentBikeGenericService {
         return rentalDays * 10;
     }
 
-    private Rent getRent(Long id) {
+    private Rent findRentById(Long id) {
         return rentRepository.findById(id).orElseThrow(IllegalArgumentException::new);
     }
 
-    private User getUser(Long id) {
-        return userRepository.findById(id).orElseThrow(IllegalArgumentException::new);
+    private User findUserById(Long id) {
+        return userService.findUserById(id);
     }
 
-    private ChargingStation getChargingStation(Long returnChargingStationId) {
-        return chargingStationRepository.findById(returnChargingStationId).orElseThrow(IllegalArgumentException::new);
+    private ChargingStation findStationById(Long returnChargingStationId) {
+        return chargingStationService.findStationById(returnChargingStationId);
     }
 }
