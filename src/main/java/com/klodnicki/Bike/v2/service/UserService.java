@@ -3,7 +3,7 @@ package com.klodnicki.Bike.v2.service;
 import com.klodnicki.Bike.v2.DTO.user.UserForAdminResponseDTO;
 import com.klodnicki.Bike.v2.model.entity.User;
 import com.klodnicki.Bike.v2.repository.UserRepository;
-import com.klodnicki.Bike.v2.service.serviceInterface.GenericUserService;
+import com.klodnicki.Bike.v2.service.interfacee.GenericUserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

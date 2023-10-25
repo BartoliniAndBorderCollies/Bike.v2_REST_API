@@ -11,7 +11,7 @@ import com.klodnicki.Bike.v2.model.entity.ChargingStation;
 import com.klodnicki.Bike.v2.model.entity.Rent;
 import com.klodnicki.Bike.v2.model.entity.User;
 import com.klodnicki.Bike.v2.repository.RentRepository;
-import com.klodnicki.Bike.v2.service.serviceInterface.*;
+import com.klodnicki.Bike.v2.service.interfacee.*;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;

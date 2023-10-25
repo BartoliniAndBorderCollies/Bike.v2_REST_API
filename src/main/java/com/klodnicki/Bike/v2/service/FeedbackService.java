@@ -2,7 +2,7 @@ package com.klodnicki.Bike.v2.service;
 
 import com.klodnicki.Bike.v2.model.entity.Feedback;
 import com.klodnicki.Bike.v2.repository.FeedbackRepository;
-import com.klodnicki.Bike.v2.service.serviceInterface.AddService;
+import com.klodnicki.Bike.v2.service.interfacee.AddService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

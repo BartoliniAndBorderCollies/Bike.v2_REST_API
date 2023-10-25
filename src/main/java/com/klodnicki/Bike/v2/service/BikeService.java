@@ -4,7 +4,7 @@ import com.klodnicki.Bike.v2.DTO.bike.BikeForAdminResponseDTO;
 import com.klodnicki.Bike.v2.DTO.bike.BikeRequestDTO;
 import com.klodnicki.Bike.v2.model.entity.Bike;
 import com.klodnicki.Bike.v2.repository.BikeRepository;
-import com.klodnicki.Bike.v2.service.serviceInterface.*;
+import com.klodnicki.Bike.v2.service.interfacee.*;
 import lombok.NonNull;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;

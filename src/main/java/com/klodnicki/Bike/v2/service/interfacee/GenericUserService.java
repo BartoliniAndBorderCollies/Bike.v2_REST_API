@@ -1,4 +1,4 @@
-package com.klodnicki.Bike.v2.service.serviceInterface;
+package com.klodnicki.Bike.v2.service.interfacee;
 
 import com.klodnicki.Bike.v2.DTO.user.UserForAdminResponseDTO;
 import com.klodnicki.Bike.v2.model.entity.User;

@@ -3,7 +3,7 @@ package com.klodnicki.Bike.v2.rest.controller;
 import com.klodnicki.Bike.v2.DTO.bike.BikeForAdminResponseDTO;
 import com.klodnicki.Bike.v2.DTO.bike.BikeRequestDTO;
 import com.klodnicki.Bike.v2.DTO.bike.ListBikesForAdminResponseDTO;
-import com.klodnicki.Bike.v2.service.serviceInterface.GenericBikeService;
+import com.klodnicki.Bike.v2.service.interfacee.GenericBikeService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
