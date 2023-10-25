@@ -43,7 +43,7 @@ public class RentBikeService implements RentBikeGenericService {
 
     @Override
     public List<BikeForNormalUserResponseDTO> findAvailableBikes() {
-        List<Bike> availableBikes = bikeRepository.findByIsRentedFalse();
+        List<Bike> availableBikes = bikeService.findByIsRentedFalse();
         List<BikeForNormalUserResponseDTO> bikesForNormalUserDTO = new ArrayList<>();
 
         for (Bike bike : availableBikes) {
@@ -106,7 +106,7 @@ public class RentBikeService implements RentBikeGenericService {
         //because ChargingStation is NOT the owning-side. Therefore, I must add line below to fix this problem
         bike.setChargingStation(chargingStation);
 
-        return chargingStationRepository.save(chargingStation);
+        return chargingStationService.save(chargingStation);
     }
 
     @Override
@@ -147,9 +147,9 @@ public class RentBikeService implements RentBikeGenericService {
 
         user.setBalance(user.getBalance() - countRentalCost(rentId)); //reducing the user balance by rental cost
 
-        bikeRepository.save(bike);
-        chargingStationRepository.save(returnChargingStation);
-        userRepository.save(user);
+        bikeService.save(bike);
+        chargingStationService.save(returnChargingStation);
+        userService.save(user);
         rentRepository.save(rent);
 
         rentRepository.deleteById(rentId);
