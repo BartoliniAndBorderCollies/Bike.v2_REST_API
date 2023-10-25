@@ -49,6 +49,15 @@ public class BikeService implements GenericBikeService {
         return modelMapper.map(savedBike, BikeForAdminResponseDTO.class);
     }
 
+    public List<Bike> findByIsRentedFalse() {
+        return bikeRepository.findByIsRentedFalse();
+    }
+
+    @Override
+    public Bike save(Bike bike) {
+        return bike;
+    }
+
     @Override
     public List<BikeForAdminResponseDTO> findAll() {
         List<BikeForAdminResponseDTO> bikeListDto = new ArrayList<>();
