@@ -6,21 +6,12 @@ import com.klodnicki.Bike.v2.model.entity.Bike;
 
 import java.util.List;
 
-public interface GenericBikeService {
-
-    Bike findBikeById(Long id);
+public interface GenericBikeService extends AddService<BikeForAdminResponseDTO, BikeRequestDTO>,
+        FindService<BikeForAdminResponseDTO, Long>,
+        UpdateService<BikeForAdminResponseDTO, Long, BikeRequestDTO>,
+        DeleteService<Long>,
+        SaveService<Bike> {
 
     List<Bike> findByIsRentedFalse();
-
-    Bike save(Bike bike);
-
-    BikeForAdminResponseDTO add(BikeRequestDTO bikeDTO);
-
-    BikeForAdminResponseDTO findById(Long id);
-
-    List<BikeForAdminResponseDTO> findAll();
-
-    void deleteById(Long id);
-
-    BikeForAdminResponseDTO update(Long id, BikeRequestDTO bikeDTO);
+    Bike findBikeById(Long id);
 }
