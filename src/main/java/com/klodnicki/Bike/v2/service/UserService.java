@@ -1,7 +1,6 @@
 package com.klodnicki.Bike.v2.service;
 
 import com.klodnicki.Bike.v2.DTO.user.UserForAdminResponseDTO;
-import com.klodnicki.Bike.v2.DTO.user.UserForNormalUserResponseDTO;
 import com.klodnicki.Bike.v2.model.entity.User;
 import com.klodnicki.Bike.v2.repository.UserRepository;
 import com.klodnicki.Bike.v2.service.crudInterface.AddService;
@@ -44,10 +43,10 @@ public class UserService implements AddService<UserForAdminResponseDTO, User>, F
         return listUsersDTO;
     }
 
-    public UserForNormalUserResponseDTO findById(Long id) {
+    public UserForAdminResponseDTO findById(Long id) {
         User user = getUser(id);
 
-        return modelMapper.map(user, UserForNormalUserResponseDTO.class);
+        return modelMapper.map(user, UserForAdminResponseDTO.class);
     }
 
     public void deleteById(Long id) {
