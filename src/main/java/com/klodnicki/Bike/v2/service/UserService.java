@@ -22,13 +22,13 @@ public class UserService implements GenericUserService {
         this.userRepository = userRepository;
         this.modelMapper = modelMapper;
     }
-
+    @Override
     public UserForAdminResponseDTO add(User user) {
         User user1 = userRepository.save(user);
 
         return modelMapper.map(user1, UserForAdminResponseDTO.class);
     }
-
+    @Override
     public List<UserForAdminResponseDTO> findAll() {
         Iterable<User> users = userRepository.findAll();
         List<UserForAdminResponseDTO> listUsersDTO = new ArrayList<>();
@@ -39,17 +39,17 @@ public class UserService implements GenericUserService {
         }
         return listUsersDTO;
     }
-
+    @Override
     public UserForAdminResponseDTO findById(Long id) {
         User user = getUser(id);
 
         return modelMapper.map(user, UserForAdminResponseDTO.class);
     }
-
+    @Override
     public void deleteById(Long id) {
         userRepository.deleteById(id);
     }
-
+    @Override
     public User findUserById(Long id) {
         return userRepository.findById(id).orElseThrow(IllegalArgumentException::new);
     }
@@ -57,7 +57,7 @@ public class UserService implements GenericUserService {
     private User getUser(Long id) {
         return userRepository.findById(id).orElseThrow(IllegalArgumentException::new);
     }
-
+    @Override
     public ResponseEntity<?> banUser(Long id) {
         User user = getUser(id);
 
@@ -69,7 +69,7 @@ public class UserService implements GenericUserService {
         }
         return new ResponseEntity<>("User banned successfully", HttpStatus.OK);
     }
-
+    @Override
     public User save(User user) {
         return userRepository.save(user);
     }
