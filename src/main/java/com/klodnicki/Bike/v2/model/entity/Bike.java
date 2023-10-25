@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.klodnicki.Bike.v2.model.BikeType;
 import com.klodnicki.Bike.v2.model.GpsCoordinates;
 import com.klodnicki.Bike.v2.model.RentableVehicle;
-import com.klodnicki.Bike.v2.model.RentalAction;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
