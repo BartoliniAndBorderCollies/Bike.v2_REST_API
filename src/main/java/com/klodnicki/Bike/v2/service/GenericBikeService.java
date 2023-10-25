@@ -6,7 +6,7 @@ import com.klodnicki.Bike.v2.model.entity.Bike;
 
 import java.util.List;
 
-public interface GenericBikeService extends GenericService<BikeForAdminResponseDTO, BikeRequestDTO> {
+public interface GenericBikeService {
 
     Bike findBikeById(Long id);
 
