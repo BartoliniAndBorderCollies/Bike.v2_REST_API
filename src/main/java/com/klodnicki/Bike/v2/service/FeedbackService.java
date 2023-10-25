@@ -3,7 +3,6 @@ package com.klodnicki.Bike.v2.service;
 import com.klodnicki.Bike.v2.model.entity.Feedback;
 import com.klodnicki.Bike.v2.repository.FeedbackRepository;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
