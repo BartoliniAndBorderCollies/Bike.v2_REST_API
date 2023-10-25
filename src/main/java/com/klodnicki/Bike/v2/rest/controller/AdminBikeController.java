@@ -15,11 +15,8 @@ public class AdminBikeController {
 
     private final GenericBikeService bikeService;
 
-    private final UserService userService;
-
-    public AdminBikeController(GenericBikeService bikeService, UserService userService) {
+    public AdminBikeController(GenericBikeService bikeService) {
         this.bikeService = bikeService;
-        this.userService = userService;
     }
 
     @PostMapping("/add")
