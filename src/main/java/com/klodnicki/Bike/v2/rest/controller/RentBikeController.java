@@ -7,7 +7,8 @@ import com.klodnicki.Bike.v2.DTO.rent.RentResponseDTO;
 import com.klodnicki.Bike.v2.model.RentRequest;
 import com.klodnicki.Bike.v2.model.entity.Bike;
 import com.klodnicki.Bike.v2.model.entity.ChargingStation;
-import com.klodnicki.Bike.v2.service.serviceInterface.RentBikeGenericService;
+import com.klodnicki.Bike.v2.service.serviceInterface.GenericRentBikeService;
+import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,13 +16,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api")
+@AllArgsConstructor
 public class RentBikeController {
 
-    private final RentBikeGenericService rentBikeService;
-
-    public RentBikeController(RentBikeGenericService rentBikeService) {
-        this.rentBikeService = rentBikeService;
-    }
+    private final GenericRentBikeService rentBikeService;
 
 
     @GetMapping("/bikes")
