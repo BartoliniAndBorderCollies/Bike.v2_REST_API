@@ -1,6 +1,6 @@
 package com.klodnicki.Bike.v2.service.serviceInterface;
 
-public interface DeleteService {
+public interface DeleteService<ID> {
 
-    void deleteById(Long id);
+    void deleteById(ID id);
 }
