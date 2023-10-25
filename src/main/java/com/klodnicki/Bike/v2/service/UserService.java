@@ -3,9 +3,7 @@ package com.klodnicki.Bike.v2.service;
 import com.klodnicki.Bike.v2.DTO.user.UserForAdminResponseDTO;
 import com.klodnicki.Bike.v2.model.entity.User;
 import com.klodnicki.Bike.v2.repository.UserRepository;
-import com.klodnicki.Bike.v2.service.serviceInterface.AddService;
-import com.klodnicki.Bike.v2.service.serviceInterface.DeleteService;
-import com.klodnicki.Bike.v2.service.serviceInterface.FindService;
+import com.klodnicki.Bike.v2.service.serviceInterface.GenericUserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,8 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class UserService implements AddService<UserForAdminResponseDTO, User>, FindService<UserForAdminResponseDTO>,
-        DeleteService {
+public class UserService implements GenericUserService {
 
     private final UserRepository userRepository;
     private final ModelMapper modelMapper;
