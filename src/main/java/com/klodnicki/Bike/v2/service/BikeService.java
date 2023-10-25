@@ -14,8 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class BikeService implements GenericBikeService, AddService<BikeForAdminResponseDTO, BikeRequestDTO>,
-        FindService<BikeForAdminResponseDTO>, UpdateService<BikeForAdminResponseDTO, BikeRequestDTO>, DeleteService {
+public class BikeService implements GenericBikeService {
 
     private final BikeRepository bikeRepository;
     private final ModelMapper modelMapper;
