@@ -13,4 +13,14 @@ public interface GenericBikeService extends GenericService<BikeForAdminResponseD
     List<Bike> findByIsRentedFalse();
 
     Bike save(Bike bike);
+
+    BikeForAdminResponseDTO add(BikeRequestDTO bikeDTO);
+
+    BikeForAdminResponseDTO findById(Long id);
+
+    List<BikeForAdminResponseDTO> findAll();
+
+    void deleteById(Long id);
+
+    BikeForAdminResponseDTO update(Long id, BikeRequestDTO bikeDTO);
 }

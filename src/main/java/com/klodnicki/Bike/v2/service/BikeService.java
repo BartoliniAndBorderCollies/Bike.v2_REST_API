@@ -4,6 +4,10 @@ import com.klodnicki.Bike.v2.DTO.bike.BikeForAdminResponseDTO;
 import com.klodnicki.Bike.v2.DTO.bike.BikeRequestDTO;
 import com.klodnicki.Bike.v2.model.entity.Bike;
 import com.klodnicki.Bike.v2.repository.BikeRepository;
+import com.klodnicki.Bike.v2.service.crudInterface.AddService;
+import com.klodnicki.Bike.v2.service.crudInterface.DeleteService;
+import com.klodnicki.Bike.v2.service.crudInterface.FindService;
+import com.klodnicki.Bike.v2.service.crudInterface.UpdateService;
 import lombok.NonNull;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -17,7 +21,8 @@ import java.util.Optional;
 //zamienilismy BikeService dependency wstrzykiwane w controllerze na GenericBikeService
 //Żeby móc podstawić różne implementacje BikeService, nie tylko ten jeden konkretny BikeService. Jak zrobisz klasę
 //        BetterBikeService możesz bez żadnych zmian w kontrolerze z niego korzystać od razu
-public class BikeService implements GenericBikeService {
+public class BikeService implements GenericBikeService, AddService<BikeForAdminResponseDTO, BikeRequestDTO>,
+        FindService<BikeForAdminResponseDTO>, UpdateService<BikeForAdminResponseDTO, BikeRequestDTO>, DeleteService {
 
     private final BikeRepository bikeRepository;
 

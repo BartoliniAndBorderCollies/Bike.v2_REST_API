@@ -11,6 +11,7 @@ import com.klodnicki.Bike.v2.model.entity.ChargingStation;
 import com.klodnicki.Bike.v2.model.entity.Rent;
 import com.klodnicki.Bike.v2.model.entity.User;
 import com.klodnicki.Bike.v2.repository.RentRepository;
+import com.klodnicki.Bike.v2.service.crudInterface.AddService;
 import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
@@ -23,7 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class RentBikeService implements RentBikeGenericService {
+public class RentBikeService implements RentBikeGenericService, AddService<RentResponseDTO, RentRequest> {
 
     private final GenericBikeService bikeService;
     private final ChargingStationService chargingStationService;

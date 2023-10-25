@@ -4,6 +4,9 @@ import com.klodnicki.Bike.v2.DTO.user.UserForAdminResponseDTO;
 import com.klodnicki.Bike.v2.DTO.user.UserForNormalUserResponseDTO;
 import com.klodnicki.Bike.v2.model.entity.User;
 import com.klodnicki.Bike.v2.repository.UserRepository;
+import com.klodnicki.Bike.v2.service.crudInterface.AddService;
+import com.klodnicki.Bike.v2.service.crudInterface.DeleteService;
+import com.klodnicki.Bike.v2.service.crudInterface.FindService;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,7 +16,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class UserService {
+public class UserService implements AddService<UserForAdminResponseDTO, User>, FindService<UserForAdminResponseDTO>,
+        DeleteService {
 
     private final UserRepository userRepository;
     private final ModelMapper modelMapper;
