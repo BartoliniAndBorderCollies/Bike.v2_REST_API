@@ -1,4 +1,4 @@
-package com.klodnicki.Bike.v2.service.crudInterface;
+package com.klodnicki.Bike.v2.service.serviceInterface;
 
 import java.util.List;
 
