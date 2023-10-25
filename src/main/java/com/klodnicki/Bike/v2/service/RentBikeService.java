@@ -71,8 +71,8 @@ public class RentBikeService implements RentBikeGenericService {
     @Transactional
     public RentResponseDTO rentBike(RentRequest rentRequest) {
         Bike bike = bikeService.getBike(rentRequest.getBikeId());
-        User user = getUser(rentRequest.getUserId());
-        ChargingStation chargingStation = getChargingStation(rentRequest.getChargingStationId());
+        User user = findUserById(rentRequest.getUserId());
+        ChargingStation chargingStation = findStationById(rentRequest.getChargingStationId());
 
         bike.setRented(true);
         bike.setChargingStation(null);
@@ -99,7 +99,7 @@ public class RentBikeService implements RentBikeGenericService {
 
     @Override
     public ChargingStation addBikeToList(Long chargingStationId, Bike bike) {
-        ChargingStation chargingStation = getChargingStation(chargingStationId);
+        ChargingStation chargingStation = findStationById(chargingStationId);
         chargingStation.getBikeList().add(bike);
         //In JPA, only the owning side of the relationship is used when writing to the database.
         //which means this will not be saved in database. Charging station still will have an empty bike list.
@@ -111,7 +111,7 @@ public class RentBikeService implements RentBikeGenericService {
 
     @Override
     public RentResponseDTO updateRent(Long id, RentRequestDTO rentRequestDTO) {
-        Rent rent = getRent(id);
+        Rent rent = findRentById(id);
 
         if (rentRequestDTO.getDaysOfRent() > 0) {
             rent.setDaysOfRent(rentRequestDTO.getDaysOfRent());
@@ -124,9 +124,9 @@ public class RentBikeService implements RentBikeGenericService {
     @Transactional
     public ResponseEntity<?> returnBike(Long rentId, Long returnChargingStationId, Long bikeId) {
         Bike bike = bikeService.getBike(bikeId);
-        ChargingStation returnChargingStation = getChargingStation(returnChargingStationId);
-        Rent rent = getRent(rentId);
-        User user = getUser(rentId);
+        ChargingStation returnChargingStation = findStationById(returnChargingStationId);
+        Rent rent = findRentById(rentId);
+        User user = findUserById(rentId);
 
         rent.setBike(null); //I deleted cascades because all entities were gone together with Rent, so I set nulls,
         // save it in repo and then delete -> otherwise Rent record will not be deleted in db, because it holds FK.
@@ -162,7 +162,7 @@ public class RentBikeService implements RentBikeGenericService {
     }
 
     private double countRentalCost(Long rentId) {
-        Rent rent = getRent(rentId);
+        Rent rent = findRentById(rentId);
         int rentalDays = rent.getDaysOfRent();
         return rentalDays * 10;
     }
