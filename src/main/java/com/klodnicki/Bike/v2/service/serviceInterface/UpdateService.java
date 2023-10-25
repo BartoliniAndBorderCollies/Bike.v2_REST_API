@@ -1,6 +1,6 @@
 package com.klodnicki.Bike.v2.service.serviceInterface;
 
-public interface UpdateService<T, G> {
+public interface UpdateService<T, ID, G> {
 
-    T update(Long id, G obj);
+    T update(ID id, G obj);
 }
