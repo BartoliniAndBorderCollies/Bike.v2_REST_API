@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 //@DiscriminatorValue("bike")
 @Getter
 @Setter
-public class Bike extends RentableVehicle implements RentalAction {
+public class Bike extends RentableVehicle {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -44,15 +44,5 @@ public class Bike extends RentableVehicle implements RentalAction {
     }
 
     public Bike() {
-    }
-
-    @Override
-    public void rent() {
-
-    }
-
-    @Override
-    public void giveBack() {
-
     }
 }
