@@ -42,11 +42,9 @@ public class ChargingStationService {
         return modelMapper.map(chargingStation, StationForAdminResponseDTO.class);
     }
 
-
     public ChargingStation findStationById(Long id) {
         return chargingStationRepository.findById(id).orElseThrow(IllegalArgumentException::new);
     }
-
 
     public ChargingStation save(ChargingStation chargingStation) {
         return chargingStationRepository.save(chargingStation);
