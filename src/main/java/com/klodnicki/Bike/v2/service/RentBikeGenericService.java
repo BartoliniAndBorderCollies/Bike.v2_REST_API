@@ -16,11 +16,11 @@ public interface RentBikeGenericService {
 
     BikeForNormalUserResponseDTO findBikeForNormalUserById(Long id);
 
-    RentResponseDTO add(RentRequest rentRequest);
-
     ChargingStation addBikeToList(Long chargingStationId, Bike bike);
 
     RentResponseDTO updateRent(Long id, RentRequestDTO rentRequestDTO);
 
-    ResponseEntity<?> returnBike(Long rentId, Long returnChargingStationId, Long bikeId);
+    RentResponseDTO rent(RentRequest rentRequest); //TODO: why this must be here? it is in RentService interface
+
+    ResponseEntity<?> returnVehicle(Long rentId, Long returnChargingStationId, Long bikeId);//TODO: why this must be here? it is in RentService interface
 }
