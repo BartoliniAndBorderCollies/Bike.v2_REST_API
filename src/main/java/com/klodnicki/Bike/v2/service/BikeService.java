@@ -17,15 +17,10 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-//public class BikeService implements GenericService<BikeForAdminResponseDTO, Bike> {
-//zamienilismy BikeService dependency wstrzykiwane w controllerze na GenericBikeService
-//Żeby móc podstawić różne implementacje BikeService, nie tylko ten jeden konkretny BikeService. Jak zrobisz klasę
-//        BetterBikeService możesz bez żadnych zmian w kontrolerze z niego korzystać od razu
 public class BikeService implements GenericBikeService, AddService<BikeForAdminResponseDTO, BikeRequestDTO>,
         FindService<BikeForAdminResponseDTO>, UpdateService<BikeForAdminResponseDTO, BikeRequestDTO>, DeleteService {
 
     private final BikeRepository bikeRepository;
-
     private final ModelMapper modelMapper;
 
     public BikeService(BikeRepository bikeRepository, ModelMapper modelMapper) {
