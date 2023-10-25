@@ -79,7 +79,7 @@ public class RentBikeService implements RentBikeGenericService {
 
     @Override
     @Transactional
-    public RentResponseDTO rentBike(RentRequest rentRequest) {
+    public RentResponseDTO add(RentRequest rentRequest) {
         Bike bike = bikeService.findBikeById(rentRequest.getBikeId());
         User user = findUserById(rentRequest.getUserId());
         ChargingStation chargingStation = findStationById(rentRequest.getChargingStationId());

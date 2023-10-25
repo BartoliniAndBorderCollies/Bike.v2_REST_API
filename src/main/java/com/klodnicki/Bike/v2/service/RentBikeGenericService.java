@@ -16,7 +16,7 @@ public interface RentBikeGenericService {
 
     BikeForNormalUserResponseDTO findBikeForNormalUserById(Long id);
 
-    RentResponseDTO rentBike(RentRequest rentRequest);
+    RentResponseDTO add(RentRequest rentRequest);
 
     ChargingStation addBikeToList(Long chargingStationId, Bike bike);
 

@@ -38,7 +38,7 @@ public class RentBikeController {
 
     @PostMapping("/rentals/add")
     public RentResponseDTO rentBike(@RequestBody RentRequest rentRequest) {
-        return rentBikeService.rentBike(rentRequest);
+        return rentBikeService.add(rentRequest);
     }
 
     @PutMapping("/bikes/list/add/{id}")

@@ -20,6 +20,6 @@ public class FeedbackController {
 
     @PostMapping("/add")
     public ResponseEntity<?> addFeedback(@RequestBody Feedback feedback) {
-        return feedbackService.addFeedback(feedback);
+        return feedbackService.add(feedback);
     }
 }

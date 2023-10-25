@@ -15,7 +15,7 @@ public class FeedbackService {
         this.feedbackRepository = feedbackRepository;
     }
 
-    public ResponseEntity<?> addFeedback(Feedback feedback) {
+    public ResponseEntity<?> add(Feedback feedback) {
         feedbackRepository.save(feedback);
 
         return new ResponseEntity<>("Thanks for your feedback!", HttpStatus.OK);
