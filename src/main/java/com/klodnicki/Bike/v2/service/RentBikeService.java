@@ -10,10 +10,7 @@ import com.klodnicki.Bike.v2.model.entity.Bike;
 import com.klodnicki.Bike.v2.model.entity.ChargingStation;
 import com.klodnicki.Bike.v2.model.entity.Rent;
 import com.klodnicki.Bike.v2.model.entity.User;
-import com.klodnicki.Bike.v2.repository.BikeRepository;
-import com.klodnicki.Bike.v2.repository.ChargingStationRepository;
 import com.klodnicki.Bike.v2.repository.RentRepository;
-import com.klodnicki.Bike.v2.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
@@ -28,23 +25,20 @@ import java.util.List;
 @Service
 public class RentBikeService implements RentBikeGenericService {
 
-    private final BikeRepository bikeRepository;
-    private final RentRepository rentRepository;
-    private final UserRepository userRepository;
-    private final ChargingStationRepository chargingStationRepository;
+
     private final GenericBikeService bikeService;
+    private final ChargingStationService chargingStationService;
+    private final UserService userService;
     private final ModelMapper modelMapper;
+    private final RentRepository rentRepository;
 
 
-    public RentBikeService(BikeRepository bikeRepository, RentRepository rentRepository,
-                           UserRepository userRepository, GenericBikeService bikeService, UserService userService, ChargingStationService chargingStationService,
-                           ChargingStationRepository chargingStationRepository, ModelMapper modelMapper) {
-        this.bikeRepository = bikeRepository;
-        this.rentRepository = rentRepository;
-        this.userRepository = userRepository;
+    public RentBikeService(GenericBikeService bikeService, ChargingStationService chargingStationService, UserService userService, ModelMapper modelMapper, RentRepository rentRepository) {
         this.bikeService = bikeService;
-        this.chargingStationRepository = chargingStationRepository;
+        this.chargingStationService = chargingStationService;
+        this.userService = userService;
         this.modelMapper = modelMapper;
+        this.rentRepository = rentRepository;
     }
 
     @Override
