@@ -3,8 +3,8 @@ package com.klodnicki.Bike.v2.service;
 import com.klodnicki.Bike.v2.DTO.station.StationForAdminResponseDTO;
 import com.klodnicki.Bike.v2.model.entity.ChargingStation;
 import com.klodnicki.Bike.v2.repository.ChargingStationRepository;
-import com.klodnicki.Bike.v2.service.crudInterface.AddService;
-import com.klodnicki.Bike.v2.service.crudInterface.FindService;
+import com.klodnicki.Bike.v2.service.serviceInterface.AddService;
+import com.klodnicki.Bike.v2.service.serviceInterface.FindService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
