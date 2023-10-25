@@ -27,7 +27,8 @@ import java.util.List;
 
 @Service
 @AllArgsConstructor
-public class RentBikeService implements RentBikeGenericService, AddService<RentResponseDTO, RentRequest> {
+public class RentBikeService implements RentBikeGenericService, RentService<RentResponseDTO, RentRequest>,
+        ReturnService<ResponseEntity<?>, Long, Long, Long> {
 
     private final GenericBikeService bikeService;
     private final ChargingStationService chargingStationService;
