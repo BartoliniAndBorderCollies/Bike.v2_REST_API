@@ -1,4 +1,4 @@
-package com.klodnicki.Bike.v2.service;
+package com.klodnicki.Bike.v2.service.serviceInterface;
 
 import com.klodnicki.Bike.v2.DTO.bike.BikeForAdminResponseDTO;
 import com.klodnicki.Bike.v2.DTO.bike.BikeRequestDTO;

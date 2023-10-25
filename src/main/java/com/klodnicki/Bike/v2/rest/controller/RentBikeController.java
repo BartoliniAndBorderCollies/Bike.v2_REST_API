@@ -7,7 +7,7 @@ import com.klodnicki.Bike.v2.DTO.rent.RentResponseDTO;
 import com.klodnicki.Bike.v2.model.RentRequest;
 import com.klodnicki.Bike.v2.model.entity.Bike;
 import com.klodnicki.Bike.v2.model.entity.ChargingStation;
-import com.klodnicki.Bike.v2.service.RentBikeGenericService;
+import com.klodnicki.Bike.v2.service.serviceInterface.RentBikeGenericService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

@@ -3,8 +3,7 @@ package com.klodnicki.Bike.v2.rest.controller;
 import com.klodnicki.Bike.v2.DTO.bike.BikeForAdminResponseDTO;
 import com.klodnicki.Bike.v2.DTO.bike.BikeRequestDTO;
 import com.klodnicki.Bike.v2.DTO.bike.ListBikesForAdminResponseDTO;
-import com.klodnicki.Bike.v2.service.GenericBikeService;
-import com.klodnicki.Bike.v2.service.UserService;
+import com.klodnicki.Bike.v2.service.serviceInterface.GenericBikeService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
