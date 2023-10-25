@@ -13,6 +13,7 @@ import com.klodnicki.Bike.v2.model.entity.User;
 import com.klodnicki.Bike.v2.repository.RentRepository;
 import com.klodnicki.Bike.v2.service.crudInterface.AddService;
 import jakarta.transaction.Transactional;
+import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@AllArgsConstructor
 public class RentBikeService implements RentBikeGenericService, AddService<RentResponseDTO, RentRequest> {
 
     private final GenericBikeService bikeService;
@@ -31,15 +33,6 @@ public class RentBikeService implements RentBikeGenericService, AddService<RentR
     private final UserService userService;
     private final ModelMapper modelMapper;
     private final RentRepository rentRepository;
-
-
-    public RentBikeService(GenericBikeService bikeService, ChargingStationService chargingStationService, UserService userService, ModelMapper modelMapper, RentRepository rentRepository) {
-        this.bikeService = bikeService;
-        this.chargingStationService = chargingStationService;
-        this.userService = userService;
-        this.modelMapper = modelMapper;
-        this.rentRepository = rentRepository;
-    }
 
     @Override
     public RentResponseDTO updateRent(Long id, RentRequestDTO rentRequestDTO) {
