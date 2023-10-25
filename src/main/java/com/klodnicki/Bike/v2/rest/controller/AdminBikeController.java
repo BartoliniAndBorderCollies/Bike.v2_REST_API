@@ -13,6 +13,10 @@ import java.util.List;
 @RequestMapping("/api/admin/bikes")
 public class AdminBikeController {
 
+//zamienilismy BikeService dependency wstrzykiwane w controllerze na GenericBikeService
+//Żeby móc podstawić różne implementacje BikeService, nie tylko ten jeden konkretny BikeService. Jak zrobisz klasę
+//        BetterBikeService możesz bez żadnych zmian w kontrolerze z niego korzystać od razu
+
     private final GenericBikeService bikeService;
 
     public AdminBikeController(GenericBikeService bikeService) {
