@@ -25,7 +25,6 @@ import java.util.List;
 @Service
 public class RentBikeService implements RentBikeGenericService {
 
-
     private final GenericBikeService bikeService;
     private final ChargingStationService chargingStationService;
     private final UserService userService;
@@ -39,6 +38,17 @@ public class RentBikeService implements RentBikeGenericService {
         this.userService = userService;
         this.modelMapper = modelMapper;
         this.rentRepository = rentRepository;
+    }
+
+    @Override
+    public RentResponseDTO updateRent(Long id, RentRequestDTO rentRequestDTO) {
+        Rent rent = findRentById(id);
+
+        if (rentRequestDTO.getDaysOfRent() > 0) {
+            rent.setDaysOfRent(rentRequestDTO.getDaysOfRent());
+        }
+        rentRepository.save(rent);
+        return modelMapper.map(rent, RentResponseDTO.class);
     }
 
     @Override
@@ -107,17 +117,6 @@ public class RentBikeService implements RentBikeGenericService {
         bike.setChargingStation(chargingStation);
 
         return chargingStationService.save(chargingStation);
-    }
-
-    @Override
-    public RentResponseDTO updateRent(Long id, RentRequestDTO rentRequestDTO) {
-        Rent rent = findRentById(id);
-
-        if (rentRequestDTO.getDaysOfRent() > 0) {
-            rent.setDaysOfRent(rentRequestDTO.getDaysOfRent());
-        }
-        rentRepository.save(rent);
-        return modelMapper.map(rent, RentResponseDTO.class);
     }
 
     @Override

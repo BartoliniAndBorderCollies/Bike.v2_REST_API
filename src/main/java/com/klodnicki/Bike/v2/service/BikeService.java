@@ -43,22 +43,6 @@ public class BikeService implements GenericBikeService {
     }
 
     @Override
-    public BikeForAdminResponseDTO findById(Long id) {
-        Bike savedBike = findBikeById(id);
-
-        return modelMapper.map(savedBike, BikeForAdminResponseDTO.class);
-    }
-
-    public List<Bike> findByIsRentedFalse() {
-        return bikeRepository.findByIsRentedFalse();
-    }
-
-    @Override
-    public Bike save(Bike bike) {
-        return bike;
-    }
-
-    @Override
     public List<BikeForAdminResponseDTO> findAll() {
         List<BikeForAdminResponseDTO> bikeListDto = new ArrayList<>();
         Iterable<Bike> bikeList = bikeRepository.findAll();
@@ -73,8 +57,10 @@ public class BikeService implements GenericBikeService {
     }
 
     @Override
-    public void deleteById(Long id) {
-        bikeRepository.deleteById(id);
+    public BikeForAdminResponseDTO findById(Long id) {
+        Bike savedBike = findBikeById(id);
+
+        return modelMapper.map(savedBike, BikeForAdminResponseDTO.class);
     }
 
     @Override
@@ -92,6 +78,20 @@ public class BikeService implements GenericBikeService {
 
         //converting Bike into BikeForAdminResponseDTO using model mapper
         return modelMapper.map(bike, BikeForAdminResponseDTO.class);
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        bikeRepository.deleteById(id);
+    }
+
+    public List<Bike> findByIsRentedFalse() {
+        return bikeRepository.findByIsRentedFalse();
+    }
+
+    @Override
+    public Bike save(Bike bike) {
+        return bike;
     }
 
     @Override

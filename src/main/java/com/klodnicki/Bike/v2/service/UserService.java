@@ -46,6 +46,10 @@ public class UserService {
         return modelMapper.map(user, UserForNormalUserResponseDTO.class);
     }
 
+    public void deleteUser(Long id) {
+        userRepository.deleteById(id);
+    }
+
     public User findUserById(Long id) {
         return userRepository.findById(id).orElseThrow(IllegalArgumentException::new);
     }
@@ -64,10 +68,6 @@ public class UserService {
             return new ResponseEntity<>("Failed to ban user", HttpStatus.I_AM_A_TEAPOT);
         }
         return new ResponseEntity<>("User banned successfully", HttpStatus.OK);
-    }
-
-    public void deleteUser(Long id) {
-        userRepository.deleteById(id);
     }
 
     public User save(User user) {
