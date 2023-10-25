@@ -46,6 +46,10 @@ public class UserService {
         return modelMapper.map(user, UserForNormalUserResponseDTO.class);
     }
 
+    public User findUserById(Long id) {
+        return userRepository.findById(id).orElseThrow(IllegalArgumentException::new);
+    }
+
     private User getUser(Long id) {
         return userRepository.findById(id).orElseThrow(IllegalArgumentException::new);
     }
@@ -64,5 +68,9 @@ public class UserService {
 
     public void deleteUser(Long id) {
         userRepository.deleteById(id);
+    }
+
+    public User save(User user) {
+        return userRepository.save(user);
     }
 }
