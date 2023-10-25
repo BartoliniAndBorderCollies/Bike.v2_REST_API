@@ -38,7 +38,7 @@ public class RentBikeController {
 
     @PostMapping("/rentals/add")
     public RentResponseDTO rentBike(@RequestBody RentRequest rentRequest) {
-        return rentBikeService.add(rentRequest);
+        return rentBikeService.rent(rentRequest);
     }
 
     @PutMapping("/bikes/list/add/{id}")
@@ -53,6 +53,6 @@ public class RentBikeController {
 
     @PutMapping("/returns/{rentId}")
     public ResponseEntity<?> returnBike(@PathVariable Long rentId, @RequestParam Long returnChargingStationId, @RequestBody Long bikeId) {
-        return rentBikeService.returnBike(rentId, returnChargingStationId, bikeId);
+        return rentBikeService.returnVehicle(rentId, returnChargingStationId, bikeId);
     }
 }
