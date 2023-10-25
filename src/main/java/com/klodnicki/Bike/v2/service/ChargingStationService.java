@@ -20,13 +20,13 @@ public class ChargingStationService implements GenericChargingStationService {
         this.chargingStationRepository = chargingStationRepository;
         this.modelMapper = modelMapper;
     }
-
+    @Override
     public StationForAdminResponseDTO add(ChargingStation chargingStation) {
         ChargingStation chargingStation1 = chargingStationRepository.save(chargingStation);
 
         return modelMapper.map(chargingStation1, StationForAdminResponseDTO.class);
     }
-
+    @Override
     public List<StationForAdminResponseDTO> findAll() {
         Iterable<ChargingStation> chargingStations = chargingStationRepository.findAll();
         List<StationForAdminResponseDTO> stationsDTO = new ArrayList<>();
@@ -37,16 +37,16 @@ public class ChargingStationService implements GenericChargingStationService {
         }
         return stationsDTO;
     }
-
+    @Override
     public StationForAdminResponseDTO findById(Long id) {
         ChargingStation chargingStation = chargingStationRepository.findById(id).orElseThrow(IllegalArgumentException::new);
         return modelMapper.map(chargingStation, StationForAdminResponseDTO.class);
     }
-
+    @Override
     public ChargingStation findStationById(Long id) {
         return chargingStationRepository.findById(id).orElseThrow(IllegalArgumentException::new);
     }
-
+    @Override
     public ChargingStation save(ChargingStation chargingStation) {
         return chargingStationRepository.save(chargingStation);
     }
