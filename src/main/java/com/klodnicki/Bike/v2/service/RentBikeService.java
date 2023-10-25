@@ -11,10 +11,7 @@ import com.klodnicki.Bike.v2.model.entity.ChargingStation;
 import com.klodnicki.Bike.v2.model.entity.Rent;
 import com.klodnicki.Bike.v2.model.entity.User;
 import com.klodnicki.Bike.v2.repository.RentRepository;
-import com.klodnicki.Bike.v2.service.serviceInterface.GenericBikeService;
-import com.klodnicki.Bike.v2.service.serviceInterface.RentBikeGenericService;
-import com.klodnicki.Bike.v2.service.serviceInterface.RentService;
-import com.klodnicki.Bike.v2.service.serviceInterface.ReturnService;
+import com.klodnicki.Bike.v2.service.serviceInterface.*;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -29,12 +26,11 @@ import java.util.List;
 
 @Service
 @AllArgsConstructor
-public class RentBikeService implements RentBikeGenericService, RentService<RentResponseDTO, RentRequest>,
-        ReturnService<ResponseEntity<?>, Long, Long, Long> {
+public class RentBikeService implements GenericRentBikeService {
 
     private final GenericBikeService bikeService;
-    private final ChargingStationService chargingStationService;
-    private final UserService userService;
+    private final GenericChargingStationService chargingStationService;
+    private final GenericUserService userService;
     private final ModelMapper modelMapper;
     private final RentRepository rentRepository;
 
