@@ -2,11 +2,13 @@ package com.klodnicki.Bike.v2.DTO.user;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@AllArgsConstructor
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class UserForAdminResponseDTO {
 
     private Long id;
@@ -17,7 +19,4 @@ public class UserForAdminResponseDTO {
     private boolean isAccountValid;
     private String role;
     private double balance;
-
-    public UserForAdminResponseDTO() {
-    }
 }
