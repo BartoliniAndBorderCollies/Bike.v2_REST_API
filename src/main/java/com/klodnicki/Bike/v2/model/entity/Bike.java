@@ -3,19 +3,21 @@ package com.klodnicki.Bike.v2.model.entity;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.klodnicki.Bike.v2.model.BikeType;
-import com.klodnicki.Bike.v2.model.GpsCoordinates;
 import com.klodnicki.Bike.v2.model.RentableVehicle;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
 
 @Entity
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 //@DiscriminatorValue("bike")
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Bike extends RentableVehicle {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,14 +36,4 @@ public class Bike extends RentableVehicle {
     @ManyToOne
     @JoinColumn(name = "charging_station_id")
     private ChargingStation chargingStation;
-
-    public Bike(Long id, BikeType bikeType, String serialNumber, boolean isRented, LocalDateTime rentalStartTime, LocalDateTime rentalEndTime,
-                double amountToBePaid, GpsCoordinates gpsCoordinates) {
-        super(serialNumber, isRented, amountToBePaid, gpsCoordinates);
-        this.id = id;
-        this.bikeType = bikeType;
-    }
-
-    public Bike() {
-    }
 }
