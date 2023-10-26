@@ -9,7 +9,6 @@ import java.util.List;
 @Getter
 @Setter
 @AllArgsConstructor
-
 public class ListBikesForNormalUserResponseDTO {
 
     private List<BikeForNormalUserResponseDTO> listOfBikesDTOs;
