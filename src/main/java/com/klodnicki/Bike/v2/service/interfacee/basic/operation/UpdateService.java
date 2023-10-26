@@ -1,4 +1,4 @@
-package com.klodnicki.Bike.v2.service.interfacee;
+package com.klodnicki.Bike.v2.service.interfacee.basic.operation;
 
 public interface UpdateService<T, ID, G> {
 
