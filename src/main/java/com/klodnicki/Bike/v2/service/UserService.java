@@ -4,6 +4,7 @@ import com.klodnicki.Bike.v2.DTO.user.UserForAdminResponseDTO;
 import com.klodnicki.Bike.v2.model.entity.User;
 import com.klodnicki.Bike.v2.repository.UserRepository;
 import com.klodnicki.Bike.v2.service.interfacee.GenericUserService;
+import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,15 +14,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@AllArgsConstructor
 public class UserService implements GenericUserService {
 
     private final UserRepository userRepository;
     private final ModelMapper modelMapper;
 
-    public UserService(UserRepository userRepository, ModelMapper modelMapper) {
-        this.userRepository = userRepository;
-        this.modelMapper = modelMapper;
-    }
     @Override
     public UserForAdminResponseDTO add(User user) {
         User user1 = userRepository.save(user);

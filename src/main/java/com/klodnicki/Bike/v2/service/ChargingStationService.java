@@ -4,6 +4,7 @@ import com.klodnicki.Bike.v2.DTO.station.StationForAdminResponseDTO;
 import com.klodnicki.Bike.v2.model.entity.ChargingStation;
 import com.klodnicki.Bike.v2.repository.ChargingStationRepository;
 import com.klodnicki.Bike.v2.service.interfacee.GenericChargingStationService;
+import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
@@ -11,15 +12,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@AllArgsConstructor
 public class ChargingStationService implements GenericChargingStationService {
 
     private final ChargingStationRepository chargingStationRepository;
     private final ModelMapper modelMapper;
 
-    public ChargingStationService(ChargingStationRepository chargingStationRepository, ModelMapper modelMapper) {
-        this.chargingStationRepository = chargingStationRepository;
-        this.modelMapper = modelMapper;
-    }
     @Override
     public StationForAdminResponseDTO add(ChargingStation chargingStation) {
         ChargingStation chargingStation1 = chargingStationRepository.save(chargingStation);

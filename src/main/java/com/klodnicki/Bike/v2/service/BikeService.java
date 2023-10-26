@@ -5,6 +5,7 @@ import com.klodnicki.Bike.v2.DTO.bike.BikeRequestDTO;
 import com.klodnicki.Bike.v2.model.entity.Bike;
 import com.klodnicki.Bike.v2.repository.BikeRepository;
 import com.klodnicki.Bike.v2.service.interfacee.*;
+import lombok.AllArgsConstructor;
 import lombok.NonNull;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -14,15 +15,11 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@AllArgsConstructor
 public class BikeService implements GenericBikeService {
 
     private final BikeRepository bikeRepository;
     private final ModelMapper modelMapper;
-
-    public BikeService(BikeRepository bikeRepository, ModelMapper modelMapper) {
-        this.bikeRepository = bikeRepository;
-        this.modelMapper = modelMapper;
-    }
 
     @Override
     public BikeForAdminResponseDTO add(@NonNull BikeRequestDTO bikeRequestDTO) {
