@@ -3,7 +3,7 @@ package com.klodnicki.Bike.v2.rest.controller;
 import com.klodnicki.Bike.v2.DTO.station.ListStationsForAdminResponseDTO;
 import com.klodnicki.Bike.v2.DTO.station.StationForAdminResponseDTO;
 import com.klodnicki.Bike.v2.model.entity.ChargingStation;
-import com.klodnicki.Bike.v2.service.ChargingStationService;
+import com.klodnicki.Bike.v2.service.interfacee.GenericChargingStationService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,7 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 public class AdminChargingStationController {
 
-    private final ChargingStationService chargingStationService;
+    private final GenericChargingStationService chargingStationService;
 
 
     @PostMapping("/add")
