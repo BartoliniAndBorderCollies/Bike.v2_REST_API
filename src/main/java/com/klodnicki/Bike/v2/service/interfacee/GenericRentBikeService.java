@@ -10,7 +10,7 @@ import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
-public interface GenericRentBikeService extends GenericRentalActionService <RentResponseDTO, ResponseEntity<?>,
+public interface GenericRentBikeService extends RentService<RentResponseDTO, ResponseEntity<?>,
         RentRequest, Long, Long, Long> {
 
     List<BikeForNormalUserResponseDTO> findAvailableBikes();
