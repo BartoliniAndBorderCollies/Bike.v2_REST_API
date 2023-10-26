@@ -119,7 +119,7 @@ public class RentBikeService implements GenericRentBikeService {
         Bike bike = bikeService.findBikeById(bikeId);
         ChargingStation returnChargingStation = findStationById(returnChargingStationId);
         Rent rent = findRentById(rentId);
-        User user = findUserById(rentId);
+        User user = findUserById(bike.getUser().getId());
 
         rent.setBike(null); //I deleted cascades because all entities were gone together with Rent, so I set nulls,
         // save it in repo and then delete -> otherwise Rent record will not be deleted in db, because it holds FK.
