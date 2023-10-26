@@ -2,6 +2,7 @@ package com.klodnicki.Bike.v2.model.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
@@ -9,6 +10,7 @@ import java.time.LocalDateTime;
 @Entity
 @Getter
 @Setter
+@NoArgsConstructor
 public class Rent {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,8 +39,5 @@ public class Rent {
         this.user = user;
         this.chargingStation = chargingStation;
         this.daysOfRent = daysOfRent;
-    }
-
-    public Rent() {
     }
 }
