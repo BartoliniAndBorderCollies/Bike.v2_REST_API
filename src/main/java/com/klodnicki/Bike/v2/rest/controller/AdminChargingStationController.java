@@ -4,19 +4,18 @@ import com.klodnicki.Bike.v2.DTO.station.ListStationsForAdminResponseDTO;
 import com.klodnicki.Bike.v2.DTO.station.StationForAdminResponseDTO;
 import com.klodnicki.Bike.v2.model.entity.ChargingStation;
 import com.klodnicki.Bike.v2.service.ChargingStationService;
+import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/admin/stations")
+@AllArgsConstructor
 public class AdminChargingStationController {
 
     private final ChargingStationService chargingStationService;
 
-    public AdminChargingStationController(ChargingStationService chargingStationService) {
-        this.chargingStationService = chargingStationService;
-    }
 
     @PostMapping("/add")
     public StationForAdminResponseDTO add(@RequestBody ChargingStation chargingStation) {
