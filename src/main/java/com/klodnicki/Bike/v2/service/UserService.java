@@ -64,9 +64,6 @@ public class UserService implements GenericUserService {
         user.setAccountValid(false);
         userRepository.save(user);
 
-        if(user.isAccountValid()) {
-            return new ResponseEntity<>("Failed to ban user", HttpStatus.I_AM_A_TEAPOT);
-        }
         return new ResponseEntity<>("User banned successfully", HttpStatus.OK);
     }
     @Override
