@@ -121,14 +121,6 @@ public class RentBikeService implements GenericRentBikeService {
         Rent rent = findRentById(rentId);
         User user = findUserById(bike.getUser().getId());
 
-        rent.setBike(null); //I deleted cascades because all entities were gone together with Rent, so I set nulls,
-        // save it in repo and then delete -> otherwise Rent record will not be deleted in db, because it holds FK.
-        //I must do it on both sides because Rent is not-owning side of the relationship.
-        bike.setRent(null);
-
-        rent.setUser(null);
-        user.setRent(null);
-
         bike.setRented(false);
         bike.setAmountToBePaid(countRentalCost(rentId));
         bike.setUser(null);
@@ -140,18 +132,15 @@ public class RentBikeService implements GenericRentBikeService {
 
         user.setBalance(user.getBalance() - countRentalCost(rentId)); //reducing the user balance by rental cost
 
+        rent.setRentalEndTime(LocalDateTime.now());
+        rent.setChargingStation(returnChargingStation);
+
         bikeService.save(bike);
         chargingStationService.save(returnChargingStation);
         userService.save(user);
         rentRepository.save(rent);
 
-        rentRepository.deleteById(rentId);
-
-        if(rentRepository.findById(rentId).isEmpty()) {
-            return new ResponseEntity<>("Bike successfully returned.", HttpStatus.OK);
-        }
-
-        return new ResponseEntity<>("Try again!", HttpStatus.I_AM_A_TEAPOT);
+        return new ResponseEntity<>("Bike successfully returned.", HttpStatus.OK);
     }
 
     private double countRentalCost(Long rentId) {
