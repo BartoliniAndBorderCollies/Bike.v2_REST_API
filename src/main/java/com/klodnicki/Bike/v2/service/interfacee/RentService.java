@@ -1,6 +1,6 @@
 package com.klodnicki.Bike.v2.service.interfacee;
 
-public interface GenericRentalActionService<G, H, T, ID, ID2, ID3> {
+public interface RentService<G, H, T, ID, ID2, ID3> {
 
     G rent(T obj);
 
