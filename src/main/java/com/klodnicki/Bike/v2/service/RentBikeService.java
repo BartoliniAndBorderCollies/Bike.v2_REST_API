@@ -81,7 +81,6 @@ public class RentBikeService implements GenericRentBikeService {
 
         bike.setRented(true);
         bike.setChargingStation(null);
-        bike.setAmountToBePaid(0.0);
         bike.setUser(user); //it is a relation @OneToOne therefore setting should be on both sides of owning
         user.setBike(bike);
         if (chargingStation.getBikeList() != null && !chargingStation.getBikeList().isEmpty()) {
@@ -124,9 +123,10 @@ public class RentBikeService implements GenericRentBikeService {
         User user = findUserById(bike.getUser().getId());
 
         rent.setRentalEndTime(LocalDateTime.now());
+        rent.setAmountToBePaid(countRentalCost(rentId));
+        rent.setChargingStation(returnChargingStation);
 
         bike.setRented(false);
-        bike.setAmountToBePaid(countRentalCost(rentId));
         bike.setUser(null);
 
         returnChargingStation.getBikeList().add(bike); //Bike is an owning side, so I must add below line to save it in db
@@ -135,8 +135,6 @@ public class RentBikeService implements GenericRentBikeService {
         returnChargingStation.setFreeSlots(returnChargingStation.getFreeSlots() - 1);
 
         user.setBalance(user.getBalance() - countRentalCost(rentId)); //reducing the user balance by rental cost
-
-        rent.setChargingStation(returnChargingStation);
 
         bikeService.save(bike);
         chargingStationService.save(returnChargingStation);
