@@ -39,7 +39,7 @@ public class UserService implements GenericUserService {
     }
     @Override
     public UserForAdminResponseDTO findById(Long id) {
-        User user = getUser(id);
+        User user = findUserById(id);
 
         return modelMapper.map(user, UserForAdminResponseDTO.class);
     }
@@ -52,12 +52,9 @@ public class UserService implements GenericUserService {
         return userRepository.findById(id).orElseThrow(IllegalArgumentException::new);
     }
 
-    private User getUser(Long id) {
-        return userRepository.findById(id).orElseThrow(IllegalArgumentException::new);
-    }
     @Override
     public ResponseEntity<?> banUser(Long id) {
-        User user = getUser(id);
+        User user = findUserById(id);
 
         user.setAccountValid(false);
         userRepository.save(user);
