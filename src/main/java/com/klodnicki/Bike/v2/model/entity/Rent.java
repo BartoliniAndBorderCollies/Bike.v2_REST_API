@@ -1,6 +1,7 @@
 package com.klodnicki.Bike.v2.model.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -11,6 +12,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 public class Rent {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,14 +32,4 @@ public class Rent {
     @OneToOne
     @JoinColumn(name = "chargingStation_id")
     private ChargingStation chargingStation;
-
-    public Rent(LocalDateTime rentalStartTime, LocalDateTime rentalEndTime, Bike bike, User user,
-                ChargingStation chargingStation, int daysOfRent) {
-        this.rentalStartTime = rentalStartTime;
-        this.rentalEndTime = rentalEndTime;
-        this.bike = bike;
-        this.user = user;
-        this.chargingStation = chargingStation;
-        this.daysOfRent = daysOfRent;
-    }
 }
