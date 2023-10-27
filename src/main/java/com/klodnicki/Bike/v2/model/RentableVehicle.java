@@ -24,7 +24,6 @@ public abstract class RentableVehicle {
 
     private String serialNumber;
     private boolean isRented;
-    private double amountToBePaid;
     @Embedded
     private GpsCoordinates gpsCoordinates;
 }
