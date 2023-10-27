@@ -21,6 +21,7 @@ public class Rent {
     private LocalDateTime rentalStartTime;
     private LocalDateTime rentalEndTime;
     private int daysOfRent;
+    private double amountToBePaid;
     @OneToOne
     @JoinColumn(name = "bike_id")
     private Bike bike;
