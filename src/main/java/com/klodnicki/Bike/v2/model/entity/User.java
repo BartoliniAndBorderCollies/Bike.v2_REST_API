@@ -30,16 +30,4 @@ public class User {
     private Rent rent;
     @OneToOne(mappedBy = "user")
     private Bike bike;
-
-    public User(Long id, String name, String phoneNumber, String emailAddress, int accountNumber,
-                boolean isAccountValid, String role, double balance) {
-        this.id = id;
-        this.name = name;
-        this.phoneNumber = phoneNumber;
-        this.emailAddress = emailAddress;
-        this.accountNumber = accountNumber;
-        this.isAccountValid = isAccountValid;
-        this.role = role;
-        this.balance = balance;
-    }
 }
