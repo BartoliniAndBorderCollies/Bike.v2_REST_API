@@ -20,6 +20,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -121,6 +122,8 @@ public class RentBikeService implements GenericRentBikeService {
         Rent rent = findRentById(rentId);
         User user = findUserById(bike.getUser().getId());
 
+        rent.setRentalEndTime(LocalDateTime.now());
+
         bike.setRented(false);
         bike.setAmountToBePaid(countRentalCost(rentId));
         bike.setUser(null);
@@ -132,7 +135,6 @@ public class RentBikeService implements GenericRentBikeService {
 
         user.setBalance(user.getBalance() - countRentalCost(rentId)); //reducing the user balance by rental cost
 
-        rent.setRentalEndTime(LocalDateTime.now());
         rent.setChargingStation(returnChargingStation);
 
         bikeService.save(bike);
