@@ -63,10 +63,6 @@ public class BikeService implements GenericBikeService {
 
         updateBikeIfValuesAreNotNulls(updatedBikeRequestDTO, bike);
         bike.setRented(updatedBikeRequestDTO.isRented());
-        if (updatedBikeRequestDTO.getAmountToBePaid() != 0) {
-            bike.setAmountToBePaid(updatedBikeRequestDTO.getAmountToBePaid());
-        }
-
         bikeRepository.save(bike);
 
         //converting Bike into BikeForAdminResponseDTO using model mapper
