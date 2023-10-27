@@ -146,7 +146,15 @@ public class RentBikeService implements GenericRentBikeService {
     private double countRentalCost(Long rentId) {
         Rent rent = findRentById(rentId);
         int rentalDays = rent.getDaysOfRent();
-        return rentalDays * 10;
+
+        //option 1: if user chooses rent option for days
+        if(rentalDays >0) {
+            return rentalDays * 10;
+        }
+
+        //option 2: if user decides to rent per minutes
+        long durationInMinutes = Duration.between(rent.getRentalStartTime(), rent.getRentalEndTime()).toMinutes();
+        return durationInMinutes * 0.1;
     }
 
     private Rent findRentById(Long id) {
