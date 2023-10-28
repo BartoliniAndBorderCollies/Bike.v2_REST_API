@@ -103,18 +103,6 @@ public class RentBikeService implements GenericRentBikeService {
     }
 
     @Override
-    public ChargingStation addBikeToList(Long chargingStationId, Bike bike) {
-        ChargingStation chargingStation = chargingStationService.findStationById(chargingStationId);
-        chargingStation.getBikeList().add(bike);
-        //In JPA, only the owning side of the relationship is used when writing to the database.
-        //which means this will not be saved in database. Charging station still will have an empty bike list.
-        //because ChargingStation is NOT the owning-side. Therefore, I must add line below to fix this problem
-        bike.setChargingStation(chargingStation);
-
-        return chargingStationService.save(chargingStation);
-    }
-
-    @Override
     @Transactional
     public ResponseEntity<?> returnVehicle(Long rentId, Long returnChargingStationId, Long bikeId) {
         Bike bike = bikeService.findBikeById(bikeId);
