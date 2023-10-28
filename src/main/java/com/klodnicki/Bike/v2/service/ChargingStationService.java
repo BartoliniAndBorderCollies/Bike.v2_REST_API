@@ -1,6 +1,7 @@
 package com.klodnicki.Bike.v2.service;
 
 import com.klodnicki.Bike.v2.DTO.station.StationForAdminResponseDTO;
+import com.klodnicki.Bike.v2.model.entity.Bike;
 import com.klodnicki.Bike.v2.model.entity.ChargingStation;
 import com.klodnicki.Bike.v2.repository.ChargingStationRepository;
 import com.klodnicki.Bike.v2.service.interfacee.GenericChargingStationService;
@@ -16,6 +17,7 @@ import java.util.List;
 public class ChargingStationService implements GenericChargingStationService {
 
     private final ChargingStationRepository chargingStationRepository;
+    private final BikeService bikeService;
     private final ModelMapper modelMapper;
 
     @Override
@@ -47,5 +49,18 @@ public class ChargingStationService implements GenericChargingStationService {
     @Override
     public ChargingStation save(ChargingStation chargingStation) {
         return chargingStationRepository.save(chargingStation);
+    }
+
+    @Override
+    public ChargingStation addBikeToList(Long chargingStationId, Long bikeId) {
+        ChargingStation chargingStation = findStationById(chargingStationId);
+        Bike bike = bikeService.findBikeById(bikeId);
+
+        bike.setChargingStation(chargingStation);
+        chargingStation.getBikeList().add(bike);
+        //In JPA, only the owning side of the relationship is used when writing to the database.
+        //which means this will not be saved in database. Charging station still will have an empty bike list.
+        //because ChargingStation is NOT the owning-side.
+        return save(chargingStation);
     }
 }

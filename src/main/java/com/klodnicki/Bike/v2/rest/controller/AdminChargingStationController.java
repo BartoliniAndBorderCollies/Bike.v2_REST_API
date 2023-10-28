@@ -16,6 +16,10 @@ public class AdminChargingStationController {
 
     private final GenericChargingStationService chargingStationService;
 
+    @PostMapping("/list/add/{id}")
+    public ChargingStation addBikeToList(@PathVariable("id") Long chargingStationId, @RequestParam Long bikeId) {
+        return chargingStationService.addBikeToList(chargingStationId, bikeId);
+    }
 
     @PostMapping("/add")
     public StationForAdminResponseDTO add(@RequestBody ChargingStation chargingStation) {
