@@ -104,11 +104,11 @@ public class RentBikeServiceHandler implements RentBikeServiceApi {
 
     @Override
     @Transactional
-    public ResponseEntity<?> returnVehicle(Long rentId, Long returnChargingStationId, Long bikeId) {
-        Bike bike = bikeService.findBikeById(bikeId);
-        ChargingStation returnChargingStation = chargingStationService.findStationById(returnChargingStationId);
+    public ResponseEntity<?> returnVehicle(Long rentId, Long returnChargingStationId) {
         Rent rent = rentRepository.findById(rentId).orElseThrow(IllegalArgumentException::new);
-        User user = userService.findUserById(bike.getUser().getId());
+        Bike bike = rent.getBike();
+        User user = rent.getUser();
+        ChargingStation returnChargingStation = chargingStationService.findStationById(returnChargingStationId);
 
         rent.setRentalEndTime(LocalDateTime.now());
         rent.setAmountToBePaid(countRentalCost(rentId));
