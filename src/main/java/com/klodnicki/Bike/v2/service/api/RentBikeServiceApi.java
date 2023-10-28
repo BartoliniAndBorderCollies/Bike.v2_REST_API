@@ -8,8 +8,8 @@ import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
-public interface RentBikeServiceApi extends RentServiceApi<RentResponseDTO, ResponseEntity<?>,
-        RentRequest, Long, Long, Long> {
+public interface RentBikeServiceApi extends RentServiceApi<RentResponseDTO, ResponseEntity<?>, RentRequest,
+        Long, Long> {
 
     List<BikeForNormalUserResponseDTO> findAvailableBikes();
     BikeForNormalUserResponseDTO findBikeForNormalUserById(Long id);

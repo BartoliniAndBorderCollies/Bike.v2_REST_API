@@ -43,7 +43,7 @@ public class RentBikeController {
     }
 
     @PutMapping("/returns/{rentId}")
-    public ResponseEntity<?> returnBike(@PathVariable Long rentId, @RequestParam Long returnChargingStationId, @RequestBody Long bikeId) {
-        return rentBikeService.returnVehicle(rentId, returnChargingStationId, bikeId);
+    public ResponseEntity<?> returnBike(@PathVariable Long rentId, @RequestParam Long returnChargingStationId) {
+        return rentBikeService.returnVehicle(rentId, returnChargingStationId);
     }
 }
