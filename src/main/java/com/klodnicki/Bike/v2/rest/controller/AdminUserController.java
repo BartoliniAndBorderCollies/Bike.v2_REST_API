@@ -2,7 +2,7 @@ package com.klodnicki.Bike.v2.rest.controller;
 
 import com.klodnicki.Bike.v2.DTO.user.ListUsersForAdminResponseDTO;
 import com.klodnicki.Bike.v2.DTO.user.UserForAdminResponseDTO;
-import com.klodnicki.Bike.v2.service.interfacee.GenericUserService;
+import com.klodnicki.Bike.v2.service.api.UserServiceApi;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,7 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 public class AdminUserController {
 
-    private final GenericUserService userService;
+    private final UserServiceApi userService;
 
 
     @GetMapping

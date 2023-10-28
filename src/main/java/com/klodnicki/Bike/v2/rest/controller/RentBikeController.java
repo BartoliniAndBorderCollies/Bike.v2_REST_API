@@ -5,9 +5,7 @@ import com.klodnicki.Bike.v2.DTO.bike.ListBikesForNormalUserResponseDTO;
 import com.klodnicki.Bike.v2.DTO.rent.RentRequestDTO;
 import com.klodnicki.Bike.v2.DTO.rent.RentResponseDTO;
 import com.klodnicki.Bike.v2.model.RentRequest;
-import com.klodnicki.Bike.v2.model.entity.Bike;
-import com.klodnicki.Bike.v2.model.entity.ChargingStation;
-import com.klodnicki.Bike.v2.service.interfacee.GenericRentBikeService;
+import com.klodnicki.Bike.v2.service.api.RentBikeServiceApi;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +17,7 @@ import java.util.List;
 @AllArgsConstructor
 public class RentBikeController {
 
-    private final GenericRentBikeService rentBikeService;
+    private final RentBikeServiceApi rentBikeService;
 
 
     @GetMapping("/bikes")

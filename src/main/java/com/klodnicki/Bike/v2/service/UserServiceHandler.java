@@ -3,7 +3,7 @@ package com.klodnicki.Bike.v2.service;
 import com.klodnicki.Bike.v2.DTO.user.UserForAdminResponseDTO;
 import com.klodnicki.Bike.v2.model.entity.User;
 import com.klodnicki.Bike.v2.repository.UserRepository;
-import com.klodnicki.Bike.v2.service.interfacee.GenericUserService;
+import com.klodnicki.Bike.v2.service.api.UserServiceApi;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
@@ -15,7 +15,7 @@ import java.util.List;
 
 @Service
 @AllArgsConstructor
-public class UserService implements GenericUserService {
+public class UserServiceHandler implements UserServiceApi {
 
     private final UserRepository userRepository;
     private final ModelMapper modelMapper;

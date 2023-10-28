@@ -4,7 +4,7 @@ import com.klodnicki.Bike.v2.DTO.bike.BikeForAdminResponseDTO;
 import com.klodnicki.Bike.v2.DTO.bike.BikeRequestDTO;
 import com.klodnicki.Bike.v2.model.entity.Bike;
 import com.klodnicki.Bike.v2.repository.BikeRepository;
-import com.klodnicki.Bike.v2.service.interfacee.*;
+import com.klodnicki.Bike.v2.service.api.*;
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
 import org.modelmapper.ModelMapper;
@@ -16,7 +16,7 @@ import java.util.Optional;
 
 @Service
 @AllArgsConstructor
-public class BikeService implements GenericBikeService {
+public class BikeServiceHandler implements BikeServiceApi {
 
     private final BikeRepository bikeRepository;
     private final ModelMapper modelMapper;
