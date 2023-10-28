@@ -14,10 +14,6 @@ public interface GenericRentBikeService extends RentService<RentResponseDTO, Res
         RentRequest, Long, Long, Long> {
 
     List<BikeForNormalUserResponseDTO> findAvailableBikes();
-
     BikeForNormalUserResponseDTO findBikeForNormalUserById(Long id);
-
-    ChargingStation addBikeToList(Long chargingStationId, Bike bike);
-
     RentResponseDTO updateRent(Long id, RentRequestDTO rentRequestDTO);
 }
