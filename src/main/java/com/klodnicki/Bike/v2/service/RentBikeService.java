@@ -37,7 +37,7 @@ public class RentBikeService implements GenericRentBikeService {
 
     @Override
     public RentResponseDTO updateRent(Long id, RentRequestDTO rentRequestDTO) {
-        Rent rent = findRentById(id);
+        Rent rent = rentRepository.findById(id).orElseThrow(IllegalArgumentException::new);
 
         if (rentRequestDTO.getDaysOfRent() > 0) {
             rent.setDaysOfRent(rentRequestDTO.getDaysOfRent());
@@ -76,8 +76,8 @@ public class RentBikeService implements GenericRentBikeService {
     @Transactional
     public RentResponseDTO rent(RentRequest rentRequest) {
         Bike bike = bikeService.findBikeById(rentRequest.getBikeId());
-        User user = findUserById(rentRequest.getUserId());
-        ChargingStation chargingStation = findStationById(rentRequest.getChargingStationId());
+        User user = userService.findUserById(rentRequest.getUserId());
+        ChargingStation chargingStation = chargingStationService.findStationById(rentRequest.getChargingStationId());
 
         bike.setRented(true);
         bike.setChargingStation(null);
@@ -104,7 +104,7 @@ public class RentBikeService implements GenericRentBikeService {
 
     @Override
     public ChargingStation addBikeToList(Long chargingStationId, Bike bike) {
-        ChargingStation chargingStation = findStationById(chargingStationId);
+        ChargingStation chargingStation = chargingStationService.findStationById(chargingStationId);
         chargingStation.getBikeList().add(bike);
         //In JPA, only the owning side of the relationship is used when writing to the database.
         //which means this will not be saved in database. Charging station still will have an empty bike list.
@@ -118,9 +118,9 @@ public class RentBikeService implements GenericRentBikeService {
     @Transactional
     public ResponseEntity<?> returnVehicle(Long rentId, Long returnChargingStationId, Long bikeId) {
         Bike bike = bikeService.findBikeById(bikeId);
-        ChargingStation returnChargingStation = findStationById(returnChargingStationId);
-        Rent rent = findRentById(rentId);
-        User user = findUserById(bike.getUser().getId());
+        ChargingStation returnChargingStation = chargingStationService.findStationById(returnChargingStationId);
+        Rent rent = rentRepository.findById(rentId).orElseThrow(IllegalArgumentException::new);
+        User user = userService.findUserById(bike.getUser().getId());
 
         rent.setRentalEndTime(LocalDateTime.now());
         rent.setAmountToBePaid(countRentalCost(rentId));
@@ -145,7 +145,7 @@ public class RentBikeService implements GenericRentBikeService {
     }
 
     private double countRentalCost(Long rentId) {
-        Rent rent = findRentById(rentId);
+        Rent rent = rentRepository.findById(rentId).orElseThrow(IllegalArgumentException::new);
         int rentalDays = rent.getDaysOfRent();
 
         //option 1: if user chooses rent option for days
@@ -156,17 +156,5 @@ public class RentBikeService implements GenericRentBikeService {
         //option 2: if user decides to rent per minutes
         long durationInMinutes = Duration.between(rent.getRentalStartTime(), rent.getRentalEndTime()).toMinutes();
         return durationInMinutes * 0.1;
-    }
-
-    private Rent findRentById(Long id) {
-        return rentRepository.findById(id).orElseThrow(IllegalArgumentException::new);
-    }
-
-    private User findUserById(Long id) {
-        return userService.findUserById(id);
-    }
-
-    private ChargingStation findStationById(Long returnChargingStationId) {
-        return chargingStationService.findStationById(returnChargingStationId);
     }
 }
