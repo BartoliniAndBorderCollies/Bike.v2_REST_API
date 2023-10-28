@@ -77,7 +77,7 @@ public class RentBikeService implements GenericRentBikeService {
     public RentResponseDTO rent(RentRequest rentRequest) {
         Bike bike = bikeService.findBikeById(rentRequest.getBikeId());
         User user = userService.findUserById(rentRequest.getUserId());
-        ChargingStation chargingStation = chargingStationService.findStationById(rentRequest.getChargingStationId());
+        ChargingStation chargingStation = chargingStationService.findStationById(bike.getChargingStation().getId());
 
         bike.setRented(true);
         bike.setChargingStation(null);
