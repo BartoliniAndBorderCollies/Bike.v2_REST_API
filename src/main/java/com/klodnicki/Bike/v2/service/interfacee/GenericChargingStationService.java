@@ -9,4 +9,6 @@ import com.klodnicki.Bike.v2.service.interfacee.basic.operation.SaveService;
 public interface GenericChargingStationService extends AddService<StationForAdminResponseDTO, ChargingStation>,
         FindService<StationForAdminResponseDTO, Long>, SaveService<ChargingStation> {
     ChargingStation findStationById(Long id);
+
+    ChargingStation addBikeToList(Long chargingStationId, Long bikeId);
 }
