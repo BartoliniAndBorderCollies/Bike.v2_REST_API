@@ -2,20 +2,23 @@ package com.klodnicki.Bike.v2.rest.controller;
 
 import com.klodnicki.Bike.v2.DTO.bike.BikeForAdminResponseDTO;
 import com.klodnicki.Bike.v2.DTO.bike.BikeRequestDTO;
-import com.klodnicki.Bike.v2.service.GenericBikeService;
+import com.klodnicki.Bike.v2.DTO.bike.ListBikesForAdminResponseDTO;
+import com.klodnicki.Bike.v2.service.api.BikeServiceApi;
+import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/bike/admin")
+@RequestMapping("/api/admin/bikes")
+@AllArgsConstructor
 public class AdminBikeController {
 
-    private final GenericBikeService bikeService;
+//zamienilismy BikeServiceHandler dependency wstrzykiwane w controllerze na BikeServiceApi
+//Żeby móc podstawić różne implementacje BikeServiceHandler, nie tylko ten jeden konkretny BikeServiceHandler. Jak zrobisz klasę
+//        BetterBikeService możesz bez żadnych zmian w kontrolerze z niego korzystać od razu
 
-    public AdminBikeController(GenericBikeService bikeService) {
-        this.bikeService = bikeService;
-    }
+    private final BikeServiceApi bikeService;
 
     @PostMapping("/add")
     public BikeForAdminResponseDTO addBike(@RequestBody BikeRequestDTO bikeDTO) {
@@ -28,8 +31,10 @@ public class AdminBikeController {
     }
 
     @GetMapping
-    public List<BikeForAdminResponseDTO> findAllBikes() {
-        return bikeService.findAll();
+    public ListBikesForAdminResponseDTO findAllBikes() {
+        List<BikeForAdminResponseDTO> listBikesDTO = bikeService.findAll();
+
+        return new ListBikesForAdminResponseDTO(listBikesDTO);
     }
 
     @DeleteMapping("/{id}")

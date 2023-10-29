@@ -1,21 +1,18 @@
 package com.klodnicki.Bike.v2.DTO.user;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class UserForNormalUserResponseDTO {
 
+    private Long id;
     private String name;
-
-    public UserForNormalUserResponseDTO(String name) {
-        this.name = name;
-    }
-
-    public UserForNormalUserResponseDTO() {
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
+    private boolean isAccountValid;
+    private String role;
 }

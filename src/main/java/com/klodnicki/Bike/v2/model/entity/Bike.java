@@ -1,55 +1,39 @@
 package com.klodnicki.Bike.v2.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.klodnicki.Bike.v2.model.BikeType;
-import com.klodnicki.Bike.v2.model.GpsCoordinates;
 import com.klodnicki.Bike.v2.model.RentableVehicle;
-import com.klodnicki.Bike.v2.model.RentalAction;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import java.time.LocalDateTime;
 
 @Entity
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 //@DiscriminatorValue("bike")
-public class Bike extends RentableVehicle implements RentalAction {
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+public class Bike extends RentableVehicle {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
     private BikeType bikeType;
+    //Bike is a parent class (owning side) of the relation with User and ChargingStation
+    //Bike is non-owning side of the relation with Rent
 
-    public Bike(Long id, BikeType bikeType, String serialNumber, boolean isRented, LocalDateTime rentalStartTime, LocalDateTime rentalEndTime,
-                double amountToBePaid, GpsCoordinates gpsCoordinates) {
-        super(serialNumber, isRented, rentalStartTime, rentalEndTime, amountToBePaid, gpsCoordinates);
-        this.id = id;
-        this.bikeType = bikeType;
-    }
-
-    public Bike() {
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public BikeType getBikeType() {
-        return bikeType;
-    }
-
-    public void setBikeType(BikeType bikeType) {
-        this.bikeType = bikeType;
-    }
-
-    @Override
-    public void rent() {
-
-    }
-
-    @Override
-    public void giveBack() {
-
-    }
+    //mam kaskadę obustronną. Każda zmiana w Rent wpływa na Bike, każda zmiana w Bike wpływa na Rent.
+    @OneToOne (mappedBy = "bike", cascade = CascadeType.ALL)
+    private Rent rent;
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+    @ManyToOne
+    @JoinColumn(name = "charging_station_id")
+    private ChargingStation chargingStation;
 }
