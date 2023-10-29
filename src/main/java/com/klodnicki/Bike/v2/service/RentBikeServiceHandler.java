@@ -37,7 +37,7 @@ public class RentBikeServiceHandler implements RentBikeServiceApi {
 
     @Override
     public RentResponseDTO updateRent(Long id, RentRequestDTO rentRequestDTO) {
-        Rent rent = rentRepository.findById(id).orElseThrow(IllegalArgumentException::new);
+        Rent rent = findRentById(id);
 
         if (rentRequestDTO.getDaysOfRent() > 0) {
             rent.setDaysOfRent(rentRequestDTO.getDaysOfRent());
@@ -105,7 +105,7 @@ public class RentBikeServiceHandler implements RentBikeServiceApi {
     @Override
     @Transactional
     public ResponseEntity<?> returnVehicle(Long rentId, Long returnChargingStationId) {
-        Rent rent = rentRepository.findById(rentId).orElseThrow(IllegalArgumentException::new);
+        Rent rent = findRentById(rentId);
         Bike bike = rent.getBike();
         User user = rent.getUser();
         ChargingStation returnChargingStation = chargingStationService.findStationById(returnChargingStationId);
@@ -133,7 +133,7 @@ public class RentBikeServiceHandler implements RentBikeServiceApi {
     }
 
     private double countRentalCost(Long rentId) {
-        Rent rent = rentRepository.findById(rentId).orElseThrow(IllegalArgumentException::new);
+        Rent rent = findRentById(rentId);
         int rentalDays = rent.getDaysOfRent();
 
         //option 1: if user chooses rent option for days
@@ -144,5 +144,9 @@ public class RentBikeServiceHandler implements RentBikeServiceApi {
         //option 2: if user decides to rent per minutes
         long durationInMinutes = Duration.between(rent.getRentalStartTime(), rent.getRentalEndTime()).toMinutes();
         return durationInMinutes * 0.1;
+    }
+
+    private Rent findRentById(Long id) {
+        return rentRepository.findById(id).orElseThrow(IllegalArgumentException::new);
     }
 }
