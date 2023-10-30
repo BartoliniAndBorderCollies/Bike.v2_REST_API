@@ -3,11 +3,15 @@ package com.klodnicki.Bike.v2.service;
 
 import com.klodnicki.Bike.v2.DTO.bike.BikeForAdminResponseDTO;
 import com.klodnicki.Bike.v2.DTO.bike.BikeRequestDTO;
+import com.klodnicki.Bike.v2.model.entity.Bike;
 import com.klodnicki.Bike.v2.repository.BikeRepository;
 import org.junit.jupiter.api.Test;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -50,5 +54,25 @@ class BikeServiceHandlerTest {
         assertNotNull(actual.getId());  // check that ID is not null
         expected.setId(actual.getId());  // set expected ID to actual ID
         assertEquals(expected, actual);
+    }
+
+    @Test
+    public void findAll_ShouldReturnListOfBikeForAdminResponseDTO_WhenBikeExistInDatabase() {
+        //given
+        bikeRepository.deleteAll();
+        ArrayList<BikeForAdminResponseDTO> list = new ArrayList<>();
+
+        for (int i = 0; i < 3; i++) {
+            Bike bike = new Bike();
+            bikeRepository.save(bike);
+            BikeForAdminResponseDTO bikeDTO = modelMapper.map(bike, BikeForAdminResponseDTO.class);
+            list.add(bikeDTO);
+        }
+
+        //when
+        List<BikeForAdminResponseDTO> actual = bikeServiceHandler.findAll();
+
+        //then
+        assertEquals(list, actual);
     }
 }
