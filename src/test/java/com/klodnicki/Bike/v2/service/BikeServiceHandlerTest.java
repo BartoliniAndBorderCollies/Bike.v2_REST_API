@@ -1,6 +1,7 @@
 package com.klodnicki.Bike.v2.service;
 
 
+import com.klodnicki.Bike.v2.DTO.bike.BikeForAdminResponseDTO;
 import com.klodnicki.Bike.v2.DTO.bike.BikeRequestDTO;
 import com.klodnicki.Bike.v2.repository.BikeRepository;
 import org.junit.jupiter.api.Test;
@@ -32,6 +33,22 @@ class BikeServiceHandlerTest {
         Long actual = bikeRepository.count();
 
         //then
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void add_ShouldReturnBikeForAdminResponseDTO_WhenGivenBikeRequestDTO() {
+        //given
+        bikeRepository.deleteAll();
+        BikeRequestDTO bikeRequestDTO = new BikeRequestDTO();
+        BikeForAdminResponseDTO expected = modelMapper.map(bikeRequestDTO, BikeForAdminResponseDTO.class);
+
+        //when
+        BikeForAdminResponseDTO actual = bikeServiceHandler.add(bikeRequestDTO);
+
+        //then
+        assertNotNull(actual.getId());  // check that ID is not null
+        expected.setId(actual.getId());  // set expected ID to actual ID
         assertEquals(expected, actual);
     }
 }
