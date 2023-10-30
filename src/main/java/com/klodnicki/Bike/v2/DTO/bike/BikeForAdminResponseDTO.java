@@ -9,10 +9,9 @@ import lombok.*;
 import java.time.LocalDateTime;
 
 @Builder
-@Getter
-@Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Data
 public class BikeForAdminResponseDTO {
     private Long id;
     private String serialNumber;
