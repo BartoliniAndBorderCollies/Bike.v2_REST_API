@@ -5,6 +5,8 @@ import com.klodnicki.Bike.v2.DTO.bike.BikeForAdminResponseDTO;
 import com.klodnicki.Bike.v2.DTO.bike.BikeRequestDTO;
 import com.klodnicki.Bike.v2.model.entity.Bike;
 import com.klodnicki.Bike.v2.repository.BikeRepository;
+import com.klodnicki.Bike.v2.repository.ChargingStationRepository;
+import com.klodnicki.Bike.v2.repository.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,10 @@ class BikeServiceHandlerTest {
 
     @Autowired
     private BikeRepository bikeRepository;
+    @Autowired
+    private ChargingStationRepository chargingStationRepository;
+    @Autowired
+    private UserRepository userRepository;
     @Autowired
     private BikeServiceHandler bikeServiceHandler;
     @Autowired
@@ -74,5 +80,21 @@ class BikeServiceHandlerTest {
 
         //then
         assertEquals(list, actual);
+    }
+
+    @Test
+    public void findById_ShouldReturnBikeForAdminResponseDTO_WhenBikeExistsInDatabase() {
+        //given
+        bikeRepository.deleteAll();
+        Bike bike = new Bike();
+        bikeRepository.save(bike);
+
+        BikeForAdminResponseDTO expected = modelMapper.map(bike, BikeForAdminResponseDTO.class);
+
+        //when
+        BikeForAdminResponseDTO actual = bikeServiceHandler.findById(bike.getId());
+
+        //then
+        assertEquals(expected, actual);
     }
 }
