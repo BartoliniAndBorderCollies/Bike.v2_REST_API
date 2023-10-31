@@ -201,4 +201,19 @@ class BikeServiceHandlerTest {
         //then
         assertEquals(expected, actual);
     }
+
+    @Test
+    public void save_ShouldSaveInDatabase_WhenGivenBikeObject() {
+        //given
+        bikeRepository.deleteAll();
+        Long expected = bikeRepository.count() + 1;
+        Bike bike = new Bike();
+
+        //when
+        bikeServiceHandler.save(bike);
+        Long actual = bikeRepository.count();
+
+        //then
+        assertEquals(expected, actual);
+    }
 }
