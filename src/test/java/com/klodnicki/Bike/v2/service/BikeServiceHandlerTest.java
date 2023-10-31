@@ -3,7 +3,14 @@ package com.klodnicki.Bike.v2.service;
 
 import com.klodnicki.Bike.v2.DTO.bike.BikeForAdminResponseDTO;
 import com.klodnicki.Bike.v2.DTO.bike.BikeRequestDTO;
+import com.klodnicki.Bike.v2.DTO.station.StationForAdminResponseDTO;
+import com.klodnicki.Bike.v2.DTO.user.UserForAdminResponseDTO;
+import com.klodnicki.Bike.v2.model.BikeType;
+import com.klodnicki.Bike.v2.model.GpsCoordinates;
 import com.klodnicki.Bike.v2.model.entity.Bike;
+import com.klodnicki.Bike.v2.model.entity.ChargingStation;
+import com.klodnicki.Bike.v2.model.entity.Rent;
+import com.klodnicki.Bike.v2.model.entity.User;
 import com.klodnicki.Bike.v2.repository.BikeRepository;
 import com.klodnicki.Bike.v2.repository.ChargingStationRepository;
 import com.klodnicki.Bike.v2.repository.UserRepository;
@@ -93,6 +100,44 @@ class BikeServiceHandlerTest {
 
         //when
         BikeForAdminResponseDTO actual = bikeServiceHandler.findById(bike.getId());
+
+        //then
+        assertEquals(expected, actual);
+    }
+
+
+    @Test
+    public void update_ShouldReturnUpdatedBikeForAdminResponseDTO_WhenGivenCorrectIdAndBikeRequestDTO() {
+        //given
+        bikeRepository.deleteAll();
+        Bike bike = new Bike();
+        bike.setRent(new Rent());
+
+        ChargingStation chargingStation = new ChargingStation();
+        chargingStationRepository.save(chargingStation);
+
+        User user = new User();
+        userRepository.save(user);
+
+        bike.setId(1L);
+        bike.setSerialNumber("123");
+        bike.setRented(true);
+        bike.setBikeType(BikeType.ELECTRIC);
+        bike.getRent().setAmountToBePaid(100.00);
+        bike.setGpsCoordinates(new GpsCoordinates("50N", "40E"));
+        bike.setUser(user);
+        bike.setChargingStation(chargingStation);
+
+        bikeRepository.save(bike);
+
+        BikeForAdminResponseDTO expected = modelMapper.map(bike, BikeForAdminResponseDTO.class);
+
+        BikeRequestDTO bikeRequestDTO = new BikeRequestDTO(2L, "123", true, BikeType.ELECTRIC,
+                100.00, new GpsCoordinates("50N", "40E"), new UserForAdminResponseDTO(),
+                new StationForAdminResponseDTO());
+
+        //when
+        BikeForAdminResponseDTO actual = bikeServiceHandler.update(1L, bikeRequestDTO);
 
         //then
         assertEquals(expected, actual);
