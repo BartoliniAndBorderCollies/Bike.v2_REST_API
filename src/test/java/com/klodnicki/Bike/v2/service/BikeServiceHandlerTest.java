@@ -175,4 +175,30 @@ class BikeServiceHandlerTest {
         //then
         assertEquals(expected, bikeRepository.count());
     }
+
+    @Test
+    public void findByIsRentedFalse_ShouldReturnListOfNotRentedBikes_WhenRentIsFalse() {
+        //given
+        bikeRepository.deleteAll();
+        List<Bike> expected = new ArrayList<>();
+
+        Bike bike = new Bike();
+        Bike bike2 = new Bike();
+        Bike bike3 = new Bike();
+
+        bike.setRented(true);
+        bike3.setRented(true);
+
+        bikeRepository.save(bike);
+        bikeRepository.save(bike2);
+        bikeRepository.save(bike3);
+
+        expected.add(bike2);
+
+        //when
+        List<Bike> actual = bikeServiceHandler.findByIsRentedFalse();
+
+        //then
+        assertEquals(expected, actual);
+    }
 }
