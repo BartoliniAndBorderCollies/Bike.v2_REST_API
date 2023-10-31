@@ -142,4 +142,23 @@ class BikeServiceHandlerTest {
         //then
         assertEquals(expected, actual);
     }
+
+    @Test
+    public void update_ShouldReturnEmptyOptional_WhenBikeRequestDTOValuesAreNulls() {
+        //given
+        bikeRepository.deleteAll();
+        Bike bike = new Bike();
+        bikeRepository.save(bike);
+
+        BikeRequestDTO bikeRequestDTO = new BikeRequestDTO(bike.getId(), null, true, null,
+                100.00, null, new UserForAdminResponseDTO(), new StationForAdminResponseDTO());
+
+        //when
+        BikeForAdminResponseDTO actual = bikeServiceHandler.update(bike.getId(), bikeRequestDTO);
+
+        //then
+        assertNull(actual.getSerialNumber());
+        assertNull(actual.getBikeType());
+        assertNull(actual.getGpsCoordinates());
+    }
 }
