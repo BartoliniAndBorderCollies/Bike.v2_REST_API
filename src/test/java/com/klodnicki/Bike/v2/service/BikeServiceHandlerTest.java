@@ -105,7 +105,6 @@ class BikeServiceHandlerTest {
         assertEquals(expected, actual);
     }
 
-
     @Test
     public void update_ShouldReturnUpdatedBikeForAdminResponseDTO_WhenGivenCorrectIdAndBikeRequestDTO() {
         //given
@@ -160,5 +159,20 @@ class BikeServiceHandlerTest {
         assertNull(actual.getSerialNumber());
         assertNull(actual.getBikeType());
         assertNull(actual.getGpsCoordinates());
+    }
+
+    @Test
+    public void deleteById_ShouldDeleteFromDatabase_WhenGivenId() {
+        //given
+        bikeRepository.deleteAll();
+        Bike bike = new Bike();
+        bikeRepository.save(bike);
+        Long expected = bikeRepository.count() - 1;
+
+        //when
+        bikeServiceHandler.deleteById(bike.getId());
+
+        //then
+        assertEquals(expected, bikeRepository.count());
     }
 }
