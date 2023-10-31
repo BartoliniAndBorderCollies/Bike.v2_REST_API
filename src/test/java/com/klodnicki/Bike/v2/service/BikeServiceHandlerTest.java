@@ -119,7 +119,7 @@ class BikeServiceHandlerTest {
         User user = new User();
         userRepository.save(user);
 
-        bike.setId(1L);
+        bike.setId(bike.getId());
         bike.setSerialNumber("123");
         bike.setRented(true);
         bike.setBikeType(BikeType.ELECTRIC);
@@ -132,12 +132,12 @@ class BikeServiceHandlerTest {
 
         BikeForAdminResponseDTO expected = modelMapper.map(bike, BikeForAdminResponseDTO.class);
 
-        BikeRequestDTO bikeRequestDTO = new BikeRequestDTO(2L, "123", true, BikeType.ELECTRIC,
+        BikeRequestDTO bikeRequestDTO = new BikeRequestDTO(bike.getId(), "123", true, BikeType.ELECTRIC,
                 100.00, new GpsCoordinates("50N", "40E"), new UserForAdminResponseDTO(),
                 new StationForAdminResponseDTO());
 
         //when
-        BikeForAdminResponseDTO actual = bikeServiceHandler.update(1L, bikeRequestDTO);
+        BikeForAdminResponseDTO actual = bikeServiceHandler.update(bike.getId(), bikeRequestDTO);
 
         //then
         assertEquals(expected, actual);
