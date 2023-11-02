@@ -55,4 +55,23 @@ class ChargingStationServiceHandlerTest {
         expected.setId(actual.getId());
         assertEquals(expected, actual);
     }
+
+    @Test
+    public void findAll_ShouldReturnListOfStationForAdminResponseDTO_WhenExistInDatabase() {
+        //given
+        chargingStationRepository.deleteAll();
+        List<StationForAdminResponseDTO> expectedStationDTOS = new ArrayList<>();
+        for(int i = 0; i<5; i++) {
+            ChargingStation chargingStation = new ChargingStation();
+            chargingStationRepository.save(chargingStation);
+            StationForAdminResponseDTO stationDTO = modelMapper.map(chargingStation, StationForAdminResponseDTO.class);
+            expectedStationDTOS.add(stationDTO);
+        }
+
+        //when
+        List<StationForAdminResponseDTO> actual = chargingStationServiceHandler.findAll();
+
+        //then
+        assertEquals(expectedStationDTOS, actual);
+    }
 }
