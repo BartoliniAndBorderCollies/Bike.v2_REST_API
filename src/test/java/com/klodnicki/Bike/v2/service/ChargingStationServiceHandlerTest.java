@@ -39,4 +39,20 @@ class ChargingStationServiceHandlerTest {
         //then
         assertEquals(expected, actual);
     }
+
+    @Test
+    public void add_ShouldReturnStationForAdminResponseDTO_WhenGivenChargingStation() {
+        //given
+        chargingStationRepository.deleteAll();
+        ChargingStation chargingStation = new ChargingStation();
+        StationForAdminResponseDTO expected = modelMapper.map(chargingStation, StationForAdminResponseDTO.class);
+
+        //when
+        StationForAdminResponseDTO actual = chargingStationServiceHandler.add(chargingStation);
+
+        //then
+        assertNotNull(actual.getId());
+        expected.setId(actual.getId());
+        assertEquals(expected, actual);
+    }
 }
