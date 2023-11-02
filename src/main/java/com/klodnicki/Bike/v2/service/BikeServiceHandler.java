@@ -80,7 +80,7 @@ public class BikeServiceHandler implements BikeServiceApi {
 
     @Override
     public Bike save(Bike bike) {
-        return bike;
+        return bikeRepository.save(bike);
     }
 
     @Override
