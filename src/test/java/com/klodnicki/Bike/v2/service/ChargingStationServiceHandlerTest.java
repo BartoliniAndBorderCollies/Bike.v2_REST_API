@@ -107,4 +107,14 @@ class ChargingStationServiceHandlerTest {
         //then
         assertEquals(chargingStation, actual);
     }
+
+    @Test
+    public void findStationById_ShouldThrowIllegalArgumentException_WhenNotFoundChargingStationInDatabase() {
+        //given
+        chargingStationRepository.deleteAll();
+
+        //when
+        //then
+        assertThrows(IllegalArgumentException.class, () -> chargingStationServiceHandler.findStationById(1L));
+    }
 }
