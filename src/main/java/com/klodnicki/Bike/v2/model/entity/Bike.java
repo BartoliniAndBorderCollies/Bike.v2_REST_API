@@ -7,13 +7,16 @@ import com.klodnicki.Bike.v2.model.RentableVehicle;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.Objects;
+
 
 @Entity
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 //@DiscriminatorValue("bike")
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
 public class Bike extends RentableVehicle {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,4 +35,17 @@ public class Bike extends RentableVehicle {
     @ManyToOne
     @JoinColumn(name = "charging_station_id")
     private ChargingStation chargingStation;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Bike bike = (Bike) o;
+        return Objects.equals(id, bike.id) && bikeType == bike.bikeType && Objects.equals(rent, bike.rent) && Objects.equals(user, bike.user);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, bikeType, rent, user);
+    }
 }
