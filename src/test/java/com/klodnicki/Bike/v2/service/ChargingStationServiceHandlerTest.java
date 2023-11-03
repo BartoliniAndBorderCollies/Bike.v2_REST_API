@@ -133,4 +133,26 @@ class ChargingStationServiceHandlerTest {
         //then
         assertEquals(expected, actual);
     }
+
+    @Test
+    public void addBikeToList_ShouldAddBikeToList_WhenProvidedCorrectArguments() {
+        //given
+        chargingStationRepository.deleteAll();
+
+        Bike bike = new Bike();
+        bikeRepository.save(bike);
+
+        List<Bike> bikeList = new ArrayList<>();
+        bikeList.add(bike);
+
+        ChargingStation chargingStation =  new ChargingStation();
+        chargingStationRepository.save(chargingStation);
+
+        //when
+        List<Bike> actual = chargingStationServiceHandler.addBikeToList(chargingStation.getId(), bike.getId()).getBikeList();
+
+        //then
+        assertIterableEquals(bikeList, actual);
+    }
+
 }
