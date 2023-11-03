@@ -1,7 +1,9 @@
 package com.klodnicki.Bike.v2.service;
 
 import com.klodnicki.Bike.v2.DTO.station.StationForAdminResponseDTO;
+import com.klodnicki.Bike.v2.model.entity.Bike;
 import com.klodnicki.Bike.v2.model.entity.ChargingStation;
+import com.klodnicki.Bike.v2.repository.BikeRepository;
 import com.klodnicki.Bike.v2.repository.ChargingStationRepository;
 import org.junit.jupiter.api.Test;
 import org.modelmapper.ModelMapper;
@@ -18,10 +20,10 @@ class ChargingStationServiceHandlerTest {
 
     @Autowired
     private ChargingStationRepository chargingStationRepository;
-
+    @Autowired
+    private BikeRepository bikeRepository;
     @Autowired
     private ChargingStationServiceHandler chargingStationServiceHandler;
-
     @Autowired
     private ModelMapper modelMapper;
 
