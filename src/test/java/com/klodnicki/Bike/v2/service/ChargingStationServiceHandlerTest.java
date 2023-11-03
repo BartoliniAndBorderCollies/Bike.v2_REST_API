@@ -117,4 +117,20 @@ class ChargingStationServiceHandlerTest {
         //then
         assertThrows(IllegalArgumentException.class, () -> chargingStationServiceHandler.findStationById(1L));
     }
+
+
+    @Test
+    public void save_ShouldSaveInDatabase_WhenProvidedChargingStationObject() {
+        //given
+        chargingStationRepository.deleteAll();
+        ChargingStation chargingStation = new ChargingStation();
+        Long expected = chargingStationRepository.count() + 1;
+
+        //when
+        chargingStationServiceHandler.save(chargingStation);
+        Long actual = chargingStationRepository.count();
+
+        //then
+        assertEquals(expected, actual);
+    }
 }
