@@ -63,7 +63,7 @@ class ChargingStationServiceHandlerTest {
         //given
         chargingStationRepository.deleteAll();
         List<StationForAdminResponseDTO> expectedStationDTOS = new ArrayList<>();
-        for(int i = 0; i<5; i++) {
+        for (int i = 0; i < 5; i++) {
             ChargingStation chargingStation = new ChargingStation();
             chargingStationRepository.save(chargingStation);
             StationForAdminResponseDTO stationDTO = modelMapper.map(chargingStation, StationForAdminResponseDTO.class);
@@ -75,5 +75,20 @@ class ChargingStationServiceHandlerTest {
 
         //then
         assertEquals(expectedStationDTOS, actual);
+    }
+
+    @Test
+    public void findById_ShouldReturnStationForAdminResponseDTO_WhenExistInDatabase() {
+        //given
+        chargingStationRepository.deleteAll();
+        ChargingStation chargingStation = new ChargingStation();
+        chargingStationRepository.save(chargingStation);
+        StationForAdminResponseDTO expected = modelMapper.map(chargingStation, StationForAdminResponseDTO.class);
+
+        //when
+        StationForAdminResponseDTO actual = chargingStationServiceHandler.findById(chargingStation.getId());
+
+        //then
+        assertEquals(expected, actual);
     }
 }
