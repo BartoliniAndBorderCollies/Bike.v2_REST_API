@@ -22,8 +22,23 @@ class UserServiceHandlerTest {
     @BeforeEach
     public void setUp() {
         userRepository = mock(UserRepository.class);
-        userServiceHandler = new UserServiceHandler(userRepository, new ModelMapper());
         modelMapper = new ModelMapper();
+        userServiceHandler = new UserServiceHandler(userRepository, modelMapper);
+    }
+
+    @Test
+    public void add_ShouldReturnUserForAdminResponseDTO_WhenUserProvided() {
+        //Arrange
+        User user = new User();
+        when(userRepository.save(user)).thenReturn(new User());
+
+        UserForAdminResponseDTO expected = modelMapper.map(user, UserForAdminResponseDTO.class);
+
+        //Act
+        UserForAdminResponseDTO actual = userServiceHandler.add(user);
+
+        //Assert
+        assertEquals(expected, actual);
     }
 
     @Test
