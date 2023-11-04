@@ -13,7 +13,8 @@ import java.util.Objects;
 @Entity
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 //@DiscriminatorValue("bike")
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class Bike extends RentableVehicle {
