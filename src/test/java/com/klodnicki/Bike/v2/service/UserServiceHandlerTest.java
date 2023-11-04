@@ -7,6 +7,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.modelmapper.ModelMapper;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -39,6 +41,31 @@ class UserServiceHandlerTest {
 
         //Assert
         assertEquals(expected, actual);
+    }
+
+    @Test
+    public void findAll_ShouldReturnListOfUserForAdminResponseDTO_WhenProvidedIterableUsers() {
+        //Arrange
+        Iterable<User> iterableOfUsers = new ArrayList<>();
+        List<UserForAdminResponseDTO> expected = new ArrayList<>();
+
+        for (int i = 0; i < 3; i++) {
+            User user = new User();
+            ((ArrayList<User>) iterableOfUsers).add(user);
+        }
+
+        when(userRepository.findAll()).thenReturn(iterableOfUsers);
+
+        for (User user : iterableOfUsers) {
+            UserForAdminResponseDTO userDTO = modelMapper.map(user, UserForAdminResponseDTO.class);
+            expected.add(userDTO);
+        }
+
+        //Act
+        List<UserForAdminResponseDTO> actual = userServiceHandler.findAll();
+
+        //Assert
+        assertIterableEquals(expected, actual);
     }
 
     @Test
