@@ -5,6 +5,7 @@ import com.klodnicki.Bike.v2.model.entity.Bike;
 import com.klodnicki.Bike.v2.model.entity.ChargingStation;
 import com.klodnicki.Bike.v2.repository.BikeRepository;
 import com.klodnicki.Bike.v2.repository.ChargingStationRepository;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,10 +28,14 @@ class ChargingStationServiceHandlerTest {
     @Autowired
     private ModelMapper modelMapper;
 
+    @BeforeEach
+    public void cleanDatabase() {
+        chargingStationRepository.deleteAll();
+    }
+
     @Test
     public void add_ShouldAddToDatabase_WhenGivenCorrectArguments() {
         //given
-        chargingStationRepository.deleteAll();
         Long expected = chargingStationRepository.count() + 1;
         ChargingStation chargingStation = new ChargingStation();
 
@@ -45,7 +50,6 @@ class ChargingStationServiceHandlerTest {
     @Test
     public void add_ShouldReturnStationForAdminResponseDTO_WhenGivenChargingStation() {
         //given
-        chargingStationRepository.deleteAll();
         ChargingStation chargingStation = new ChargingStation();
         StationForAdminResponseDTO expected = modelMapper.map(chargingStation, StationForAdminResponseDTO.class);
 
@@ -61,7 +65,6 @@ class ChargingStationServiceHandlerTest {
     @Test
     public void findAll_ShouldReturnListOfStationForAdminResponseDTO_WhenExistInDatabase() {
         //given
-        chargingStationRepository.deleteAll();
         List<StationForAdminResponseDTO> expectedStationDTOS = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
             ChargingStation chargingStation = new ChargingStation();
@@ -80,7 +83,6 @@ class ChargingStationServiceHandlerTest {
     @Test
     public void findById_ShouldReturnStationForAdminResponseDTO_WhenExistInDatabase() {
         //given
-        chargingStationRepository.deleteAll();
         ChargingStation chargingStation = new ChargingStation();
         chargingStationRepository.save(chargingStation);
         StationForAdminResponseDTO expected = modelMapper.map(chargingStation, StationForAdminResponseDTO.class);
@@ -96,7 +98,6 @@ class ChargingStationServiceHandlerTest {
     @Test
     public void findStationById_ShouldReturnChargingStation_WhenExistInDatabase() {
         //given
-        chargingStationRepository.deleteAll();
         ChargingStation chargingStation = new ChargingStation();
         chargingStationRepository.save(chargingStation);
 
@@ -111,8 +112,6 @@ class ChargingStationServiceHandlerTest {
     @Test
     public void findStationById_ShouldThrowIllegalArgumentException_WhenNotFoundChargingStationInDatabase() {
         //given
-        chargingStationRepository.deleteAll();
-
         //when
         //then
         assertThrows(IllegalArgumentException.class, () -> chargingStationServiceHandler.findStationById(1L));
@@ -122,7 +121,6 @@ class ChargingStationServiceHandlerTest {
     @Test
     public void save_ShouldSaveInDatabase_WhenProvidedChargingStationObject() {
         //given
-        chargingStationRepository.deleteAll();
         ChargingStation chargingStation = new ChargingStation();
         Long expected = chargingStationRepository.count() + 1;
 
@@ -137,8 +135,6 @@ class ChargingStationServiceHandlerTest {
     @Test
     public void addBikeToList_ShouldAddBikeToList_WhenProvidedCorrectArguments() {
         //given
-        chargingStationRepository.deleteAll();
-
         Bike bike = new Bike();
         bikeRepository.save(bike);
 
@@ -154,5 +150,4 @@ class ChargingStationServiceHandlerTest {
         //then
         assertIterableEquals(bikeList, actual);
     }
-
 }
