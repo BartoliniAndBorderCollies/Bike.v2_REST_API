@@ -118,5 +118,17 @@ class UserServiceHandlerTest {
         assertEquals(HttpStatusCode.valueOf(200), response.getStatusCode());
     }
 
+    @Test
+    public void save_ShouldCallOnUserRepositoryExactlyOnce_WhenProvidedUser() {
+        //Arrange
+        User user = new User();
+
+        //Act
+        userServiceHandler.save(user);
+
+        //Assert
+        verify(userRepository, times(1)).save(user);
+    }
+
 
 }
