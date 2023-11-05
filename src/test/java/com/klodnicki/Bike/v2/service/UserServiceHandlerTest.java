@@ -95,4 +95,11 @@ class UserServiceHandlerTest {
         //Assert
         verify(userRepository, times(1)).deleteById(user.getId());
     }
+
+    @Test
+    public void findUserById_ShouldThrowException_WhenUserIsNotFound() {
+        assertThrows(IllegalArgumentException.class, () -> userServiceHandler.findUserById(1L));
+    }
+
+
 }
