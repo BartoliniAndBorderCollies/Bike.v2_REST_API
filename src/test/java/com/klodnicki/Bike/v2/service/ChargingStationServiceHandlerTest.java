@@ -99,11 +99,11 @@ class ChargingStationServiceHandlerTest {
     public void findStationById_ShouldReturnChargingStation_WhenExistInDatabase() {
         //given
         ChargingStation chargingStation = new ChargingStation();
+        chargingStation.setBikeList(new ArrayList<>());
         chargingStationRepository.save(chargingStation);
 
         //when
         ChargingStation actual = chargingStationServiceHandler.findStationById(chargingStation.getId());
-        actual.setBikeList(null);
 
         //then
         assertEquals(chargingStation, actual);
