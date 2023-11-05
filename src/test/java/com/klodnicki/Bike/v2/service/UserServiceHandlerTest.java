@@ -11,9 +11,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 class UserServiceHandlerTest {
 
@@ -81,5 +82,17 @@ class UserServiceHandlerTest {
 
         //Assert
         assertEquals(expected, actual);
+    }
+
+    @Test
+    public void deleteById_ShouldCallOnUserRepositoryExactlyOnce_WhenProvidedId() {
+        //Arrange
+        User user = new User();
+
+        //Act
+        userServiceHandler.deleteById(user.getId());
+
+        //Assert
+        verify(userRepository, times(1)).deleteById(user.getId());
     }
 }
