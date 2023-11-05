@@ -6,6 +6,8 @@ import com.klodnicki.Bike.v2.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.modelmapper.ModelMapper;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -99,6 +101,21 @@ class UserServiceHandlerTest {
     @Test
     public void findUserById_ShouldThrowException_WhenUserIsNotFound() {
         assertThrows(IllegalArgumentException.class, () -> userServiceHandler.findUserById(1L));
+    }
+
+    @Test
+    public void banUser_ShouldReturnResponseEntityWithCodeOK_WhenProvidedId() {
+        //Arrange
+        User user = new User();
+        user.setId(1L);
+        user.setAccountValid(false);
+        when(userRepository.findById(user.getId())).thenReturn(Optional.of(user));
+
+        //Act
+        ResponseEntity<?> response = userServiceHandler.banUser(user.getId());
+
+        //Assert
+        assertEquals(HttpStatusCode.valueOf(200), response.getStatusCode());
     }
 
 
