@@ -3,14 +3,16 @@ package com.klodnicki.Bike.v2.model.entity;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.hibernate.Hibernate;
 
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 public class ChargingStation {
     @Id
@@ -36,5 +38,18 @@ public class ChargingStation {
         this.city = city;
         this.freeSlots = freeSlots;
         this.bikeList = bikeList;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        ChargingStation that = (ChargingStation) o;
+        return getId() != null && Objects.equals(getId(), that.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
     }
 }
