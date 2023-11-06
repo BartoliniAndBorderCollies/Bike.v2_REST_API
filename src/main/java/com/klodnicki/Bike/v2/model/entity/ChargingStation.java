@@ -43,9 +43,11 @@ public class ChargingStation {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        if (o == null || getClass() != o.getClass()) return false;
         ChargingStation that = (ChargingStation) o;
-        return getId() != null && Objects.equals(getId(), that.getId());
+        return freeSlots == that.freeSlots && Objects.equals(id, that.id) && Objects.equals(name, that.name) &&
+                Objects.equals(address, that.address) && Objects.equals(city, that.city) && Objects.equals(rent, that.rent)
+                && Objects.equals(bikeList, that.bikeList);
     }
 
     @Override
