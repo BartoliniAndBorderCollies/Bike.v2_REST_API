@@ -93,4 +93,20 @@ class RentBikeServiceHandlerTest {
         //Assert
         assertIterableEquals(expected, actual);
     }
+
+    @Test
+    public void findBikeForNormalUserById_ShouldReturnBikeForNormalUserResponseDTO_WhenGivenCorrectId() {
+        //Arrange
+        Bike bike = new Bike();
+        bike.setId(1L);
+        when(bikeRepository.findById(bike.getId())).thenReturn(Optional.of(bike));
+
+        BikeForNormalUserResponseDTO expected = modelMapper.map(bike, BikeForNormalUserResponseDTO.class);
+
+        //Act
+        BikeForNormalUserResponseDTO actual = rentBikeServiceHandler.findBikeForNormalUserById(bike.getId());
+
+        //Assert
+        assertEquals(expected, actual);
+    }
 }
