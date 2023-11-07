@@ -1,7 +1,9 @@
 package com.klodnicki.Bike.v2.service;
 
+import com.klodnicki.Bike.v2.DTO.bike.BikeForNormalUserResponseDTO;
 import com.klodnicki.Bike.v2.DTO.rent.RentRequestDTO;
 import com.klodnicki.Bike.v2.DTO.rent.RentResponseDTO;
+import com.klodnicki.Bike.v2.model.entity.Bike;
 import com.klodnicki.Bike.v2.model.entity.Rent;
 import com.klodnicki.Bike.v2.repository.BikeRepository;
 import com.klodnicki.Bike.v2.repository.ChargingStationRepository;
@@ -13,9 +15,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.modelmapper.ModelMapper;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertIterableEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -64,5 +69,28 @@ class RentBikeServiceHandlerTest {
 
         //Assert
         assertEquals(expected, actual);
+    }
+
+    @Test
+    public void findAvailableBikes_ShouldReturnListOfBikeForNormalUserResponseDTO_WhenGivenListOfBikes() {
+        //Arrange
+        List<Bike> listOfBikes = new ArrayList<>();
+        List<BikeForNormalUserResponseDTO> expected = new ArrayList<>();
+
+        when(bikeRepository.findByIsRentedFalse()).thenReturn(listOfBikes);
+
+        for (int i = 0; i < 3; i++) {
+            Bike bike = new Bike();
+            bike.setRented(false);
+            listOfBikes.add(bike);
+
+            expected.add(modelMapper.map(bike, BikeForNormalUserResponseDTO.class));
+        }
+
+        //Act
+        List<BikeForNormalUserResponseDTO> actual = rentBikeServiceHandler.findAvailableBikes();
+
+        //Assert
+        assertIterableEquals(expected, actual);
     }
 }
