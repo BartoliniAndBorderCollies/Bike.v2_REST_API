@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Data
 public class BikeForNormalUserResponseDTO {
     private Long id;
     private String serialNumber;
