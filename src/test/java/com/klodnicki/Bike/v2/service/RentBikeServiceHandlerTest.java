@@ -16,6 +16,7 @@ import com.klodnicki.Bike.v2.service.api.ChargingStationServiceApi;
 import com.klodnicki.Bike.v2.service.api.UserServiceApi;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
 import org.modelmapper.ModelMapper;
 
 import java.util.ArrayList;
@@ -23,8 +24,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 class RentBikeServiceHandlerTest {
 
@@ -177,5 +177,48 @@ class RentBikeServiceHandlerTest {
 
         //Assert
         assertEquals(expected, actual);
+    }
+
+    @Test
+    public void rent_ShouldCallOnRentRepositoryExactlyOnceWithCorrectState_WhenRentProvided() {
+        //Arrange
+        Bike bike = new Bike();
+        bike.setId(1L);
+
+        User user = new User();
+        user.setId(1L);
+
+        ChargingStation chargingStation = new ChargingStation();
+        chargingStation.setId(1L);
+
+        bike.setChargingStation(chargingStation);
+
+        when(bikeRepository.findById(bike.getId())).thenReturn(Optional.of(bike));
+        when(userRepository.findById(user.getId())).thenReturn(Optional.of(user));
+        when(chargingStationRepository.findById(chargingStation.getId())).thenReturn(Optional.of(chargingStation));
+
+        RentRequest rentRequest = new RentRequest(1L, user.getId(), bike.getId(), 10);
+
+        //Act
+        rentBikeServiceHandler.rent(rentRequest);
+
+        //Assert
+        ArgumentCaptor<Rent> rentCaptor = ArgumentCaptor.forClass(Rent.class); //I capture a Rent object which is passed
+        // to save(), because rent in test method and rent in original method are two different instances
+
+        verify(rentRepository, times(1)).save(rentCaptor.capture()); //I verify if the save method
+        // of rentRepository is called exactly once. The rentCaptor.capture() I use as the argument to save,
+        // this tells Mockito to capture the argument that is passed in when save is called.
+
+        Rent capturedRent = rentCaptor.getValue(); //I get the captured value
+
+        assertEquals(bike, capturedRent.getBike()); // I check if these objects are equals to the objects which I set up
+        // earlier in my test method
+        assertEquals(user, capturedRent.getUser());
+        assertEquals(rentRequest.getDaysOfRent(), capturedRent.getDaysOfRent());
+
+        //So this code captures Rent object that is passed to rentRepository.save(), and then it checks if its fields
+        // have the expected values. So that I not only check if it was called once, but also if arguments
+        // themselves have the correct state.
     }
 }
