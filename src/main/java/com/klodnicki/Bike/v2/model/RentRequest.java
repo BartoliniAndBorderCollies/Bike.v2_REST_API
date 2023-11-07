@@ -7,6 +7,7 @@ import lombok.Setter;
 @Setter
 public class RentRequest {
 
+    private Long id;
     private Long userId;
     private Long bikeId;
     private int daysOfRent;
