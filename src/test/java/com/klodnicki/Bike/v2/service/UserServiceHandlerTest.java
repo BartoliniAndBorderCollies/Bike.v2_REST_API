@@ -71,6 +71,23 @@ class UserServiceHandlerTest {
         assertIterableEquals(expected, actual);
     }
 
+    private Iterable<User> createUsers() {
+        List<User> users = new ArrayList<>();
+        for (int i = 0; i < 3; i++) {
+            users.add(new User());
+        }
+        return users;
+    }
+
+    private List<UserForAdminResponseDTO> mapUsersToDTO(Iterable<User> users) {
+        List<UserForAdminResponseDTO> userDTOs = new ArrayList<>();
+        for (User user : users) {
+            UserForAdminResponseDTO userDTO = modelMapper.map(user, UserForAdminResponseDTO.class);
+            userDTOs.add(userDTO);
+        }
+        return userDTOs;
+    }
+
     @Test
     public void findById_ShouldReturnUserForAdminResponseDTO_WhenProvidedId() {
         //Arrange
