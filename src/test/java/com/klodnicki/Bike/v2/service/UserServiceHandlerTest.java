@@ -95,14 +95,14 @@ class UserServiceHandlerTest {
 
     @Test
     public void deleteById_ShouldCallOnUserRepositoryExactlyOnce_WhenProvidedId() {
-        //Arrange
-        User user = new User();
+        // Arrange
+        Long id = 1L;
 
-        //Act
-        userServiceHandler.deleteById(user.getId());
+        // Act
+        userServiceHandler.deleteById(id);
 
-        //Assert
-        verify(userRepository, times(1)).deleteById(user.getId());
+        // Assert
+        verify(userRepository, times(1)).deleteById(id);
     }
 
     @Test
