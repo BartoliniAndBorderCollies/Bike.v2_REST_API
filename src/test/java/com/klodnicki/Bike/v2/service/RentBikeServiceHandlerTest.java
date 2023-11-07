@@ -3,8 +3,11 @@ package com.klodnicki.Bike.v2.service;
 import com.klodnicki.Bike.v2.DTO.bike.BikeForNormalUserResponseDTO;
 import com.klodnicki.Bike.v2.DTO.rent.RentRequestDTO;
 import com.klodnicki.Bike.v2.DTO.rent.RentResponseDTO;
+import com.klodnicki.Bike.v2.model.RentRequest;
 import com.klodnicki.Bike.v2.model.entity.Bike;
+import com.klodnicki.Bike.v2.model.entity.ChargingStation;
 import com.klodnicki.Bike.v2.model.entity.Rent;
+import com.klodnicki.Bike.v2.model.entity.User;
 import com.klodnicki.Bike.v2.repository.BikeRepository;
 import com.klodnicki.Bike.v2.repository.ChargingStationRepository;
 import com.klodnicki.Bike.v2.repository.RentRepository;
@@ -19,8 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertIterableEquals;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -109,4 +111,41 @@ class RentBikeServiceHandlerTest {
         //Assert
         assertEquals(expected, actual);
     }
+
+    @Test
+    public void rent_ShouldRemoveFromBikeList_WhenProvidedBikeObject() {
+        //Arrange
+        List<Bike> bikeList = new ArrayList<>();
+
+        Bike bike = new Bike();
+        bike.setId(1L);
+        bikeList.add(bike);
+
+        User user = new User();
+        user.setId(1L);
+
+        ChargingStation chargingStation = new ChargingStation();
+        chargingStation.setId(1L);
+        chargingStation.setBikeList(bikeList);
+
+        bike.setChargingStation(chargingStation);
+
+        when(bikeRepository.findById(bike.getId())).thenReturn(Optional.of(bike));
+        when(userRepository.findById(user.getId())).thenReturn(Optional.of(user));
+        when(chargingStationRepository.findById(chargingStation.getId())).thenReturn(Optional.of(chargingStation));
+
+        RentRequest rentRequest = new RentRequest();
+        rentRequest.setId(1L);
+        rentRequest.setBikeId(bike.getId());
+        rentRequest.setUserId(user.getId());
+        rentRequest.setDaysOfRent(10);
+
+        //Act
+        rentBikeServiceHandler.rent(rentRequest);
+        List<Bike> actual = chargingStation.getBikeList();
+
+        //Assert
+        assertTrue(actual.isEmpty());
+    }
+
 }
