@@ -3,10 +3,7 @@ package com.klodnicki.Bike.v2.DTO.rent;
 import com.klodnicki.Bike.v2.DTO.bike.BikeForNormalUserResponseDTO;
 import com.klodnicki.Bike.v2.DTO.station.StationForNormalUserResponseDTO;
 import com.klodnicki.Bike.v2.DTO.user.UserForNormalUserResponseDTO;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
@@ -14,6 +11,7 @@ import java.time.LocalDateTime;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Data
 public class RentResponseDTO {
 
     private Long id;
