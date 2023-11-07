@@ -148,4 +148,34 @@ class RentBikeServiceHandlerTest {
         assertTrue(actual.isEmpty());
     }
 
+    @Test
+    public void rent_ShouldIncrementFreeSlotsByOne_WhenBikeIsRented() {
+        //Arrange
+        Bike bike = new Bike();
+        bike.setId(1L);
+
+        User user = new User();
+        user.setId(1L);
+
+        ChargingStation chargingStation = new ChargingStation();
+        chargingStation.setId(1L);
+        chargingStation.setFreeSlots(1);
+
+        bike.setChargingStation(chargingStation);
+
+        when(bikeRepository.findById(bike.getId())).thenReturn(Optional.of(bike));
+        when(userRepository.findById(user.getId())).thenReturn(Optional.of(user));
+        when(chargingStationRepository.findById(chargingStation.getId())).thenReturn(Optional.of(chargingStation));
+
+        RentRequest rentRequest = new RentRequest(1L, user.getId(), bike.getId(), 10);
+
+        int expected = chargingStation.getFreeSlots() + 1;
+
+        //Act
+        rentBikeServiceHandler.rent(rentRequest);
+        int actual = chargingStation.getFreeSlots();
+
+        //Assert
+        assertEquals(expected, actual);
+    }
 }
