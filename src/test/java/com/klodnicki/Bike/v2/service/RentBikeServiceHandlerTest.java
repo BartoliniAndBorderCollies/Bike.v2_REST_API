@@ -44,4 +44,25 @@ class RentBikeServiceHandlerTest {
         chargingStationService = new ChargingStationServiceHandler(chargingStationRepository, bikeServiceHandler, modelMapper);
         rentBikeServiceHandler = new RentBikeServiceHandler(bikeServiceHandler, chargingStationService, userService, modelMapper, rentRepository);
     }
+
+    @Test
+    public void updateRent_ShouldReturnUpdatedDaysOfRentResponseDTO_WhenGivenCorrectArguments() {
+        //Arrange
+        Rent rent = new Rent();
+        rent.setId(1L);
+
+        when(rentRepository.findById(rent.getId())).thenReturn(Optional.of(rent));
+
+        RentRequestDTO rentRequestDTO = new RentRequestDTO();
+        rentRequestDTO.setId(1L);
+        rentRequestDTO.setDaysOfRent(10);
+
+        RentResponseDTO expected = modelMapper.map(rentRequestDTO, RentResponseDTO.class);
+
+        //Act
+        RentResponseDTO actual = rentBikeServiceHandler.updateRent(rent.getId(), rentRequestDTO);
+
+        //Assert
+        assertEquals(expected, actual);
+    }
 }
