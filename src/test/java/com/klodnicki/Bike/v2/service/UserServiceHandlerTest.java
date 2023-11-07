@@ -48,26 +48,16 @@ class UserServiceHandlerTest {
 
     @Test
     public void findAll_ShouldReturnListOfUserForAdminResponseDTO_WhenProvidedIterableUsers() {
-        //Arrange
-        Iterable<User> iterableOfUsers = new ArrayList<>();
-        List<UserForAdminResponseDTO> expected = new ArrayList<>();
-
-        for (int i = 0; i < 3; i++) {
-            User user = new User();
-            ((ArrayList<User>) iterableOfUsers).add(user);
-        }
+        // Arrange
+        Iterable<User> iterableOfUsers = createUsers();
+        List<UserForAdminResponseDTO> expected = mapUsersToDTO(iterableOfUsers);
 
         when(userRepository.findAll()).thenReturn(iterableOfUsers);
 
-        for (User user : iterableOfUsers) {
-            UserForAdminResponseDTO userDTO = modelMapper.map(user, UserForAdminResponseDTO.class);
-            expected.add(userDTO);
-        }
-
-        //Act
+        // Act
         List<UserForAdminResponseDTO> actual = userServiceHandler.findAll();
 
-        //Assert
+        // Assert
         assertIterableEquals(expected, actual);
     }
 
