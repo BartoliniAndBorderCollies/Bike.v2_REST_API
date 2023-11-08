@@ -110,8 +110,9 @@ public class RentBikeServiceHandler implements RentBikeServiceApi {
         User user = rent.getUser();
         ChargingStation returnChargingStation = chargingStationService.findStationById(returnChargingStationId);
 
+        double rentalCost = countRentalCost(rentId);
         rent.setRentalEndTime(LocalDateTime.now());
-        rent.setAmountToBePaid(countRentalCost(rentId));
+        rent.setAmountToBePaid(rentalCost);
         rent.setChargingStation(returnChargingStation);
 
         bike.setRented(false);
@@ -122,7 +123,7 @@ public class RentBikeServiceHandler implements RentBikeServiceApi {
 
         returnChargingStation.setFreeSlots(returnChargingStation.getFreeSlots() - 1);
 
-        user.setBalance(user.getBalance() - countRentalCost(rentId)); //reducing the user balance by rental cost
+        user.setBalance(user.getBalance() - rentalCost); //reducing the user balance by rental cost
 
         bikeService.save(bike);
         chargingStationService.save(returnChargingStation);
