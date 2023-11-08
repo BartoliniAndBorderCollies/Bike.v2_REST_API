@@ -229,24 +229,19 @@ class RentBikeServiceHandlerTest {
         List<Bike> bikeList = new ArrayList<>();
 
         Rent rent = mock(Rent.class);
-        rent.setId(1L);
-
+        User user = mock(User.class);
         Bike bike = mock(Bike.class);
-        bike.setId(1L);
 
         ChargingStation chargingStation = new ChargingStation(); //I cannot have here mock(ChargingStation.class) because
-        //later I'm not able to set a bikeList to it.
+        //I test behaviour of this object, and later I would not able to set a bikeList to it.
         chargingStation.setId(1L);
-
-        User user = mock(User.class);
-        user.setId(1L);
 
         bikeList.add(bike);
         chargingStation.setBikeList(bikeList);
 
         when(rentRepository.findById(rent.getId())).thenReturn(Optional.of(rent));
-        when(rent.getBike()).thenReturn(bike); //I should create mocks for bike and user so that Mockito will return the mock objects
-        //and I can define their behaviour
+        when(rent.getBike()).thenReturn(bike); //I should create mocks so that I don't have to set up these instances,
+        // Mockito will return the mock objects, and then I can define their behaviour by thenReturn
         when(rent.getUser()).thenReturn(user);
         when(chargingStationRepository.findById(chargingStation.getId())).thenReturn(Optional.of(chargingStation));
         when(rent.getRentalStartTime()).thenReturn(LocalDateTime.of(2023, 1, 1, 0, 0));
