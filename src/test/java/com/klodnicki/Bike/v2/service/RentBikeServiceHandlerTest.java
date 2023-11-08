@@ -245,7 +245,8 @@ class RentBikeServiceHandlerTest {
         chargingStation.setBikeList(bikeList);
 
         when(rentRepository.findById(rent.getId())).thenReturn(Optional.of(rent));
-        when(rent.getBike()).thenReturn(bike);
+        when(rent.getBike()).thenReturn(bike); //I should create mocks for bike and user so that Mockito will return the mock objects
+        //and I can define their behaviour
         when(rent.getUser()).thenReturn(user);
         when(chargingStationRepository.findById(chargingStation.getId())).thenReturn(Optional.of(chargingStation));
         when(rent.getRentalStartTime()).thenReturn(LocalDateTime.of(2023, 1, 1, 0, 0));
