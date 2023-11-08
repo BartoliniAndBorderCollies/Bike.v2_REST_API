@@ -19,6 +19,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.modelmapper.ModelMapper;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -220,5 +221,41 @@ class RentBikeServiceHandlerTest {
         //So this code captures Rent object that is passed to rentRepository.save(), and then it checks if its fields
         // have the expected values. So that I not only check if it was called once, but also if arguments
         // themselves have the correct state.
+    }
+
+    @Test
+    public void returnVehicle_ShouldAddReturnedBikeToStation_WhenGivenBikeObject() {
+        //Arrange
+        List<Bike> bikeList = new ArrayList<>();
+
+        Rent rent = mock(Rent.class);
+        rent.setId(1L);
+
+        Bike bike = mock(Bike.class);
+        bike.setId(1L);
+
+        ChargingStation chargingStation = new ChargingStation(); //I cannot have here mock(ChargingStation.class) because
+        //later I'm not able to set a bikeList to it.
+        chargingStation.setId(1L);
+
+        User user = mock(User.class);
+        user.setId(1L);
+
+        bikeList.add(bike);
+        chargingStation.setBikeList(bikeList);
+
+        when(rentRepository.findById(rent.getId())).thenReturn(Optional.of(rent));
+        when(rent.getBike()).thenReturn(bike);
+        when(rent.getUser()).thenReturn(user);
+        when(chargingStationRepository.findById(chargingStation.getId())).thenReturn(Optional.of(chargingStation));
+        when(rent.getRentalStartTime()).thenReturn(LocalDateTime.of(2023, 1, 1, 0, 0));
+        when(rent.getRentalEndTime()).thenReturn( LocalDateTime.of(2023, 1, 1, 1, 0));
+
+        //Act
+        rentBikeServiceHandler.returnVehicle(rent.getId(), chargingStation.getId());
+        List<Bike> actual = chargingStation.getBikeList();
+
+        //Assert
+        assertIterableEquals(bikeList, actual);
     }
 }
