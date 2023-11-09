@@ -234,7 +234,7 @@ class RentBikeServiceHandlerTest {
         private List<Bike> bikeList;
 
         @BeforeEach
-        public void setUpForRentMethod() {
+        public void setUpForReturnVehicleMethod() {
             bikeList = new ArrayList<>();
 
             rent = mock(Rent.class);
