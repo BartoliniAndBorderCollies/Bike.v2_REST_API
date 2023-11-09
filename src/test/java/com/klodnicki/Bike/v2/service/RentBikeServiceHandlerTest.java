@@ -39,6 +39,11 @@ class RentBikeServiceHandlerTest {
     private BikeServiceHandler bikeServiceHandler;
     private ChargingStationServiceApi chargingStationService;
     private UserServiceApi userService;
+    private ChargingStation chargingStation;
+    private Rent rent;
+    private User user;
+    private Bike bike;
+    private List<Bike> bikeList;
 
     @BeforeEach
     public void setUp() {
@@ -57,7 +62,7 @@ class RentBikeServiceHandlerTest {
     @Test
     public void updateRent_ShouldReturnUpdatedDaysOfRentResponseDTO_WhenGivenCorrectArguments() {
         //Arrange
-        Rent rent = new Rent();
+        rent = new Rent();
         rent.setId(1L);
 
         when(rentRepository.findById(rent.getId())).thenReturn(Optional.of(rent));
@@ -78,15 +83,15 @@ class RentBikeServiceHandlerTest {
     @Test
     public void findAvailableBikes_ShouldReturnListOfBikeForNormalUserResponseDTO_WhenGivenListOfBikes() {
         //Arrange
-        List<Bike> listOfBikes = new ArrayList<>();
+        bikeList = new ArrayList<>();
         List<BikeForNormalUserResponseDTO> expected = new ArrayList<>();
 
-        when(bikeRepository.findByIsRentedFalse()).thenReturn(listOfBikes);
+        when(bikeRepository.findByIsRentedFalse()).thenReturn(bikeList);
 
         for (int i = 0; i < 3; i++) {
             Bike bike = new Bike();
             bike.setRented(false);
-            listOfBikes.add(bike);
+            bikeList.add(bike);
 
             expected.add(modelMapper.map(bike, BikeForNormalUserResponseDTO.class));
         }
@@ -101,7 +106,7 @@ class RentBikeServiceHandlerTest {
     @Test
     public void findBikeForNormalUserById_ShouldReturnBikeForNormalUserResponseDTO_WhenGivenCorrectId() {
         //Arrange
-        Bike bike = new Bike();
+        bike = new Bike();
         bike.setId(1L);
         when(bikeRepository.findById(bike.getId())).thenReturn(Optional.of(bike));
 
