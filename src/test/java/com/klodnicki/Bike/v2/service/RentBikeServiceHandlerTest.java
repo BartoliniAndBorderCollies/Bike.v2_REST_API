@@ -254,4 +254,33 @@ class RentBikeServiceHandlerTest {
         //Assert
         assertIterableEquals(bikeList, actual);
     }
+
+    @Test
+    public void returnVehicle_ShouldDecrementStationFreeSlotsByOne_WhenBikeIsReturned() {
+        //Arrange
+        List<Bike> bikeList = new ArrayList<>();
+
+        Rent rent = mock(Rent.class);
+        User user = mock(User.class);
+        Bike bike = mock(Bike.class);
+        ChargingStation chargingStation = new ChargingStation();
+        chargingStation.setId(1L);
+        chargingStation.setFreeSlots(1); //should decrement by one
+        chargingStation.setBikeList(bikeList);
+
+        when(rentRepository.findById(rent.getId())).thenReturn(Optional.of(rent));
+        when(rent.getBike()).thenReturn(bike); //I should create mocks so that I don't have to set up these instances,
+        // Mockito will return the mock objects, and then I can define their behaviour by thenReturn
+        when(rent.getUser()).thenReturn(user);
+        when(chargingStationRepository.findById(chargingStation.getId())).thenReturn(Optional.of(chargingStation));
+        when(rent.getRentalStartTime()).thenReturn(LocalDateTime.of(2023, 1, 1, 0, 0));
+        when(rent.getRentalEndTime()).thenReturn( LocalDateTime.of(2023, 1, 1, 1, 0));
+
+        //Act
+        rentBikeServiceHandler.returnVehicle(rent.getId(), chargingStation.getId());
+        int actual = chargingStation.getFreeSlots();
+
+        //Assert
+        assertEquals(0, actual);
+    }
 }
