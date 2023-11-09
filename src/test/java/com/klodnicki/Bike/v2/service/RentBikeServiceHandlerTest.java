@@ -114,114 +114,122 @@ class RentBikeServiceHandlerTest {
         assertEquals(expected, actual);
     }
 
-    @Test
-    public void rent_ShouldRemoveFromBikeList_WhenProvidedBikeObject() {
-        //Arrange
-        List<Bike> bikeList = new ArrayList<>();
+    @Nested
+    class nestedTestsForRentMethods {
 
-        Bike bike = new Bike();
-        bike.setId(1L);
-        bikeList.add(bike);
+        public void setUpForRentMethods() {
 
-        User user = new User();
-        user.setId(1L);
+        }
 
-        ChargingStation chargingStation = new ChargingStation();
-        chargingStation.setId(1L);
-        chargingStation.setBikeList(bikeList);
+        @Test
+        public void rent_ShouldRemoveFromBikeList_WhenProvidedBikeObject() {
+            //Arrange
+            List<Bike> bikeList = new ArrayList<>();
 
-        bike.setChargingStation(chargingStation);
+            Bike bike = new Bike();
+            bike.setId(1L);
+            bikeList.add(bike);
 
-        when(bikeRepository.findById(bike.getId())).thenReturn(Optional.of(bike));
-        when(userRepository.findById(user.getId())).thenReturn(Optional.of(user));
-        when(chargingStationRepository.findById(chargingStation.getId())).thenReturn(Optional.of(chargingStation));
+            User user = new User();
+            user.setId(1L);
 
-        RentRequest rentRequest = new RentRequest();
-        rentRequest.setId(1L);
-        rentRequest.setBikeId(bike.getId());
-        rentRequest.setUserId(user.getId());
-        rentRequest.setDaysOfRent(10);
+            ChargingStation chargingStation = new ChargingStation();
+            chargingStation.setId(1L);
+            chargingStation.setBikeList(bikeList);
 
-        //Act
-        rentBikeServiceHandler.rent(rentRequest);
-        List<Bike> actual = chargingStation.getBikeList();
+            bike.setChargingStation(chargingStation);
 
-        //Assert
-        assertTrue(actual.isEmpty());
-    }
+            when(bikeRepository.findById(bike.getId())).thenReturn(Optional.of(bike));
+            when(userRepository.findById(user.getId())).thenReturn(Optional.of(user));
+            when(chargingStationRepository.findById(chargingStation.getId())).thenReturn(Optional.of(chargingStation));
 
-    @Test
-    public void rent_ShouldIncrementFreeSlotsByOne_WhenBikeIsRented() {
-        //Arrange
-        Bike bike = new Bike();
-        bike.setId(1L);
+            RentRequest rentRequest = new RentRequest();
+            rentRequest.setId(1L);
+            rentRequest.setBikeId(bike.getId());
+            rentRequest.setUserId(user.getId());
+            rentRequest.setDaysOfRent(10);
 
-        User user = new User();
-        user.setId(1L);
+            //Act
+            rentBikeServiceHandler.rent(rentRequest);
+            List<Bike> actual = chargingStation.getBikeList();
 
-        ChargingStation chargingStation = new ChargingStation();
-        chargingStation.setId(1L);
-        chargingStation.setFreeSlots(1);
+            //Assert
+            assertTrue(actual.isEmpty());
+        }
 
-        bike.setChargingStation(chargingStation);
+        @Test
+        public void rent_ShouldIncrementFreeSlotsByOne_WhenBikeIsRented() {
+            //Arrange
+            Bike bike = new Bike();
+            bike.setId(1L);
 
-        when(bikeRepository.findById(bike.getId())).thenReturn(Optional.of(bike));
-        when(userRepository.findById(user.getId())).thenReturn(Optional.of(user));
-        when(chargingStationRepository.findById(chargingStation.getId())).thenReturn(Optional.of(chargingStation));
+            User user = new User();
+            user.setId(1L);
 
-        RentRequest rentRequest = new RentRequest(1L, user.getId(), bike.getId(), 10);
+            ChargingStation chargingStation = new ChargingStation();
+            chargingStation.setId(1L);
+            chargingStation.setFreeSlots(1);
 
-        int expected = chargingStation.getFreeSlots() + 1;
+            bike.setChargingStation(chargingStation);
 
-        //Act
-        rentBikeServiceHandler.rent(rentRequest);
-        int actual = chargingStation.getFreeSlots();
+            when(bikeRepository.findById(bike.getId())).thenReturn(Optional.of(bike));
+            when(userRepository.findById(user.getId())).thenReturn(Optional.of(user));
+            when(chargingStationRepository.findById(chargingStation.getId())).thenReturn(Optional.of(chargingStation));
 
-        //Assert
-        assertEquals(expected, actual);
-    }
+            RentRequest rentRequest = new RentRequest(1L, user.getId(), bike.getId(), 10);
 
-    @Test
-    public void rent_ShouldCallOnRentRepositoryExactlyOnceWithCorrectState_WhenRentProvided() {
-        //Arrange
-        Bike bike = new Bike();
-        bike.setId(1L);
+            int expected = chargingStation.getFreeSlots() + 1;
 
-        User user = new User();
-        user.setId(1L);
+            //Act
+            rentBikeServiceHandler.rent(rentRequest);
+            int actual = chargingStation.getFreeSlots();
 
-        ChargingStation chargingStation = new ChargingStation();
-        chargingStation.setId(1L);
+            //Assert
+            assertEquals(expected, actual);
+        }
 
-        bike.setChargingStation(chargingStation);
+        @Test
+        public void rent_ShouldCallOnRentRepositoryExactlyOnceWithCorrectState_WhenRentProvided() {
+            //Arrange
+            Bike bike = new Bike();
+            bike.setId(1L);
 
-        when(bikeRepository.findById(bike.getId())).thenReturn(Optional.of(bike));
-        when(userRepository.findById(user.getId())).thenReturn(Optional.of(user));
-        when(chargingStationRepository.findById(chargingStation.getId())).thenReturn(Optional.of(chargingStation));
+            User user = new User();
+            user.setId(1L);
 
-        RentRequest rentRequest = new RentRequest(1L, user.getId(), bike.getId(), 10);
+            ChargingStation chargingStation = new ChargingStation();
+            chargingStation.setId(1L);
 
-        //Act
-        rentBikeServiceHandler.rent(rentRequest);
+            bike.setChargingStation(chargingStation);
 
-        //Assert
-        ArgumentCaptor<Rent> rentCaptor = ArgumentCaptor.forClass(Rent.class); //I capture a Rent object which is passed
-        // to save(), because rent in test method and rent in original method are two different instances
+            when(bikeRepository.findById(bike.getId())).thenReturn(Optional.of(bike));
+            when(userRepository.findById(user.getId())).thenReturn(Optional.of(user));
+            when(chargingStationRepository.findById(chargingStation.getId())).thenReturn(Optional.of(chargingStation));
 
-        verify(rentRepository, times(1)).save(rentCaptor.capture()); //I verify if the save method
-        // of rentRepository is called exactly once. The rentCaptor.capture() I use as the argument to save,
-        // this tells Mockito to capture the argument that is passed in when save is called.
+            RentRequest rentRequest = new RentRequest(1L, user.getId(), bike.getId(), 10);
 
-        Rent capturedRent = rentCaptor.getValue(); //I get the captured value
+            //Act
+            rentBikeServiceHandler.rent(rentRequest);
 
-        assertEquals(bike, capturedRent.getBike()); // I check if these objects are equals to the objects which I set up
-        // earlier in my test method
-        assertEquals(user, capturedRent.getUser());
-        assertEquals(rentRequest.getDaysOfRent(), capturedRent.getDaysOfRent());
+            //Assert
+            ArgumentCaptor<Rent> rentCaptor = ArgumentCaptor.forClass(Rent.class); //I capture a Rent object which is passed
+            // to save(), because rent in test method and rent in original method are two different instances
 
-        //So this code captures Rent object that is passed to rentRepository.save(), and then it checks if its fields
-        // have the expected values. So that I not only check if it was called once, but also if arguments
-        // themselves have the correct state.
+            verify(rentRepository, times(1)).save(rentCaptor.capture()); //I verify if the save method
+            // of rentRepository is called exactly once. The rentCaptor.capture() I use as the argument to save,
+            // this tells Mockito to capture the argument that is passed in when save is called.
+
+            Rent capturedRent = rentCaptor.getValue(); //I get the captured value
+
+            assertEquals(bike, capturedRent.getBike()); // I check if these objects are equals to the objects which I set up
+            // earlier in my test method
+            assertEquals(user, capturedRent.getUser());
+            assertEquals(rentRequest.getDaysOfRent(), capturedRent.getDaysOfRent());
+
+            //So this code captures Rent object that is passed to rentRepository.save(), and then it checks if its fields
+            // have the expected values. So that I not only check if it was called once, but also if arguments
+            // themselves have the correct state.
+        }
     }
 
     @Nested
