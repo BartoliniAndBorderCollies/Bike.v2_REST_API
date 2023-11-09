@@ -15,6 +15,7 @@ import com.klodnicki.Bike.v2.repository.UserRepository;
 import com.klodnicki.Bike.v2.service.api.ChargingStationServiceApi;
 import com.klodnicki.Bike.v2.service.api.UserServiceApi;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.modelmapper.ModelMapper;
@@ -223,64 +224,59 @@ class RentBikeServiceHandlerTest {
         // themselves have the correct state.
     }
 
-    @Test
-    public void returnVehicle_ShouldAddReturnedBikeToStation_WhenGivenBikeObject() {
-        //Arrange
-        List<Bike> bikeList = new ArrayList<>();
+    @Nested
+    class nestedTestsForReturnVehicleMethods {
 
-        Rent rent = mock(Rent.class);
-        User user = mock(User.class);
-        Bike bike = mock(Bike.class);
+        private ChargingStation chargingStation;
+        private Rent rent;
+        private User user;
+        private Bike bike;
+        private List<Bike> bikeList;
 
-        ChargingStation chargingStation = new ChargingStation(); //I cannot have here mock(ChargingStation.class) because
-        //I test behaviour of this object, and later I would not able to set a bikeList to it.
-        chargingStation.setId(1L);
+        @BeforeEach
+        public void setUpForRentMethod() {
+            bikeList = new ArrayList<>();
 
-        bikeList.add(bike);
-        chargingStation.setBikeList(bikeList);
+            rent = mock(Rent.class);
+            user = mock(User.class);
+            bike = mock(Bike.class);
+            chargingStation = new ChargingStation();
+            chargingStation.setId(1L);
+            chargingStation.setBikeList(bikeList);
 
-        when(rentRepository.findById(rent.getId())).thenReturn(Optional.of(rent));
-        when(rent.getBike()).thenReturn(bike); //I should create mocks so that I don't have to set up these instances,
-        // Mockito will return the mock objects, and then I can define their behaviour by thenReturn
-        when(rent.getUser()).thenReturn(user);
-        when(chargingStationRepository.findById(chargingStation.getId())).thenReturn(Optional.of(chargingStation));
-        when(rent.getRentalStartTime()).thenReturn(LocalDateTime.of(2023, 1, 1, 0, 0));
-        when(rent.getRentalEndTime()).thenReturn( LocalDateTime.of(2023, 1, 1, 1, 0));
+            when(rentRepository.findById(rent.getId())).thenReturn(Optional.of(rent));
+            when(rent.getBike()).thenReturn(bike); //I should create mocks so that I don't have to set up these instances,
+            // Mockito will return the mock objects, and then I can define their behaviour by thenReturn
+            when(rent.getUser()).thenReturn(user);
+            when(chargingStationRepository.findById(chargingStation.getId())).thenReturn(Optional.of(chargingStation));
+            when(rent.getRentalStartTime()).thenReturn(LocalDateTime.of(2023, 1, 1, 0, 0));
+            when(rent.getRentalEndTime()).thenReturn( LocalDateTime.of(2023, 1, 1, 1, 0));
+        }
 
-        //Act
-        rentBikeServiceHandler.returnVehicle(rent.getId(), chargingStation.getId());
-        List<Bike> actual = chargingStation.getBikeList();
+        @Test
+        public void returnVehicle_ShouldAddReturnedBikeToStation_WhenGivenBikeObject() {
+            //Arrange
+            bikeList.add(bike);
 
-        //Assert
-        assertIterableEquals(bikeList, actual);
-    }
+            //Act
+            rentBikeServiceHandler.returnVehicle(rent.getId(), chargingStation.getId());
+            List<Bike> actual = chargingStation.getBikeList();
 
-    @Test
-    public void returnVehicle_ShouldDecrementStationFreeSlotsByOne_WhenBikeIsReturned() {
-        //Arrange
-        List<Bike> bikeList = new ArrayList<>();
+            //Assert
+            assertIterableEquals(bikeList, actual);
+        }
 
-        Rent rent = mock(Rent.class);
-        User user = mock(User.class);
-        Bike bike = mock(Bike.class);
-        ChargingStation chargingStation = new ChargingStation();
-        chargingStation.setId(1L);
-        chargingStation.setFreeSlots(1); //should decrement by one
-        chargingStation.setBikeList(bikeList);
+        @Test
+        public void returnVehicle_ShouldDecrementStationFreeSlotsByOne_WhenBikeIsReturned() {
+            //Arrange
+            chargingStation.setFreeSlots(1); //should decrement by one
 
-        when(rentRepository.findById(rent.getId())).thenReturn(Optional.of(rent));
-        when(rent.getBike()).thenReturn(bike); //I should create mocks so that I don't have to set up these instances,
-        // Mockito will return the mock objects, and then I can define their behaviour by thenReturn
-        when(rent.getUser()).thenReturn(user);
-        when(chargingStationRepository.findById(chargingStation.getId())).thenReturn(Optional.of(chargingStation));
-        when(rent.getRentalStartTime()).thenReturn(LocalDateTime.of(2023, 1, 1, 0, 0));
-        when(rent.getRentalEndTime()).thenReturn( LocalDateTime.of(2023, 1, 1, 1, 0));
+            //Act
+            rentBikeServiceHandler.returnVehicle(rent.getId(), chargingStation.getId());
+            int actual = chargingStation.getFreeSlots();
 
-        //Act
-        rentBikeServiceHandler.returnVehicle(rent.getId(), chargingStation.getId());
-        int actual = chargingStation.getFreeSlots();
-
-        //Assert
-        assertEquals(0, actual);
+            //Assert
+            assertEquals(0, actual);
+        }
     }
 }
