@@ -122,38 +122,40 @@ class RentBikeServiceHandlerTest {
     @Nested
     class nestedTestsForRentMethods {
 
+        private RentRequest rentRequest;
+
+        @BeforeEach
         public void setUpForRentMethods() {
 
-        }
+            bikeList = new ArrayList<>();
 
-        @Test
-        public void rent_ShouldRemoveFromBikeList_WhenProvidedBikeObject() {
-            //Arrange
-            List<Bike> bikeList = new ArrayList<>();
-
-            Bike bike = new Bike();
+            bike = new Bike();
             bike.setId(1L);
             bikeList.add(bike);
 
-            User user = new User();
+            user = new User();
             user.setId(1L);
 
-            ChargingStation chargingStation = new ChargingStation();
+            chargingStation = new ChargingStation();
             chargingStation.setId(1L);
             chargingStation.setBikeList(bikeList);
+
+            rentRequest = new RentRequest();
+            rentRequest.setId(1L);
+            rentRequest.setBikeId(bike.getId());
+            rentRequest.setUserId(user.getId());
+            rentRequest.setDaysOfRent(10);
 
             bike.setChargingStation(chargingStation);
 
             when(bikeRepository.findById(bike.getId())).thenReturn(Optional.of(bike));
             when(userRepository.findById(user.getId())).thenReturn(Optional.of(user));
             when(chargingStationRepository.findById(chargingStation.getId())).thenReturn(Optional.of(chargingStation));
+        }
 
-            RentRequest rentRequest = new RentRequest();
-            rentRequest.setId(1L);
-            rentRequest.setBikeId(bike.getId());
-            rentRequest.setUserId(user.getId());
-            rentRequest.setDaysOfRent(10);
-
+        @Test
+        public void rent_ShouldRemoveFromBikeList_WhenProvidedBikeObject() {
+            //Arrange
             //Act
             rentBikeServiceHandler.rent(rentRequest);
             List<Bike> actual = chargingStation.getBikeList();
@@ -165,24 +167,7 @@ class RentBikeServiceHandlerTest {
         @Test
         public void rent_ShouldIncrementFreeSlotsByOne_WhenBikeIsRented() {
             //Arrange
-            Bike bike = new Bike();
-            bike.setId(1L);
-
-            User user = new User();
-            user.setId(1L);
-
-            ChargingStation chargingStation = new ChargingStation();
-            chargingStation.setId(1L);
             chargingStation.setFreeSlots(1);
-
-            bike.setChargingStation(chargingStation);
-
-            when(bikeRepository.findById(bike.getId())).thenReturn(Optional.of(bike));
-            when(userRepository.findById(user.getId())).thenReturn(Optional.of(user));
-            when(chargingStationRepository.findById(chargingStation.getId())).thenReturn(Optional.of(chargingStation));
-
-            RentRequest rentRequest = new RentRequest(1L, user.getId(), bike.getId(), 10);
-
             int expected = chargingStation.getFreeSlots() + 1;
 
             //Act
@@ -196,23 +181,6 @@ class RentBikeServiceHandlerTest {
         @Test
         public void rent_ShouldCallOnRentRepositoryExactlyOnceWithCorrectState_WhenRentProvided() {
             //Arrange
-            Bike bike = new Bike();
-            bike.setId(1L);
-
-            User user = new User();
-            user.setId(1L);
-
-            ChargingStation chargingStation = new ChargingStation();
-            chargingStation.setId(1L);
-
-            bike.setChargingStation(chargingStation);
-
-            when(bikeRepository.findById(bike.getId())).thenReturn(Optional.of(bike));
-            when(userRepository.findById(user.getId())).thenReturn(Optional.of(user));
-            when(chargingStationRepository.findById(chargingStation.getId())).thenReturn(Optional.of(chargingStation));
-
-            RentRequest rentRequest = new RentRequest(1L, user.getId(), bike.getId(), 10);
-
             //Act
             rentBikeServiceHandler.rent(rentRequest);
 
@@ -239,12 +207,6 @@ class RentBikeServiceHandlerTest {
 
     @Nested
     class nestedTestsForReturnVehicleMethods {
-
-        private ChargingStation chargingStation;
-        private Rent rent;
-        private User user;
-        private Bike bike;
-        private List<Bike> bikeList;
 
         @BeforeEach
         public void setUpForReturnVehicleMethod() {
