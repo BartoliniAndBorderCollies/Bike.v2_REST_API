@@ -22,5 +22,5 @@ public class BikeForAdminResponseDTO {
     private double amountToBePaid;
     private GpsCoordinates gpsCoordinates;
     private UserForAdminResponseDTO userForAdminResponseDTO;
-    private StationForAdminResponseDTO stationForAdminResponseDTO;
+    private StationForAdminResponseDTO chargingStation;
 }
