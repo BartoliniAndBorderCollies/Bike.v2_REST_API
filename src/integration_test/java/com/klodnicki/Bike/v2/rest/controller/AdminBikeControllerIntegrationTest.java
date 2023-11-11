@@ -6,7 +6,9 @@ import com.klodnicki.Bike.v2.DTO.bike.ListBikesForAdminResponseDTO;
 import com.klodnicki.Bike.v2.DTO.station.StationForAdminResponseDTO;
 import com.klodnicki.Bike.v2.model.BikeType;
 import com.klodnicki.Bike.v2.model.GpsCoordinates;
+import com.klodnicki.Bike.v2.model.entity.Bike;
 import com.klodnicki.Bike.v2.model.entity.ChargingStation;
+import com.klodnicki.Bike.v2.repository.BikeRepository;
 import com.klodnicki.Bike.v2.repository.ChargingStationRepository;
 import org.junit.jupiter.api.Test;
 import org.modelmapper.ModelMapper;
@@ -25,6 +27,8 @@ class AdminBikeControllerIntegrationTest {
     private ModelMapper modelMapper;
     @Autowired
     private ChargingStationRepository chargingStationRepository;
+    @Autowired
+    private BikeRepository bikeRepository;
 
     @Test
     void addBike_ShouldAddBikeToDatabaseAndReturnBikeForAdminResponseDTO_WhenBikeRequestDTOIsProvided() {
@@ -53,6 +57,33 @@ class AdminBikeControllerIntegrationTest {
                     assertEquals(BikeType.ELECTRIC, bikeDTO.getBikeType());
                     assertEquals(0, bikeDTO.getAmountToBePaid());
                     assertEquals(new GpsCoordinates("10N", "5E"), bikeDTO.getGpsCoordinates());
+                    assertNull(bikeDTO.getUserForAdminResponseDTO());
+                    assertEquals(stationDTO, bikeDTO.getChargingStation());
+                });
+    }
+
+    @Test
+    void findBikeById_ShouldReturnBikeForAdminResponseDTO_WhenBikeIdIsProvidedAndBikeExistInDatabase() {
+        ChargingStation chargingStation = new ChargingStation();
+        chargingStationRepository.save(chargingStation);
+        StationForAdminResponseDTO stationDTO = modelMapper.map(chargingStation, StationForAdminResponseDTO.class);
+
+        Bike bike = new Bike(null, BikeType.ELECTRIC, null, null, chargingStation);
+        bikeRepository.save(bike);
+        Long id = bike.getId();
+
+        webTestClient.get()
+
+                .uri("/api/admin/bikes/" + id)
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(BikeForAdminResponseDTO.class)
+                .consumeWith(response -> {
+                    BikeForAdminResponseDTO bikeDTO = response.getResponseBody();
+                    assertNotNull(bikeDTO);
+                    assertEquals(id, bikeDTO.getId());
+                    assertEquals(BikeType.ELECTRIC, bikeDTO.getBikeType());
+                    assertNull(bikeDTO.getRentalStartTime());
                     assertNull(bikeDTO.getUserForAdminResponseDTO());
                     assertEquals(stationDTO, bikeDTO.getChargingStation());
                 });
