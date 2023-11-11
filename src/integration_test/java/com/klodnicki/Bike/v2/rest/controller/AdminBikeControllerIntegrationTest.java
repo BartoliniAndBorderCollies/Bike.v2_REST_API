@@ -16,6 +16,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -106,5 +108,36 @@ class AdminBikeControllerIntegrationTest {
                             // the rest of asserts
                         }
                 );
+    }
+
+    @Test
+    void deleteBikeById_ShouldDeleteBikeInDatabase_WhenIdProvided() {
+        //Arrange
+        ChargingStation chargingStation = new ChargingStation();
+        chargingStationRepository.save(chargingStation);
+
+        // I create a bike which is at station
+        Bike bike = new Bike(null, BikeType.ELECTRIC, null, null, chargingStation);
+        bikeRepository.save(bike);
+        Long id = bike.getId();
+        // I have to set charging station to null, otherwise I'm not able to delete bike because it holds foreign key
+        // of charging station
+        bike.setChargingStation(null);
+        bikeRepository.save(bike);
+
+        //Act
+        webTestClient.delete()
+                .uri("/api/admin/bikes/" + id)
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody()
+                .consumeWith(response -> {
+                    //after deleting the bike, I try to retrieve it from the database again using
+                    // bikeRepository.findById(id). This returns an Optional<Bike>
+                    Optional<Bike> deletedBike = bikeRepository.findById(id);
+                    // If the bike was successfully deleted, this Optional should be empty, so I assert that
+                    //deletedBike.isEmpty() is true
+                    assertTrue(deletedBike.isEmpty());
+                });
     }
 }
