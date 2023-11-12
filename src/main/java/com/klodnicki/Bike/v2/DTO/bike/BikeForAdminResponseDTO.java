@@ -21,6 +21,6 @@ public class BikeForAdminResponseDTO {
     private LocalDateTime rentalEndTime;
     private double amountToBePaid;
     private GpsCoordinates gpsCoordinates;
-    private UserForAdminResponseDTO userForAdminResponseDTO;
+    private UserForAdminResponseDTO user;
     private StationForAdminResponseDTO chargingStation;
 }
