@@ -4,12 +4,15 @@ import com.klodnicki.Bike.v2.DTO.bike.BikeForAdminResponseDTO;
 import com.klodnicki.Bike.v2.DTO.bike.BikeRequestDTO;
 import com.klodnicki.Bike.v2.DTO.bike.ListBikesForAdminResponseDTO;
 import com.klodnicki.Bike.v2.DTO.station.StationForAdminResponseDTO;
+import com.klodnicki.Bike.v2.DTO.user.UserForAdminResponseDTO;
 import com.klodnicki.Bike.v2.model.BikeType;
 import com.klodnicki.Bike.v2.model.GpsCoordinates;
 import com.klodnicki.Bike.v2.model.entity.Bike;
 import com.klodnicki.Bike.v2.model.entity.ChargingStation;
+import com.klodnicki.Bike.v2.model.entity.User;
 import com.klodnicki.Bike.v2.repository.BikeRepository;
 import com.klodnicki.Bike.v2.repository.ChargingStationRepository;
+import com.klodnicki.Bike.v2.repository.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +34,8 @@ class AdminBikeControllerIntegrationTest {
     private ChargingStationRepository chargingStationRepository;
     @Autowired
     private BikeRepository bikeRepository;
+    @Autowired
+    private UserRepository userRepository;
 
     @Test
     void addBike_ShouldAddBikeToDatabaseAndReturnBikeForAdminResponseDTO_WhenBikeRequestDTOIsProvided() {
@@ -59,7 +64,7 @@ class AdminBikeControllerIntegrationTest {
                     assertEquals(BikeType.ELECTRIC, bikeDTO.getBikeType());
                     assertEquals(0, bikeDTO.getAmountToBePaid());
                     assertEquals(new GpsCoordinates("10N", "5E"), bikeDTO.getGpsCoordinates());
-                    assertNull(bikeDTO.getUserForAdminResponseDTO());
+                    assertNull(bikeDTO.getUser());
                     assertEquals(stationDTO, bikeDTO.getChargingStation());
                 });
     }
@@ -86,7 +91,7 @@ class AdminBikeControllerIntegrationTest {
                     assertEquals(id, bikeDTO.getId());
                     assertEquals(BikeType.ELECTRIC, bikeDTO.getBikeType());
                     assertNull(bikeDTO.getRentalStartTime());
-                    assertNull(bikeDTO.getUserForAdminResponseDTO());
+                    assertNull(bikeDTO.getUser());
                     assertEquals(stationDTO, bikeDTO.getChargingStation());
                 });
     }
@@ -138,6 +143,50 @@ class AdminBikeControllerIntegrationTest {
                     // If the bike was successfully deleted, this Optional should be empty, so I assert that
                     //deletedBike.isEmpty() is true
                     assertTrue(deletedBike.isEmpty());
+                });
+    }
+
+    @Test
+    void updateBikeById_ShouldUpdateBike_WhenBikeExistInDatabaseAndBikeIdAndBikeRequestDTOIsGiven() {
+        //Arrange
+        ChargingStation chargingStation = new ChargingStation();
+        chargingStationRepository.save(chargingStation);
+
+        User user = new User();
+        userRepository.save(user);
+        UserForAdminResponseDTO userDTO = modelMapper.map(user, UserForAdminResponseDTO.class);
+
+        Bike bike = new Bike(null, BikeType.ELECTRIC, null, null, chargingStation);
+        bikeRepository.save(bike);
+
+        BikeRequestDTO bikeRequestDTO = new BikeRequestDTO(bike.getId(), "updated serial number",
+                true, BikeType.TRADITIONAL, 0, new GpsCoordinates("updated 100N", "updated 50W"),
+                userDTO, null);
+
+        //I must set station to null and bike user to user and save it. Otherwise, bike contains foreign key of station and user,
+        // and I'm not able to update it.
+        bike.setChargingStation(null);
+        bike.setUser(user);
+        bikeRepository.save(bike);
+
+        //Act
+        webTestClient.put()
+                .uri("/api/admin/bikes/" + bike.getId())
+                .bodyValue(bikeRequestDTO)
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(BikeForAdminResponseDTO.class)
+                .consumeWith(response -> {
+                    BikeForAdminResponseDTO actualUpdatedBike = response.getResponseBody();
+                    assert actualUpdatedBike != null;
+                    assertEquals(bikeRequestDTO.getId(), actualUpdatedBike.getId());
+                    assertEquals(bikeRequestDTO.getSerialNumber(), actualUpdatedBike.getSerialNumber());
+                    assertEquals(bikeRequestDTO.isRented(), actualUpdatedBike.isRented());
+                    assertEquals(bikeRequestDTO.getBikeType(), actualUpdatedBike.getBikeType());
+                    assertEquals(bikeRequestDTO.getAmountToBePaid(), actualUpdatedBike.getAmountToBePaid());
+                    assertEquals(bikeRequestDTO.getGpsCoordinates(), actualUpdatedBike.getGpsCoordinates());
+                    assertEquals(bikeRequestDTO.getUser(), actualUpdatedBike.getUser());
+                    assertNull(actualUpdatedBike.getChargingStation());
                 });
     }
 }
