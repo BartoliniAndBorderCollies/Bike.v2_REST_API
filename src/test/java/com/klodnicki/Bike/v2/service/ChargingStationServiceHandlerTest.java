@@ -121,17 +121,15 @@ class ChargingStationServiceHandlerTest {
 
 
     @Test
-    public void save_ShouldSaveInDatabase_WhenProvidedChargingStationObject() {
+    public void save_ShouldCallOnChargingStationRepositoryExactlyOnce_WhenChargingStationIsProvided() {
         //given
-        ChargingStation chargingStation = new ChargingStation();
-        Long expected = chargingStationRepository.count() + 1;
+        when(chargingStationRepository.save(chargingStation)).thenReturn(chargingStation);
 
         //when
         chargingStationServiceHandler.save(chargingStation);
-        Long actual = chargingStationRepository.count();
 
         //then
-        assertEquals(expected, actual);
+        verify(chargingStationRepository, times(1)).save(chargingStation);
     }
 
     @Test
