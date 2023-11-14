@@ -63,20 +63,24 @@ class ChargingStationServiceHandlerTest {
     }
 
     @Test
-    public void findAll_ShouldReturnListOfStationForAdminResponseDTO_WhenExistInDatabase() {
-        //given
+    public void findAll_ShouldReturnListOfStationForAdminResponseDTO_WhenBikesExistInDatabase() {
+        //Arrange
+        List<ChargingStation> stations = new ArrayList<>();
         List<StationForAdminResponseDTO> expectedStationDTOS = new ArrayList<>();
+        StationForAdminResponseDTO stationDTO = new StationForAdminResponseDTO();
+        when(chargingStationRepository.findAll()).thenReturn(stations);
+
         for (int i = 0; i < 5; i++) {
-            ChargingStation chargingStation = new ChargingStation();
-            chargingStationRepository.save(chargingStation);
-            StationForAdminResponseDTO stationDTO = modelMapper.map(chargingStation, StationForAdminResponseDTO.class);
+            when(chargingStationRepository.save(chargingStation)).thenReturn(chargingStation);
+            when(modelMapper.map(chargingStation, StationForAdminResponseDTO.class)).thenReturn(stationDTO);
             expectedStationDTOS.add(stationDTO);
+            stations.add(chargingStation);
         }
 
-        //when
+        //Act
         List<StationForAdminResponseDTO> actual = chargingStationServiceHandler.findAll();
 
-        //then
+        //Assert
         assertEquals(expectedStationDTOS, actual);
     }
 
@@ -141,7 +145,7 @@ class ChargingStationServiceHandlerTest {
         List<Bike> bikeList = new ArrayList<>();
         bikeList.add(bike);
 
-        ChargingStation chargingStation =  new ChargingStation();
+        ChargingStation chargingStation = new ChargingStation();
         chargingStationRepository.save(chargingStation);
 
         //when
