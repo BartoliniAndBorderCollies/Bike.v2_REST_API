@@ -8,29 +8,30 @@ import com.klodnicki.Bike.v2.repository.ChargingStationRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
-@SpringBootTest
+
 class ChargingStationServiceHandlerTest {
 
-    @Autowired
     private ChargingStationRepository chargingStationRepository;
-    @Autowired
     private BikeRepository bikeRepository;
-    @Autowired
     private ChargingStationServiceHandler chargingStationServiceHandler;
-    @Autowired
+    private BikeServiceHandler bikeServiceHandler;
     private ModelMapper modelMapper;
 
     @BeforeEach
-    public void cleanDatabase() {
-        chargingStationRepository.deleteAll();
+    public void setUp() {
+        chargingStationRepository = mock(ChargingStationRepository.class);
+        bikeRepository = mock(BikeRepository.class);
+        bikeServiceHandler = mock(BikeServiceHandler.class);
+        modelMapper = mock(ModelMapper.class);
+        chargingStationServiceHandler = new ChargingStationServiceHandler(chargingStationRepository, bikeServiceHandler,
+                modelMapper);
     }
 
     @Test
