@@ -87,14 +87,17 @@ class RentBikeServiceHandlerTest {
         bikeList = new ArrayList<>();
         List<BikeForNormalUserResponseDTO> expected = new ArrayList<>();
 
-        when(bikeRepository.findByIsRentedFalse()).thenReturn(bikeList);
+        when(bikeServiceHandler.findByIsRentedFalse()).thenReturn(bikeList);
 
         for (int i = 0; i < 3; i++) {
             Bike bike = new Bike();
             bike.setRented(false);
             bikeList.add(bike);
 
-            expected.add(modelMapper.map(bike, BikeForNormalUserResponseDTO.class));
+            BikeForNormalUserResponseDTO bikeDto = new BikeForNormalUserResponseDTO();
+            expected.add(bikeDto);
+
+            when(modelMapper.map(bike, BikeForNormalUserResponseDTO.class)).thenReturn(bikeDto);
         }
 
         //Act
