@@ -34,16 +34,16 @@ class UserServiceHandlerTest {
     @Test
     public void add_ShouldReturnUserForAdminResponseDTO_WhenUserProvided() {
         //Arrange
-        User user = new User();
-        when(userRepository.save(user)).thenReturn(new User());
-
-        UserForAdminResponseDTO expected = modelMapper.map(user, UserForAdminResponseDTO.class);
+        User user = mock(User.class);
+        UserForAdminResponseDTO userDTO = new UserForAdminResponseDTO();
+        when(userRepository.save(user)).thenReturn(user);
+        when(modelMapper.map(user, UserForAdminResponseDTO.class)).thenReturn(userDTO);
 
         //Act
         UserForAdminResponseDTO actual = userServiceHandler.add(user);
 
         //Assert
-        assertEquals(expected, actual);
+        assertEquals(userDTO, actual);
     }
 
     @Test
