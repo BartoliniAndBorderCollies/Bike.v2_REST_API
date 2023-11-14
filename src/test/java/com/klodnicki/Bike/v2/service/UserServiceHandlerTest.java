@@ -20,14 +20,14 @@ import static org.mockito.Mockito.*;
 
 class UserServiceHandlerTest {
 
-    private UserRepository userRepository; // to jest mock
+    private UserRepository userRepository;
     private UserServiceHandler userServiceHandler;
     private ModelMapper modelMapper;
 
     @BeforeEach
     public void setUp() {
         userRepository = mock(UserRepository.class);
-        modelMapper = new ModelMapper();
+        modelMapper = mock(ModelMapper.class);
         userServiceHandler = new UserServiceHandler(userRepository, modelMapper);
     }
 
