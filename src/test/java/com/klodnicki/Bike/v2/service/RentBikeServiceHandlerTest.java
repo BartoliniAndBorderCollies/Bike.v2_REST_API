@@ -52,11 +52,12 @@ class RentBikeServiceHandlerTest {
         chargingStationRepository = mock(ChargingStationRepository.class);
         userRepository = mock(UserRepository.class);
 
-        modelMapper = new ModelMapper();
-        bikeServiceHandler = new BikeServiceHandler(bikeRepository, modelMapper);
-        userService = new UserServiceHandler(userRepository, modelMapper);
-        chargingStationService = new ChargingStationServiceHandler(chargingStationRepository, bikeServiceHandler, modelMapper);
-        rentBikeServiceHandler = new RentBikeServiceHandler(bikeServiceHandler, chargingStationService, userService, modelMapper, rentRepository);
+        modelMapper = mock(ModelMapper.class);
+        bikeServiceHandler = mock(BikeServiceHandler.class);
+        userService = mock(UserServiceHandler.class);
+        chargingStationService = mock(ChargingStationServiceHandler.class);
+        rentBikeServiceHandler = new RentBikeServiceHandler(bikeServiceHandler, chargingStationService, userService,
+                modelMapper, rentRepository);
     }
 
     @Test
