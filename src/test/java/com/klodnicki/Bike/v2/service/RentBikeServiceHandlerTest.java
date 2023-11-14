@@ -155,15 +155,16 @@ class RentBikeServiceHandlerTest {
             when(bikeRepository.findById(bike.getId())).thenReturn(Optional.of(bike));
             when(userRepository.findById(user.getId())).thenReturn(Optional.of(user));
             when(chargingStationRepository.findById(chargingStation.getId())).thenReturn(Optional.of(chargingStation));
+
+            when(bikeServiceHandler.findBikeById(rentRequest.getBikeId())).thenReturn(bike);
+            when(userService.findUserById(rentRequest.getUserId())).thenReturn(user);
+            when(chargingStationService.findStationById(bike.getChargingStation().getId())).thenReturn(chargingStation);
         }
 
         @Test
         public void rent_ShouldRemoveFromBikeList_WhenProvidedBikeObject() {
             //Arrange
             //Act
-            when(bikeServiceHandler.findBikeById(rentRequest.getBikeId())).thenReturn(bike);
-            when(userService.findUserById(rentRequest.getUserId())).thenReturn(user);
-            when(chargingStationService.findStationById(bike.getChargingStation().getId())).thenReturn(chargingStation);
             rentBikeServiceHandler.rent(rentRequest);
             List<Bike> actual = chargingStation.getBikeList();
 
