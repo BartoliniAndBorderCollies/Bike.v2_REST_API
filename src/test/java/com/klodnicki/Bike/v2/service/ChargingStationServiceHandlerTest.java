@@ -122,32 +122,36 @@ class ChargingStationServiceHandlerTest {
 
     @Test
     public void save_ShouldCallOnChargingStationRepositoryExactlyOnce_WhenChargingStationIsProvided() {
-        //given
+        //Arrange
         when(chargingStationRepository.save(chargingStation)).thenReturn(chargingStation);
 
-        //when
+        //Act
         chargingStationServiceHandler.save(chargingStation);
 
-        //then
+        //Assert
         verify(chargingStationRepository, times(1)).save(chargingStation);
     }
 
     @Test
-    public void addBikeToList_ShouldAddBikeToList_WhenProvidedCorrectArguments() {
-        //given
-        Bike bike = new Bike();
-        bikeRepository.save(bike);
-
+    public void addBikeToList_ShouldAddBikeToList_WhenIdsOfBikeAndStationAreProvided() {
+        //Arrange
         List<Bike> bikeList = new ArrayList<>();
+        Bike bike = new Bike();
         bikeList.add(bike);
 
-        ChargingStation chargingStation = new ChargingStation();
-        chargingStationRepository.save(chargingStation);
+        chargingStation = new ChargingStation();
 
-        //when
+        when(chargingStationRepository.findById(chargingStation.getId())).thenReturn(Optional.of(chargingStation));
+        when(bikeServiceHandler.findBikeById(bike.getId())).thenReturn(bike);
+        when(chargingStationRepository.save(chargingStation)).thenReturn(chargingStation);
+
+        bike.setChargingStation(chargingStation);
+        chargingStation.setBikeList(bikeList);
+
+        //Act
         List<Bike> actual = chargingStationServiceHandler.addBikeToList(chargingStation.getId(), bike.getId()).getBikeList();
 
-        //then
+        //Assert
         assertIterableEquals(bikeList, actual);
     }
 }
