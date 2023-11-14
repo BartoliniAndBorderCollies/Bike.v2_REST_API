@@ -71,8 +71,10 @@ class UserServiceHandlerTest {
 
     private List<UserForAdminResponseDTO> mapUsersToDTO(Iterable<User> users) {
         List<UserForAdminResponseDTO> userDTOs = new ArrayList<>();
+        UserForAdminResponseDTO userDTO = new UserForAdminResponseDTO();
+
         for (User user : users) {
-            UserForAdminResponseDTO userDTO = modelMapper.map(user, UserForAdminResponseDTO.class);
+            when(modelMapper.map(user, UserForAdminResponseDTO.class)).thenReturn(userDTO);
             userDTOs.add(userDTO);
         }
         return userDTOs;
