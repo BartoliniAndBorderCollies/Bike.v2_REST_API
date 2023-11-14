@@ -63,8 +63,7 @@ class RentBikeServiceHandlerTest {
     @Test
     public void updateRent_ShouldReturnUpdatedDaysOfRentResponseDTO_WhenGivenCorrectArguments() {
         //Arrange
-        rent = new Rent();
-        rent.setId(1L);
+        rent = mock(Rent.class);
 
         when(rentRepository.findById(rent.getId())).thenReturn(Optional.of(rent));
 
@@ -110,8 +109,7 @@ class RentBikeServiceHandlerTest {
     @Test
     public void findBikeForNormalUserById_ShouldReturnBikeForNormalUserResponseDTO_WhenGivenCorrectId() {
         //Arrange
-        bike = new Bike();
-        bike.setId(1L);
+        bike = mock(Bike.class);
         when(bikeRepository.findById(bike.getId())).thenReturn(Optional.of(bike));
 
         BikeForNormalUserResponseDTO expected = modelMapper.map(bike, BikeForNormalUserResponseDTO.class);
