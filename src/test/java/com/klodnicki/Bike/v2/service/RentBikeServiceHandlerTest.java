@@ -137,8 +137,7 @@ class RentBikeServiceHandlerTest {
             bike.setId(1L);
             bikeList.add(bike);
 
-            user = new User();
-            user.setId(1L);
+            user = mock(User.class);
 
             chargingStation = new ChargingStation();
             chargingStation.setId(1L);
