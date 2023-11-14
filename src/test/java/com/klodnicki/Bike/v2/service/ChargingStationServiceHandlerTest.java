@@ -35,17 +35,16 @@ class ChargingStationServiceHandlerTest {
     }
 
     @Test
-    public void add_ShouldAddToDatabase_WhenGivenCorrectArguments() {
-        //given
-        Long expected = chargingStationRepository.count() + 1;
-        ChargingStation chargingStation = new ChargingStation();
+    public void add_ShouldCallOnChargingStationRepositoryExactlyOnce_WhenChargingStationProvided() {
+        //Arrange
+        ChargingStation chargingStation = mock(ChargingStation.class);
+        when(chargingStationRepository.save(chargingStation)).thenReturn(chargingStation);
 
-        //when
+        //Act
         chargingStationServiceHandler.add(chargingStation);
-        Long actual = chargingStationRepository.count();
 
-        //then
-        assertEquals(expected, actual);
+        //Assert
+        verify(chargingStationRepository, times(1)).save(chargingStation);
     }
 
     @Test
