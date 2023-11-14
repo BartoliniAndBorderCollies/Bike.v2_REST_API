@@ -161,6 +161,9 @@ class RentBikeServiceHandlerTest {
         public void rent_ShouldRemoveFromBikeList_WhenProvidedBikeObject() {
             //Arrange
             //Act
+            when(bikeServiceHandler.findBikeById(rentRequest.getBikeId())).thenReturn(bike);
+            when(userService.findUserById(rentRequest.getUserId())).thenReturn(user);
+            when(chargingStationService.findStationById(bike.getChargingStation().getId())).thenReturn(chargingStation);
             rentBikeServiceHandler.rent(rentRequest);
             List<Bike> actual = chargingStation.getBikeList();
 
