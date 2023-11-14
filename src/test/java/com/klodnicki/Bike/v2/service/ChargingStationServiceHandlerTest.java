@@ -23,6 +23,7 @@ class ChargingStationServiceHandlerTest {
     private ChargingStationServiceHandler chargingStationServiceHandler;
     private BikeServiceHandler bikeServiceHandler;
     private ModelMapper modelMapper;
+    private ChargingStation chargingStation;
 
     @BeforeEach
     public void setUp() {
@@ -32,12 +33,12 @@ class ChargingStationServiceHandlerTest {
         modelMapper = mock(ModelMapper.class);
         chargingStationServiceHandler = new ChargingStationServiceHandler(chargingStationRepository, bikeServiceHandler,
                 modelMapper);
+        chargingStation = mock(ChargingStation.class);
     }
 
     @Test
     public void add_ShouldCallOnChargingStationRepositoryExactlyOnce_WhenChargingStationProvided() {
         //Arrange
-        ChargingStation chargingStation = mock(ChargingStation.class);
         when(chargingStationRepository.save(chargingStation)).thenReturn(chargingStation);
 
         //Act
