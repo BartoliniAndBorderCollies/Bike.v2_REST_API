@@ -132,7 +132,8 @@ class UserServiceHandlerTest {
     @Test
     public void save_ShouldCallOnUserRepositoryExactlyOnce_WhenProvidedUser() {
         //Arrange
-        User user = new User();
+        User user = mock(User.class);
+        when(userRepository.save(user)).thenReturn(user);
 
         //Act
         userServiceHandler.save(user);
@@ -140,6 +141,4 @@ class UserServiceHandlerTest {
         //Assert
         verify(userRepository, times(1)).save(user);
     }
-
-
 }
