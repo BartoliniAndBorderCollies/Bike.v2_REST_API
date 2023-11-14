@@ -83,16 +83,17 @@ class UserServiceHandlerTest {
     @Test
     public void findById_ShouldReturnUserForAdminResponseDTO_WhenProvidedId() {
         //Arrange
-        User user = new User();
-        user.setId(1L);
+        User user = mock(User.class);
+        UserForAdminResponseDTO userDTO = new UserForAdminResponseDTO();
+
         when(userRepository.findById(user.getId())).thenReturn(Optional.of(user));
-        UserForAdminResponseDTO expected = modelMapper.map(user, UserForAdminResponseDTO.class);
+        when(modelMapper.map(user, UserForAdminResponseDTO.class)).thenReturn(userDTO);
 
         //Act
-        UserForAdminResponseDTO actual = userServiceHandler.findById(1L);
+        UserForAdminResponseDTO actual = userServiceHandler.findById(user.getId());
 
         //Assert
-        assertEquals(expected, actual);
+        assertEquals(userDTO, actual);
     }
 
     @Test
