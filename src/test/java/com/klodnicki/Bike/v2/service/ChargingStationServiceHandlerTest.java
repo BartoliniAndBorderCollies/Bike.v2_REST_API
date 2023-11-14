@@ -99,18 +99,15 @@ class ChargingStationServiceHandlerTest {
         assertEquals(stationDTO, actual);
     }
 
-
     @Test
     public void findStationById_ShouldReturnChargingStation_WhenExistInDatabase() {
-        //given
-        ChargingStation chargingStation = new ChargingStation();
-        chargingStation.setBikeList(new ArrayList<>());
-        chargingStationRepository.save(chargingStation);
+        //Arrange
+        when(chargingStationRepository.findById(chargingStation.getId())).thenReturn(Optional.of(chargingStation));
 
-        //when
+        //Act
         ChargingStation actual = chargingStationServiceHandler.findStationById(chargingStation.getId());
 
-        //then
+        //Assert
         assertEquals(chargingStation, actual);
     }
 
