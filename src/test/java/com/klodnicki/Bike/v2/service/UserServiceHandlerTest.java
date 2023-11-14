@@ -116,10 +116,11 @@ class UserServiceHandlerTest {
     @Test
     public void banUser_ShouldReturnResponseEntityWithCodeOK_WhenProvidedId() {
         //Arrange
-        User user = new User();
+        User user = mock(User.class);
         user.setId(1L);
         user.setAccountValid(false);
         when(userRepository.findById(user.getId())).thenReturn(Optional.of(user));
+        when(userRepository.save(user)).thenReturn(user);
 
         //Act
         ResponseEntity<?> response = userServiceHandler.banUser(user.getId());
