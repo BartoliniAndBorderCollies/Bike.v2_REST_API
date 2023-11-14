@@ -11,6 +11,7 @@ import org.modelmapper.ModelMapper;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -86,16 +87,16 @@ class ChargingStationServiceHandlerTest {
 
     @Test
     public void findById_ShouldReturnStationForAdminResponseDTO_WhenExistInDatabase() {
-        //given
-        ChargingStation chargingStation = new ChargingStation();
-        chargingStationRepository.save(chargingStation);
-        StationForAdminResponseDTO expected = modelMapper.map(chargingStation, StationForAdminResponseDTO.class);
+        //Arrange
+        when(chargingStationRepository.findById(chargingStation.getId())).thenReturn(Optional.of(chargingStation));
+        StationForAdminResponseDTO stationDTO = new StationForAdminResponseDTO();
+        when(modelMapper.map(chargingStation, StationForAdminResponseDTO.class)).thenReturn(stationDTO);
 
-        //when
+        //Act
         StationForAdminResponseDTO actual = chargingStationServiceHandler.findById(chargingStation.getId());
 
-        //then
-        assertEquals(expected, actual);
+        //Assert
+        assertEquals(stationDTO, actual);
     }
 
 
