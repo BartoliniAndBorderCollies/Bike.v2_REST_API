@@ -166,18 +166,13 @@ class BikeServiceHandlerTest {
     }
 
     @Test
-    public void deleteById_ShouldDeleteFromDatabase_WhenGivenId() {
-        //given
-        bikeRepository.deleteAll();
-        Bike bike = new Bike();
-        bikeRepository.save(bike);
-        Long expected = bikeRepository.count() - 1;
-
-        //when
+    public void deleteById_ShouldCallOnRepositoryExactlyOnce_WhenGivenId() {
+        //Arrange
+        //Act
         bikeServiceHandler.deleteById(bike.getId());
 
         //then
-        assertEquals(expected, bikeRepository.count());
+        verify(bikeRepository, times(1)).deleteById(bike.getId());
     }
 
     @Test
