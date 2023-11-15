@@ -212,11 +212,6 @@ class BikeServiceHandlerTest {
 
     @Test
     public void findBikeById_ShouldThrowIllegalArgumentException_WhenGivenIdDoesNotExistInDatabase() {
-        //given
-        bikeRepository.deleteAll();
-
-        //when
-        //then
         assertThrows(IllegalArgumentException.class, () -> bikeServiceHandler.findBikeById(1L));
     }
 }
