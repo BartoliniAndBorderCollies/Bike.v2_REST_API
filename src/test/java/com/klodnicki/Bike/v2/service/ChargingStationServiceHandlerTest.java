@@ -35,13 +35,13 @@ class ChargingStationServiceHandlerTest {
         chargingStationServiceHandler = new ChargingStationServiceHandler(chargingStationRepository, bikeServiceHandler,
                 modelMapper);
         chargingStation = mock(ChargingStation.class);
+
+        when(chargingStationRepository.save(chargingStation)).thenReturn(chargingStation);
     }
 
     @Test
     public void add_ShouldCallOnChargingStationRepositoryExactlyOnce_WhenChargingStationProvided() {
-        //Arrange
-        when(chargingStationRepository.save(chargingStation)).thenReturn(chargingStation);
-
+        //Arrange - takes from @BeforeEach setUp()
         //Act
         chargingStationServiceHandler.add(chargingStation);
 
@@ -51,10 +51,9 @@ class ChargingStationServiceHandlerTest {
 
     @Test
     public void add_ShouldReturnStationForAdminResponseDTO_WhenGivenChargingStation() {
-        //Arrange
+        //Arrange - takes from @BeforeEach setUp()
         StationForAdminResponseDTO stationDTO = new StationForAdminResponseDTO();
         when(modelMapper.map(chargingStation, StationForAdminResponseDTO.class)).thenReturn(stationDTO);
-        when(chargingStationRepository.save(chargingStation)).thenReturn(chargingStation);
 
         //Act
         StationForAdminResponseDTO actual = chargingStationServiceHandler.add(chargingStation);
@@ -65,14 +64,13 @@ class ChargingStationServiceHandlerTest {
 
     @Test
     public void findAll_ShouldReturnListOfStationForAdminResponseDTO_WhenBikesExistInDatabase() {
-        //Arrange
+        //Arrange - takes from @BeforeEach setUp()
         List<ChargingStation> stations = new ArrayList<>();
         List<StationForAdminResponseDTO> expectedStationDTOS = new ArrayList<>();
         StationForAdminResponseDTO stationDTO = new StationForAdminResponseDTO();
         when(chargingStationRepository.findAll()).thenReturn(stations);
 
         for (int i = 0; i < 5; i++) {
-            when(chargingStationRepository.save(chargingStation)).thenReturn(chargingStation);
             when(modelMapper.map(chargingStation, StationForAdminResponseDTO.class)).thenReturn(stationDTO);
             expectedStationDTOS.add(stationDTO);
             stations.add(chargingStation);
@@ -113,18 +111,13 @@ class ChargingStationServiceHandlerTest {
 
     @Test
     public void findStationById_ShouldThrowIllegalArgumentException_WhenNotFoundChargingStationInDatabase() {
-        //given
-        //when
-        //then
         assertThrows(IllegalArgumentException.class, () -> chargingStationServiceHandler.findStationById(1L));
     }
 
 
     @Test
     public void save_ShouldCallOnChargingStationRepositoryExactlyOnce_WhenChargingStationIsProvided() {
-        //Arrange
-        when(chargingStationRepository.save(chargingStation)).thenReturn(chargingStation);
-
+        //Arrange - takes from @BeforeEach setUp()
         //Act
         chargingStationServiceHandler.save(chargingStation);
 

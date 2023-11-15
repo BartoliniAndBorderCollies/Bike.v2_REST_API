@@ -46,14 +46,16 @@ class BikeServiceHandlerTest {
         bike = mock(Bike.class);
         bikeRequestDTO = mock(BikeRequestDTO.class);
         bikeForAdminResponseDTO = mock(BikeForAdminResponseDTO.class);
+
+        when(bikeRepository.findById(bike.getId())).thenReturn(Optional.of(bike));
+        when(bikeRepository.save(bike)).thenReturn(bike);
+        when(modelMapper.map(bike, BikeForAdminResponseDTO.class)).thenReturn(bikeForAdminResponseDTO);
     }
 
     @Test
     public void add_ShouldCallOnRepositoryExactlyOnce_WhenGivenBikeRequestDTOObject() {
-        //Arrange
+        //Arrange - takes from @BeforeEach setUp()
         when(modelMapper.map(bikeRequestDTO, Bike.class)).thenReturn(bike);
-        when(bikeRepository.save(bike)).thenReturn(bike);
-        when(modelMapper.map(bike, BikeForAdminResponseDTO.class)).thenReturn(bikeForAdminResponseDTO);
 
         //Act
         bikeServiceHandler.add(bikeRequestDTO);
@@ -64,10 +66,8 @@ class BikeServiceHandlerTest {
 
     @Test
     public void add_ShouldReturnBikeForAdminResponseDTO_WhenGivenBikeRequestDTO() {
-        //Arrange
+        //Arrange - takes from @BeforeEach setUp()
         when(modelMapper.map(bikeRequestDTO, Bike.class)).thenReturn(bike);
-        when(bikeRepository.save(bike)).thenReturn(bike);
-        when(modelMapper.map(bike, BikeForAdminResponseDTO.class)).thenReturn(bikeForAdminResponseDTO);
 
         //Act
         BikeForAdminResponseDTO actual = bikeServiceHandler.add(bikeRequestDTO);
@@ -78,7 +78,7 @@ class BikeServiceHandlerTest {
 
     @Test
     public void findAll_ShouldReturnListOfBikeForAdminResponseDTO_WhenBikeExistInDatabase() {
-        //Arrange
+        //Arrange - takes from @BeforeEach setUp()
         List<Bike> bikeList = new ArrayList<>();
         List<BikeForAdminResponseDTO> bikeListDto = new ArrayList<>();
 
@@ -88,7 +88,6 @@ class BikeServiceHandlerTest {
         }
 
         when(bikeRepository.findAll()).thenReturn(bikeList);
-        when(modelMapper.map(bike, BikeForAdminResponseDTO.class)).thenReturn(bikeForAdminResponseDTO);
 
         //Act
         List<BikeForAdminResponseDTO> actual = bikeServiceHandler.findAll();
@@ -99,10 +98,7 @@ class BikeServiceHandlerTest {
 
     @Test
     public void findById_ShouldReturnBikeForAdminResponseDTO_WhenBikeExistsInDatabaseAndIdOfBikeIsProvided() {
-        //Arrange
-        when(bikeRepository.findById(bike.getId())).thenReturn(Optional.of(bike));
-        when(modelMapper.map(bike, BikeForAdminResponseDTO.class)).thenReturn(bikeForAdminResponseDTO);
-
+        //Arrange - takes from @BeforeEach setUp()
         //Act
         BikeForAdminResponseDTO actual = bikeServiceHandler.findById(bike.getId());
 
@@ -148,13 +144,8 @@ class BikeServiceHandlerTest {
     @Test
     public void update_ShouldReturnEmptyOptional_WhenBikeRequestDTOValuesAreNulls() {
         //Arrange
-        Bike bike = mock(Bike.class);
         BikeRequestDTO bikeRequestDTO = new BikeRequestDTO(null, null, true, null,
                 100.00, null, new UserForAdminResponseDTO(), new StationForAdminResponseDTO());
-
-        when(bikeRepository.findById(bike.getId())).thenReturn(Optional.of(bike));
-        when(bikeRepository.save(bike)).thenReturn(bike);
-        when(modelMapper.map(bike, BikeForAdminResponseDTO.class)).thenReturn(bikeForAdminResponseDTO);
 
         //Act
         BikeForAdminResponseDTO actual = bikeServiceHandler.update(bike.getId(), bikeRequestDTO);
@@ -200,9 +191,7 @@ class BikeServiceHandlerTest {
 
     @Test
     public void save_ShouldCallOnRepositoryExactlyOnce_WhenGivenBikeObject() {
-        //Arrange
-        when(bikeRepository.save(bike)).thenReturn(bike);
-
+        //Arrange - takes from @BeforeEach setUp()
         //Act
         bikeServiceHandler.save(bike);
 
