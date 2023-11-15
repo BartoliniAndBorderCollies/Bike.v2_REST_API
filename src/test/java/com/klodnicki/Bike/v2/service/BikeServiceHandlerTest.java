@@ -20,6 +20,7 @@ import org.modelmapper.ModelMapper;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -97,19 +98,16 @@ class BikeServiceHandlerTest {
     }
 
     @Test
-    public void findById_ShouldReturnBikeForAdminResponseDTO_WhenBikeExistsInDatabase() {
-        //given
-        bikeRepository.deleteAll();
-        Bike bike = new Bike();
-        bikeRepository.save(bike);
+    public void findById_ShouldReturnBikeForAdminResponseDTO_WhenBikeExistsInDatabaseAndIdOfBikeIsProvided() {
+        //Arrange
+        when(bikeRepository.findById(bike.getId())).thenReturn(Optional.of(bike));
+        when(modelMapper.map(bike, BikeForAdminResponseDTO.class)).thenReturn(bikeForAdminResponseDTO);
 
-        BikeForAdminResponseDTO expected = modelMapper.map(bike, BikeForAdminResponseDTO.class);
-
-        //when
+        //Act
         BikeForAdminResponseDTO actual = bikeServiceHandler.findById(bike.getId());
 
         //then
-        assertEquals(expected, actual);
+        assertEquals(bikeForAdminResponseDTO, actual);
     }
 
     @Test
