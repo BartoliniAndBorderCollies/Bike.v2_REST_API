@@ -77,22 +77,23 @@ class BikeServiceHandlerTest {
 
     @Test
     public void findAll_ShouldReturnListOfBikeForAdminResponseDTO_WhenBikeExistInDatabase() {
-        //given
-        bikeRepository.deleteAll();
-        ArrayList<BikeForAdminResponseDTO> list = new ArrayList<>();
+        //Arrange
+        List<Bike> bikeList = new ArrayList<>();
+        List<BikeForAdminResponseDTO> bikeListDto = new ArrayList<>();
 
         for (int i = 0; i < 3; i++) {
-            Bike bike = new Bike();
-            bikeRepository.save(bike);
-            BikeForAdminResponseDTO bikeDTO = modelMapper.map(bike, BikeForAdminResponseDTO.class);
-            list.add(bikeDTO);
+            bikeList.add(bike);
+            bikeListDto.add(bikeForAdminResponseDTO);
         }
 
-        //when
+        when(bikeRepository.findAll()).thenReturn(bikeList);
+        when(modelMapper.map(bike, BikeForAdminResponseDTO.class)).thenReturn(bikeForAdminResponseDTO);
+
+        //Act
         List<BikeForAdminResponseDTO> actual = bikeServiceHandler.findAll();
 
-        //then
-        assertEquals(list, actual);
+        //Assert
+        assertEquals(bikeListDto, actual);
     }
 
     @Test
