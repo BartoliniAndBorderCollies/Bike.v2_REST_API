@@ -112,39 +112,37 @@ class BikeServiceHandlerTest {
 
     @Test
     public void update_ShouldReturnUpdatedBikeForAdminResponseDTO_WhenGivenCorrectIdAndBikeRequestDTO() {
-        //given
-        bikeRepository.deleteAll();
-        Bike bike = new Bike();
+        //Arrange
+        bike = new Bike();
         bike.setRent(new Rent());
 
-        ChargingStation chargingStation = new ChargingStation();
-        chargingStationRepository.save(chargingStation);
+        ChargingStation chargingStation = mock(ChargingStation.class);
+        User user = mock(User.class);
+        UserForAdminResponseDTO userDTO = mock(UserForAdminResponseDTO.class);
+        GpsCoordinates gpsCoordinates = mock(GpsCoordinates.class);
+        StationForAdminResponseDTO stationDTO = mock(StationForAdminResponseDTO.class);
 
-        User user = new User();
-        userRepository.save(user);
+        when(bikeRepository.findById(bike.getId())).thenReturn(Optional.of(bike));
+        when(bikeRepository.save(bike)).thenReturn(bike);
+        when(modelMapper.map(bike, BikeForAdminResponseDTO.class)).thenReturn(bikeForAdminResponseDTO);
 
         bike.setId(bike.getId());
         bike.setSerialNumber("123");
         bike.setRented(true);
         bike.setBikeType(BikeType.ELECTRIC);
         bike.getRent().setAmountToBePaid(100.00);
-        bike.setGpsCoordinates(new GpsCoordinates("50N", "40E"));
+        bike.setGpsCoordinates(gpsCoordinates);
         bike.setUser(user);
         bike.setChargingStation(chargingStation);
 
-        bikeRepository.save(bike);
-
-        BikeForAdminResponseDTO expected = modelMapper.map(bike, BikeForAdminResponseDTO.class);
-
         BikeRequestDTO bikeRequestDTO = new BikeRequestDTO(bike.getId(), "123", true, BikeType.ELECTRIC,
-                100.00, new GpsCoordinates("50N", "40E"), new UserForAdminResponseDTO(),
-                new StationForAdminResponseDTO());
+                100.00, gpsCoordinates, userDTO, stationDTO);
 
-        //when
+        //Act
         BikeForAdminResponseDTO actual = bikeServiceHandler.update(bike.getId(), bikeRequestDTO);
 
-        //then
-        assertEquals(expected, actual);
+        //Assert
+        assertEquals(bikeForAdminResponseDTO, actual);
     }
 
     @Test
