@@ -171,34 +171,31 @@ class BikeServiceHandlerTest {
         //Act
         bikeServiceHandler.deleteById(bike.getId());
 
-        //then
+        //Assert
         verify(bikeRepository, times(1)).deleteById(bike.getId());
     }
 
     @Test
     public void findByIsRentedFalse_ShouldReturnListOfNotRentedBikes_WhenRentIsFalse() {
-        //given
-        bikeRepository.deleteAll();
+        //Arrange
         List<Bike> expected = new ArrayList<>();
 
-        Bike bike = new Bike();
+        Bike bike1 = new Bike();
+        bike1.setRented(true);
         Bike bike2 = new Bike();
+        bike2.setRented(false);
         Bike bike3 = new Bike();
-
-        bike.setRented(true);
         bike3.setRented(true);
-
-        bikeRepository.save(bike);
-        bikeRepository.save(bike2);
-        bikeRepository.save(bike3);
 
         expected.add(bike2);
 
-        //when
+        when(bikeRepository.findByIsRentedFalse()).thenReturn(expected);
+
+        //Act
         List<Bike> actual = bikeServiceHandler.findByIsRentedFalse();
 
-        //then
-        assertEquals(expected, actual);
+        //Assert
+        assertIterableEquals(expected, actual);
     }
 
     @Test
