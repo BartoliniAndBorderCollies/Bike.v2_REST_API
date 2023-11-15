@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.*;
 
 class BikeServiceHandlerTest {
 
@@ -31,6 +31,9 @@ class BikeServiceHandlerTest {
     private UserRepository userRepository;
     private BikeServiceHandler bikeServiceHandler;
     private ModelMapper modelMapper;
+    private Bike bike;
+    private BikeRequestDTO bikeRequestDTO;
+    private BikeForAdminResponseDTO bikeForAdminResponseDTO;
 
     @BeforeEach
     public void setUp(){
@@ -39,6 +42,9 @@ class BikeServiceHandlerTest {
         userRepository = mock(UserRepository.class);
         modelMapper = mock(ModelMapper.class);
         bikeServiceHandler = new BikeServiceHandler(bikeRepository, modelMapper);
+        bike = mock(Bike.class);
+        bikeRequestDTO = mock(BikeRequestDTO.class);
+        bikeForAdminResponseDTO = mock(BikeForAdminResponseDTO.class);
     }
 
     @Test
