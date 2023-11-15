@@ -199,18 +199,15 @@ class BikeServiceHandlerTest {
     }
 
     @Test
-    public void save_ShouldSaveInDatabase_WhenGivenBikeObject() {
-        //given
-        bikeRepository.deleteAll();
-        Long expected = bikeRepository.count() + 1;
-        Bike bike = new Bike();
+    public void save_ShouldCallOnRepositoryExactlyOnce_WhenGivenBikeObject() {
+        //Arrange
+        when(bikeRepository.save(bike)).thenReturn(bike);
 
-        //when
+        //Act
         bikeServiceHandler.save(bike);
-        Long actual = bikeRepository.count();
 
-        //then
-        assertEquals(expected, actual);
+        //Assert
+        verify(bikeRepository, times(1)).save(bike);
     }
 
     @Test
