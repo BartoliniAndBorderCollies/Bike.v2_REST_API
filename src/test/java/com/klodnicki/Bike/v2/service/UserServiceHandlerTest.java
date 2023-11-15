@@ -24,17 +24,20 @@ class UserServiceHandlerTest {
     private UserServiceHandler userServiceHandler;
     private ModelMapper modelMapper;
 
+    private User user;
+
     @BeforeEach
     public void setUp() {
         userRepository = mock(UserRepository.class);
         modelMapper = mock(ModelMapper.class);
         userServiceHandler = new UserServiceHandler(userRepository, modelMapper);
+
+        user = mock(User.class);
     }
 
     @Test
     public void add_ShouldReturnUserForAdminResponseDTO_WhenUserProvided() {
         //Arrange
-        User user = mock(User.class);
         UserForAdminResponseDTO userDTO = new UserForAdminResponseDTO();
         when(userRepository.save(user)).thenReturn(user);
         when(modelMapper.map(user, UserForAdminResponseDTO.class)).thenReturn(userDTO);
@@ -83,7 +86,6 @@ class UserServiceHandlerTest {
     @Test
     public void findById_ShouldReturnUserForAdminResponseDTO_WhenProvidedId() {
         //Arrange
-        User user = mock(User.class);
         UserForAdminResponseDTO userDTO = new UserForAdminResponseDTO();
 
         when(userRepository.findById(user.getId())).thenReturn(Optional.of(user));
@@ -99,8 +101,6 @@ class UserServiceHandlerTest {
     @Test
     public void deleteById_ShouldCallOnUserRepositoryExactlyOnce_WhenProvidedId() {
         // Arrange
-        User user = mock(User.class);
-
         // Act
         userServiceHandler.deleteById(user.getId());
 
@@ -132,7 +132,6 @@ class UserServiceHandlerTest {
     @Test
     public void save_ShouldCallOnUserRepositoryExactlyOnce_WhenProvidedUser() {
         //Arrange
-        User user = mock(User.class);
         when(userRepository.save(user)).thenReturn(user);
 
         //Act
