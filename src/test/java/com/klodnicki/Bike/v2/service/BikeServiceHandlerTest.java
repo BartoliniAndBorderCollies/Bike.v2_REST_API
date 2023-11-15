@@ -176,7 +176,7 @@ class BikeServiceHandlerTest {
     }
 
     @Test
-    public void findByIsRentedFalse_ShouldReturnListOfNotRentedBikes_WhenRentIsFalse() {
+    public void findByIsRentedFalse_ShouldReturnListOfNotRentedBikes_WhenNotRentedBikesAreInDatabase() {
         //Arrange
         List<Bike> expected = new ArrayList<>();
 
