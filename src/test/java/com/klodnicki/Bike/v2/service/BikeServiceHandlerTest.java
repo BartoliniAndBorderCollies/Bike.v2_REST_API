@@ -48,18 +48,17 @@ class BikeServiceHandlerTest {
     }
 
     @Test
-    public void add_ShouldAddToDatabase_WhenGivenCorrectArguments() {
-        //given
-        bikeRepository.deleteAll();
-        BikeRequestDTO bikeRequestDTO = new BikeRequestDTO();
+    public void add_ShouldCallOnRepositoryExactlyOnce_WhenGivenBikeRequestDTOObject() {
+        //Arrange
+        when(modelMapper.map(bikeRequestDTO, Bike.class)).thenReturn(bike);
+        when(bikeRepository.save(bike)).thenReturn(bike);
+        when(modelMapper.map(bike, BikeForAdminResponseDTO.class)).thenReturn(bikeForAdminResponseDTO);
+
+        //Act
         bikeServiceHandler.add(bikeRequestDTO);
-        Long expected = 1L;
 
-        //when
-        Long actual = bikeRepository.count();
-
-        //then
-        assertEquals(expected, actual);
+        //Assert
+        verify(bikeRepository, times(1)).save(bike);
     }
 
     @Test
