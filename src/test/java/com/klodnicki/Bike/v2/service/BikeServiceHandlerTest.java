@@ -147,18 +147,19 @@ class BikeServiceHandlerTest {
 
     @Test
     public void update_ShouldReturnEmptyOptional_WhenBikeRequestDTOValuesAreNulls() {
-        //given
-        bikeRepository.deleteAll();
-        Bike bike = new Bike();
-        bikeRepository.save(bike);
-
-        BikeRequestDTO bikeRequestDTO = new BikeRequestDTO(bike.getId(), null, true, null,
+        //Arrange
+        Bike bike = mock(Bike.class);
+        BikeRequestDTO bikeRequestDTO = new BikeRequestDTO(null, null, true, null,
                 100.00, null, new UserForAdminResponseDTO(), new StationForAdminResponseDTO());
 
-        //when
+        when(bikeRepository.findById(bike.getId())).thenReturn(Optional.of(bike));
+        when(bikeRepository.save(bike)).thenReturn(bike);
+        when(modelMapper.map(bike, BikeForAdminResponseDTO.class)).thenReturn(bikeForAdminResponseDTO);
+
+        //Act
         BikeForAdminResponseDTO actual = bikeServiceHandler.update(bike.getId(), bikeRequestDTO);
 
-        //then
+        //Assert
         assertNull(actual.getSerialNumber());
         assertNull(actual.getBikeType());
         assertNull(actual.getGpsCoordinates());
