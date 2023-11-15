@@ -63,18 +63,16 @@ class BikeServiceHandlerTest {
 
     @Test
     public void add_ShouldReturnBikeForAdminResponseDTO_WhenGivenBikeRequestDTO() {
-        //given
-        bikeRepository.deleteAll();
-        BikeRequestDTO bikeRequestDTO = new BikeRequestDTO();
-        BikeForAdminResponseDTO expected = modelMapper.map(bikeRequestDTO, BikeForAdminResponseDTO.class);
+        //Arrange
+        when(modelMapper.map(bikeRequestDTO, Bike.class)).thenReturn(bike);
+        when(bikeRepository.save(bike)).thenReturn(bike);
+        when(modelMapper.map(bike, BikeForAdminResponseDTO.class)).thenReturn(bikeForAdminResponseDTO);
 
-        //when
+        //Act
         BikeForAdminResponseDTO actual = bikeServiceHandler.add(bikeRequestDTO);
 
-        //then
-        assertNotNull(actual.getId());  // check that ID is not null
-        expected.setId(actual.getId());  // set expected ID to actual ID
-        assertEquals(expected, actual);
+        //Assert
+        assertEquals(bikeForAdminResponseDTO, actual);
     }
 
     @Test
