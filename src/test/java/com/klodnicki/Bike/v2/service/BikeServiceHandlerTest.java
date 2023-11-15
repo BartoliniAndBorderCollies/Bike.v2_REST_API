@@ -14,29 +14,32 @@ import com.klodnicki.Bike.v2.model.entity.User;
 import com.klodnicki.Bike.v2.repository.BikeRepository;
 import com.klodnicki.Bike.v2.repository.ChargingStationRepository;
 import com.klodnicki.Bike.v2.repository.UserRepository;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
 
-@SpringBootTest
 class BikeServiceHandlerTest {
 
-    @Autowired
     private BikeRepository bikeRepository;
-    @Autowired
     private ChargingStationRepository chargingStationRepository;
-    @Autowired
     private UserRepository userRepository;
-    @Autowired
     private BikeServiceHandler bikeServiceHandler;
-    @Autowired
     private ModelMapper modelMapper;
+
+    @BeforeEach
+    public void setUp(){
+        bikeRepository = mock(BikeRepository.class);
+        chargingStationRepository = mock(ChargingStationRepository.class);
+        userRepository = mock(UserRepository.class);
+        modelMapper = mock(ModelMapper.class);
+        bikeServiceHandler = new BikeServiceHandler(bikeRepository, modelMapper);
+    }
 
     @Test
     public void add_ShouldAddToDatabase_WhenGivenCorrectArguments() {
