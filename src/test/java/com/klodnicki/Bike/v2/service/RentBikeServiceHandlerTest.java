@@ -40,10 +40,7 @@ class RentBikeServiceHandlerTest {
     private ChargingStationServiceApi chargingStationService;
     private UserServiceApi userService;
     private ChargingStation chargingStation;
-    private Rent rent;
-    private User user;
     private Bike bike;
-    private List<Bike> bikeList;
 
     @BeforeEach
     public void setUp() {
@@ -58,12 +55,14 @@ class RentBikeServiceHandlerTest {
         chargingStationService = mock(ChargingStationServiceHandler.class);
         rentBikeServiceHandler = new RentBikeServiceHandler(bikeServiceHandler, chargingStationService, userService,
                 modelMapper, rentRepository);
+
+        bike = mock(Bike.class);
     }
 
     @Test
     public void updateRent_ShouldReturnUpdatedDaysOfRentResponseDTO_WhenGivenCorrectArguments() {
         //Arrange
-        rent = mock(Rent.class);
+        Rent rent = mock(Rent.class);
 
         when(rentRepository.findById(rent.getId())).thenReturn(Optional.of(rent));
 
@@ -83,7 +82,7 @@ class RentBikeServiceHandlerTest {
     @Test
     public void findAvailableBikes_ShouldReturnListOfBikeForNormalUserResponseDTO_WhenGivenListOfBikes() {
         //Arrange
-        bikeList = new ArrayList<>();
+       List<Bike> bikeList = new ArrayList<>();
         List<BikeForNormalUserResponseDTO> expected = new ArrayList<>();
 
         when(bikeServiceHandler.findByIsRentedFalse()).thenReturn(bikeList);
@@ -109,7 +108,6 @@ class RentBikeServiceHandlerTest {
     @Test
     public void findBikeForNormalUserById_ShouldReturnBikeForNormalUserResponseDTO_WhenGivenCorrectId() {
         //Arrange
-        bike = mock(Bike.class);
         when(bikeRepository.findById(bike.getId())).thenReturn(Optional.of(bike));
 
         BikeForNormalUserResponseDTO expected = modelMapper.map(bike, BikeForNormalUserResponseDTO.class);
@@ -125,11 +123,12 @@ class RentBikeServiceHandlerTest {
     class nestedTestsForRentMethods {
 
         private RentRequest rentRequest;
+        private User user;
 
         @BeforeEach
         public void setUpForRentMethods() {
 
-            bikeList = new ArrayList<>();
+            List<Bike> bikeList = new ArrayList<>();
 
             bike = new Bike();
             bike.setId(1L);
@@ -213,13 +212,15 @@ class RentBikeServiceHandlerTest {
     @Nested
     class nestedTestsForReturnVehicleMethods {
 
+        private Rent rent;
+        private List<Bike> bikeList;
+
         @BeforeEach
         public void setUpForReturnVehicleMethod() {
             bikeList = new ArrayList<>();
 
             rent = mock(Rent.class);
-            user = mock(User.class);
-            bike = mock(Bike.class);
+            User user = mock(User.class);
             chargingStation = new ChargingStation();
             chargingStation.setId(1L);
             chargingStation.setBikeList(bikeList);
