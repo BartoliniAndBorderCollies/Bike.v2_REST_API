@@ -40,11 +40,11 @@ class AdminChargingStationControllerIntegrationTest {
 
     @Test
     public void addBikeToList_ShouldAddBikeToStationListOfBikesAndReturnChargingStation_WhenStationIdAndBikeIdAreGiven() {
-
-        ChargingStation chargingStation2 = new ChargingStation();
         List<Bike> bikeList = new ArrayList<>();
         bikeList.add(bike);
-        chargingStation2.setBikeList(bikeList);
+        ChargingStation chargingStation2 = new ChargingStation(2L, "station name2", "station address2",
+                "station city2", 100,  bikeList);
+        chargingStationRepository.save(chargingStation2);
 
         webTestClient.post()
                 .uri(uriBuilder -> uriBuilder
