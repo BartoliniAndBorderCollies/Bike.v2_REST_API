@@ -1,5 +1,6 @@
 package com.klodnicki.Bike.v2.rest.controller;
 
+import com.klodnicki.Bike.v2.model.BikeType;
 import com.klodnicki.Bike.v2.model.entity.Bike;
 import com.klodnicki.Bike.v2.model.entity.ChargingStation;
 import com.klodnicki.Bike.v2.repository.BikeRepository;
@@ -29,10 +30,11 @@ class AdminChargingStationControllerIntegrationTest {
 
     @BeforeEach
     public void setUp() {
-        chargingStation = new ChargingStation();
+        chargingStation = new ChargingStation(1L, "station name", "station address", "station city",
+                100, new ArrayList<>());
         chargingStationRepository.save(chargingStation);
 
-        bike = new Bike();
+        bike = new Bike(null, BikeType.ELECTRIC, null, null, chargingStation);
         bikeRepository.save(bike);
     }
 
