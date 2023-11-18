@@ -8,146 +8,143 @@ import com.klodnicki.Bike.v2.repository.ChargingStationRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
-@SpringBootTest
+
 class ChargingStationServiceHandlerTest {
 
-    @Autowired
     private ChargingStationRepository chargingStationRepository;
-    @Autowired
     private BikeRepository bikeRepository;
-    @Autowired
     private ChargingStationServiceHandler chargingStationServiceHandler;
-    @Autowired
+    private BikeServiceHandler bikeServiceHandler;
     private ModelMapper modelMapper;
+    private ChargingStation chargingStation;
 
     @BeforeEach
-    public void cleanDatabase() {
-        chargingStationRepository.deleteAll();
+    public void setUp() {
+        chargingStationRepository = mock(ChargingStationRepository.class);
+        bikeRepository = mock(BikeRepository.class);
+        bikeServiceHandler = mock(BikeServiceHandler.class);
+        modelMapper = mock(ModelMapper.class);
+        chargingStationServiceHandler = new ChargingStationServiceHandler(chargingStationRepository, bikeServiceHandler,
+                modelMapper);
+        chargingStation = mock(ChargingStation.class);
+
+        when(chargingStationRepository.save(chargingStation)).thenReturn(chargingStation);
     }
 
     @Test
-    public void add_ShouldAddToDatabase_WhenGivenCorrectArguments() {
-        //given
-        Long expected = chargingStationRepository.count() + 1;
-        ChargingStation chargingStation = new ChargingStation();
-
-        //when
+    public void add_ShouldCallOnChargingStationRepositoryExactlyOnce_WhenChargingStationProvided() {
+        //Arrange - takes from @BeforeEach setUp()
+        //Act
         chargingStationServiceHandler.add(chargingStation);
-        Long actual = chargingStationRepository.count();
 
-        //then
-        assertEquals(expected, actual);
+        //Assert
+        verify(chargingStationRepository, times(1)).save(chargingStation);
     }
 
     @Test
     public void add_ShouldReturnStationForAdminResponseDTO_WhenGivenChargingStation() {
-        //given
-        ChargingStation chargingStation = new ChargingStation();
-        StationForAdminResponseDTO expected = modelMapper.map(chargingStation, StationForAdminResponseDTO.class);
+        //Arrange - takes from @BeforeEach setUp()
+        StationForAdminResponseDTO stationDTO = new StationForAdminResponseDTO();
+        when(modelMapper.map(chargingStation, StationForAdminResponseDTO.class)).thenReturn(stationDTO);
 
-        //when
+        //Act
         StationForAdminResponseDTO actual = chargingStationServiceHandler.add(chargingStation);
 
-        //then
-        assertNotNull(actual.getId());
-        expected.setId(actual.getId());
-        assertEquals(expected, actual);
+        //Assert
+        assertEquals(stationDTO, actual);
     }
 
     @Test
-    public void findAll_ShouldReturnListOfStationForAdminResponseDTO_WhenExistInDatabase() {
-        //given
+    public void findAll_ShouldReturnListOfStationForAdminResponseDTO_WhenBikesExistInDatabase() {
+        //Arrange - takes from @BeforeEach setUp()
+        List<ChargingStation> stations = new ArrayList<>();
         List<StationForAdminResponseDTO> expectedStationDTOS = new ArrayList<>();
+        StationForAdminResponseDTO stationDTO = new StationForAdminResponseDTO();
+        when(chargingStationRepository.findAll()).thenReturn(stations);
+        when(modelMapper.map(chargingStation, StationForAdminResponseDTO.class)).thenReturn(stationDTO);
+
         for (int i = 0; i < 5; i++) {
-            ChargingStation chargingStation = new ChargingStation();
-            chargingStationRepository.save(chargingStation);
-            StationForAdminResponseDTO stationDTO = modelMapper.map(chargingStation, StationForAdminResponseDTO.class);
             expectedStationDTOS.add(stationDTO);
+            stations.add(chargingStation);
         }
 
-        //when
+        //Act
         List<StationForAdminResponseDTO> actual = chargingStationServiceHandler.findAll();
 
-        //then
+        //Assert
         assertEquals(expectedStationDTOS, actual);
     }
 
     @Test
     public void findById_ShouldReturnStationForAdminResponseDTO_WhenExistInDatabase() {
-        //given
-        ChargingStation chargingStation = new ChargingStation();
-        chargingStationRepository.save(chargingStation);
-        StationForAdminResponseDTO expected = modelMapper.map(chargingStation, StationForAdminResponseDTO.class);
+        //Arrange
+        when(chargingStationRepository.findById(chargingStation.getId())).thenReturn(Optional.of(chargingStation));
+        StationForAdminResponseDTO stationDTO = new StationForAdminResponseDTO();
+        when(modelMapper.map(chargingStation, StationForAdminResponseDTO.class)).thenReturn(stationDTO);
 
-        //when
+        //Act
         StationForAdminResponseDTO actual = chargingStationServiceHandler.findById(chargingStation.getId());
 
-        //then
-        assertEquals(expected, actual);
+        //Assert
+        assertEquals(stationDTO, actual);
     }
-
 
     @Test
     public void findStationById_ShouldReturnChargingStation_WhenExistInDatabase() {
-        //given
-        ChargingStation chargingStation = new ChargingStation();
-        chargingStation.setBikeList(new ArrayList<>());
-        chargingStationRepository.save(chargingStation);
+        //Arrange
+        when(chargingStationRepository.findById(chargingStation.getId())).thenReturn(Optional.of(chargingStation));
 
-        //when
+        //Act
         ChargingStation actual = chargingStationServiceHandler.findStationById(chargingStation.getId());
 
-        //then
+        //Assert
         assertEquals(chargingStation, actual);
     }
 
     @Test
     public void findStationById_ShouldThrowIllegalArgumentException_WhenNotFoundChargingStationInDatabase() {
-        //given
-        //when
-        //then
         assertThrows(IllegalArgumentException.class, () -> chargingStationServiceHandler.findStationById(1L));
     }
 
 
     @Test
-    public void save_ShouldSaveInDatabase_WhenProvidedChargingStationObject() {
-        //given
-        ChargingStation chargingStation = new ChargingStation();
-        Long expected = chargingStationRepository.count() + 1;
-
-        //when
+    public void save_ShouldCallOnChargingStationRepositoryExactlyOnce_WhenChargingStationIsProvided() {
+        //Arrange - takes from @BeforeEach setUp()
+        //Act
         chargingStationServiceHandler.save(chargingStation);
-        Long actual = chargingStationRepository.count();
 
-        //then
-        assertEquals(expected, actual);
+        //Assert
+        verify(chargingStationRepository, times(1)).save(chargingStation);
     }
 
     @Test
-    public void addBikeToList_ShouldAddBikeToList_WhenProvidedCorrectArguments() {
-        //given
-        Bike bike = new Bike();
-        bikeRepository.save(bike);
-
+    public void addBikeToList_ShouldAddBikeToList_WhenIdsOfBikeAndStationAreProvided() {
+        //Arrange
         List<Bike> bikeList = new ArrayList<>();
+        Bike bike = new Bike();
         bikeList.add(bike);
 
-        ChargingStation chargingStation =  new ChargingStation();
-        chargingStationRepository.save(chargingStation);
+        chargingStation = new ChargingStation();
 
-        //when
+        when(chargingStationRepository.findById(chargingStation.getId())).thenReturn(Optional.of(chargingStation));
+        when(bikeServiceHandler.findBikeById(bike.getId())).thenReturn(bike);
+        when(chargingStationRepository.save(chargingStation)).thenReturn(chargingStation);
+
+        bike.setChargingStation(chargingStation);
+        chargingStation.setBikeList(bikeList);
+
+        //Act
         List<Bike> actual = chargingStationServiceHandler.addBikeToList(chargingStation.getId(), bike.getId()).getBikeList();
 
-        //then
+        //Assert
         assertIterableEquals(bikeList, actual);
     }
 }

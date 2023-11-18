@@ -20,30 +20,33 @@ import static org.mockito.Mockito.*;
 
 class UserServiceHandlerTest {
 
-    private UserRepository userRepository; // to jest mock
+    private UserRepository userRepository;
     private UserServiceHandler userServiceHandler;
     private ModelMapper modelMapper;
+
+    private User user;
 
     @BeforeEach
     public void setUp() {
         userRepository = mock(UserRepository.class);
-        modelMapper = new ModelMapper();
+        modelMapper = mock(ModelMapper.class);
         userServiceHandler = new UserServiceHandler(userRepository, modelMapper);
+
+        user = mock(User.class);
     }
 
     @Test
     public void add_ShouldReturnUserForAdminResponseDTO_WhenUserProvided() {
         //Arrange
-        User user = new User();
-        when(userRepository.save(user)).thenReturn(new User());
-
-        UserForAdminResponseDTO expected = modelMapper.map(user, UserForAdminResponseDTO.class);
+        UserForAdminResponseDTO userDTO = new UserForAdminResponseDTO();
+        when(userRepository.save(user)).thenReturn(user);
+        when(modelMapper.map(user, UserForAdminResponseDTO.class)).thenReturn(userDTO);
 
         //Act
         UserForAdminResponseDTO actual = userServiceHandler.add(user);
 
         //Assert
-        assertEquals(expected, actual);
+        assertEquals(userDTO, actual);
     }
 
     @Test
@@ -71,8 +74,10 @@ class UserServiceHandlerTest {
 
     private List<UserForAdminResponseDTO> mapUsersToDTO(Iterable<User> users) {
         List<UserForAdminResponseDTO> userDTOs = new ArrayList<>();
+        UserForAdminResponseDTO userDTO = new UserForAdminResponseDTO();
+
         for (User user : users) {
-            UserForAdminResponseDTO userDTO = modelMapper.map(user, UserForAdminResponseDTO.class);
+            when(modelMapper.map(user, UserForAdminResponseDTO.class)).thenReturn(userDTO);
             userDTOs.add(userDTO);
         }
         return userDTOs;
@@ -81,28 +86,26 @@ class UserServiceHandlerTest {
     @Test
     public void findById_ShouldReturnUserForAdminResponseDTO_WhenProvidedId() {
         //Arrange
-        User user = new User();
-        user.setId(1L);
+        UserForAdminResponseDTO userDTO = new UserForAdminResponseDTO();
+
         when(userRepository.findById(user.getId())).thenReturn(Optional.of(user));
-        UserForAdminResponseDTO expected = modelMapper.map(user, UserForAdminResponseDTO.class);
+        when(modelMapper.map(user, UserForAdminResponseDTO.class)).thenReturn(userDTO);
 
         //Act
-        UserForAdminResponseDTO actual = userServiceHandler.findById(1L);
+        UserForAdminResponseDTO actual = userServiceHandler.findById(user.getId());
 
         //Assert
-        assertEquals(expected, actual);
+        assertEquals(userDTO, actual);
     }
 
     @Test
     public void deleteById_ShouldCallOnUserRepositoryExactlyOnce_WhenProvidedId() {
         // Arrange
-        Long id = 1L;
-
         // Act
-        userServiceHandler.deleteById(id);
+        userServiceHandler.deleteById(user.getId());
 
         // Assert
-        verify(userRepository, times(1)).deleteById(id);
+        verify(userRepository, times(1)).deleteById(user.getId());
     }
 
     @Test
@@ -113,10 +116,11 @@ class UserServiceHandlerTest {
     @Test
     public void banUser_ShouldReturnResponseEntityWithCodeOK_WhenProvidedId() {
         //Arrange
-        User user = new User();
+        User user = mock(User.class);
         user.setId(1L);
         user.setAccountValid(false);
         when(userRepository.findById(user.getId())).thenReturn(Optional.of(user));
+        when(userRepository.save(user)).thenReturn(user);
 
         //Act
         ResponseEntity<?> response = userServiceHandler.banUser(user.getId());
@@ -128,7 +132,7 @@ class UserServiceHandlerTest {
     @Test
     public void save_ShouldCallOnUserRepositoryExactlyOnce_WhenProvidedUser() {
         //Arrange
-        User user = new User();
+        when(userRepository.save(user)).thenReturn(user);
 
         //Act
         userServiceHandler.save(user);
@@ -136,6 +140,4 @@ class UserServiceHandlerTest {
         //Assert
         verify(userRepository, times(1)).save(user);
     }
-
-
 }

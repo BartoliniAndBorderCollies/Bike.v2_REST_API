@@ -14,216 +14,193 @@ import com.klodnicki.Bike.v2.model.entity.User;
 import com.klodnicki.Bike.v2.repository.BikeRepository;
 import com.klodnicki.Bike.v2.repository.ChargingStationRepository;
 import com.klodnicki.Bike.v2.repository.UserRepository;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
-@SpringBootTest
 class BikeServiceHandlerTest {
 
-    @Autowired
     private BikeRepository bikeRepository;
-    @Autowired
     private ChargingStationRepository chargingStationRepository;
-    @Autowired
     private UserRepository userRepository;
-    @Autowired
     private BikeServiceHandler bikeServiceHandler;
-    @Autowired
     private ModelMapper modelMapper;
+    private Bike bike;
+    private BikeRequestDTO bikeRequestDTO;
+    private BikeForAdminResponseDTO bikeForAdminResponseDTO;
+
+    @BeforeEach
+    public void setUp(){
+        bikeRepository = mock(BikeRepository.class);
+        chargingStationRepository = mock(ChargingStationRepository.class);
+        userRepository = mock(UserRepository.class);
+        modelMapper = mock(ModelMapper.class);
+        bikeServiceHandler = new BikeServiceHandler(bikeRepository, modelMapper);
+        bike = mock(Bike.class);
+        bikeRequestDTO = mock(BikeRequestDTO.class);
+        bikeForAdminResponseDTO = mock(BikeForAdminResponseDTO.class);
+
+        when(bikeRepository.findById(bike.getId())).thenReturn(Optional.of(bike));
+        when(bikeRepository.save(bike)).thenReturn(bike);
+        when(modelMapper.map(bike, BikeForAdminResponseDTO.class)).thenReturn(bikeForAdminResponseDTO);
+    }
 
     @Test
-    public void add_ShouldAddToDatabase_WhenGivenCorrectArguments() {
-        //given
-        bikeRepository.deleteAll();
-        BikeRequestDTO bikeRequestDTO = new BikeRequestDTO();
+    public void add_ShouldCallOnRepositoryExactlyOnce_WhenGivenBikeRequestDTOObject() {
+        //Arrange - takes from @BeforeEach setUp()
+        when(modelMapper.map(bikeRequestDTO, Bike.class)).thenReturn(bike);
+
+        //Act
         bikeServiceHandler.add(bikeRequestDTO);
-        Long expected = 1L;
 
-        //when
-        Long actual = bikeRepository.count();
-
-        //then
-        assertEquals(expected, actual);
+        //Assert
+        verify(bikeRepository, times(1)).save(bike);
     }
 
     @Test
     public void add_ShouldReturnBikeForAdminResponseDTO_WhenGivenBikeRequestDTO() {
-        //given
-        bikeRepository.deleteAll();
-        BikeRequestDTO bikeRequestDTO = new BikeRequestDTO();
-        BikeForAdminResponseDTO expected = modelMapper.map(bikeRequestDTO, BikeForAdminResponseDTO.class);
+        //Arrange - takes from @BeforeEach setUp()
+        when(modelMapper.map(bikeRequestDTO, Bike.class)).thenReturn(bike);
 
-        //when
+        //Act
         BikeForAdminResponseDTO actual = bikeServiceHandler.add(bikeRequestDTO);
 
-        //then
-        assertNotNull(actual.getId());  // check that ID is not null
-        expected.setId(actual.getId());  // set expected ID to actual ID
-        assertEquals(expected, actual);
+        //Assert
+        assertEquals(bikeForAdminResponseDTO, actual);
     }
 
     @Test
     public void findAll_ShouldReturnListOfBikeForAdminResponseDTO_WhenBikeExistInDatabase() {
-        //given
-        bikeRepository.deleteAll();
-        ArrayList<BikeForAdminResponseDTO> list = new ArrayList<>();
+        //Arrange - takes from @BeforeEach setUp()
+        List<Bike> bikeList = new ArrayList<>();
+        List<BikeForAdminResponseDTO> bikeListDto = new ArrayList<>();
 
         for (int i = 0; i < 3; i++) {
-            Bike bike = new Bike();
-            bikeRepository.save(bike);
-            BikeForAdminResponseDTO bikeDTO = modelMapper.map(bike, BikeForAdminResponseDTO.class);
-            list.add(bikeDTO);
+            bikeList.add(bike);
+            bikeListDto.add(bikeForAdminResponseDTO);
         }
 
-        //when
+        when(bikeRepository.findAll()).thenReturn(bikeList);
+
+        //Act
         List<BikeForAdminResponseDTO> actual = bikeServiceHandler.findAll();
 
-        //then
-        assertEquals(list, actual);
+        //Assert
+        assertEquals(bikeListDto, actual);
     }
 
     @Test
-    public void findById_ShouldReturnBikeForAdminResponseDTO_WhenBikeExistsInDatabase() {
-        //given
-        bikeRepository.deleteAll();
-        Bike bike = new Bike();
-        bikeRepository.save(bike);
-
-        BikeForAdminResponseDTO expected = modelMapper.map(bike, BikeForAdminResponseDTO.class);
-
-        //when
+    public void findById_ShouldReturnBikeForAdminResponseDTO_WhenBikeExistsInDatabaseAndIdOfBikeIsProvided() {
+        //Arrange - takes from @BeforeEach setUp()
+        //Act
         BikeForAdminResponseDTO actual = bikeServiceHandler.findById(bike.getId());
 
         //then
-        assertEquals(expected, actual);
+        assertEquals(bikeForAdminResponseDTO, actual);
     }
 
     @Test
     public void update_ShouldReturnUpdatedBikeForAdminResponseDTO_WhenGivenCorrectIdAndBikeRequestDTO() {
-        //given
-        bikeRepository.deleteAll();
-        Bike bike = new Bike();
+        //Arrange
+        bike = new Bike();
         bike.setRent(new Rent());
 
-        ChargingStation chargingStation = new ChargingStation();
-        chargingStationRepository.save(chargingStation);
+        ChargingStation chargingStation = mock(ChargingStation.class);
+        User user = mock(User.class);
+        UserForAdminResponseDTO userDTO = mock(UserForAdminResponseDTO.class);
+        GpsCoordinates gpsCoordinates = mock(GpsCoordinates.class);
+        StationForAdminResponseDTO stationDTO = mock(StationForAdminResponseDTO.class);
 
-        User user = new User();
-        userRepository.save(user);
+        when(bikeRepository.findById(bike.getId())).thenReturn(Optional.of(bike));
+        when(bikeRepository.save(bike)).thenReturn(bike);
+        when(modelMapper.map(bike, BikeForAdminResponseDTO.class)).thenReturn(bikeForAdminResponseDTO);
 
         bike.setId(bike.getId());
         bike.setSerialNumber("123");
         bike.setRented(true);
         bike.setBikeType(BikeType.ELECTRIC);
         bike.getRent().setAmountToBePaid(100.00);
-        bike.setGpsCoordinates(new GpsCoordinates("50N", "40E"));
+        bike.setGpsCoordinates(gpsCoordinates);
         bike.setUser(user);
         bike.setChargingStation(chargingStation);
 
-        bikeRepository.save(bike);
-
-        BikeForAdminResponseDTO expected = modelMapper.map(bike, BikeForAdminResponseDTO.class);
-
         BikeRequestDTO bikeRequestDTO = new BikeRequestDTO(bike.getId(), "123", true, BikeType.ELECTRIC,
-                100.00, new GpsCoordinates("50N", "40E"), new UserForAdminResponseDTO(),
-                new StationForAdminResponseDTO());
+                100.00, gpsCoordinates, userDTO, stationDTO);
 
-        //when
+        //Act
         BikeForAdminResponseDTO actual = bikeServiceHandler.update(bike.getId(), bikeRequestDTO);
 
-        //then
-        assertEquals(expected, actual);
+        //Assert
+        assertEquals(bikeForAdminResponseDTO, actual);
     }
 
     @Test
     public void update_ShouldReturnEmptyOptional_WhenBikeRequestDTOValuesAreNulls() {
-        //given
-        bikeRepository.deleteAll();
-        Bike bike = new Bike();
-        bikeRepository.save(bike);
-
-        BikeRequestDTO bikeRequestDTO = new BikeRequestDTO(bike.getId(), null, true, null,
+        //Arrange
+        BikeRequestDTO bikeRequestDTO = new BikeRequestDTO(null, null, true, null,
                 100.00, null, new UserForAdminResponseDTO(), new StationForAdminResponseDTO());
 
-        //when
+        //Act
         BikeForAdminResponseDTO actual = bikeServiceHandler.update(bike.getId(), bikeRequestDTO);
 
-        //then
+        //Assert
         assertNull(actual.getSerialNumber());
         assertNull(actual.getBikeType());
         assertNull(actual.getGpsCoordinates());
     }
 
     @Test
-    public void deleteById_ShouldDeleteFromDatabase_WhenGivenId() {
-        //given
-        bikeRepository.deleteAll();
-        Bike bike = new Bike();
-        bikeRepository.save(bike);
-        Long expected = bikeRepository.count() - 1;
-
-        //when
+    public void deleteById_ShouldCallOnRepositoryExactlyOnce_WhenGivenId() {
+        //Arrange
+        //Act
         bikeServiceHandler.deleteById(bike.getId());
 
-        //then
-        assertEquals(expected, bikeRepository.count());
+        //Assert
+        verify(bikeRepository, times(1)).deleteById(bike.getId());
     }
 
     @Test
-    public void findByIsRentedFalse_ShouldReturnListOfNotRentedBikes_WhenRentIsFalse() {
-        //given
-        bikeRepository.deleteAll();
+    public void findByIsRentedFalse_ShouldReturnListOfNotRentedBikes_WhenNotRentedBikesAreInDatabase() {
+        //Arrange
         List<Bike> expected = new ArrayList<>();
 
-        Bike bike = new Bike();
+        Bike bike1 = new Bike();
+        bike1.setRented(true);
         Bike bike2 = new Bike();
+        bike2.setRented(false);
         Bike bike3 = new Bike();
-
-        bike.setRented(true);
         bike3.setRented(true);
-
-        bikeRepository.save(bike);
-        bikeRepository.save(bike2);
-        bikeRepository.save(bike3);
 
         expected.add(bike2);
 
-        //when
+        when(bikeRepository.findByIsRentedFalse()).thenReturn(expected);
+
+        //Act
         List<Bike> actual = bikeServiceHandler.findByIsRentedFalse();
 
-        //then
-        assertEquals(expected, actual);
+        //Assert
+        assertIterableEquals(expected, actual);
     }
 
     @Test
-    public void save_ShouldSaveInDatabase_WhenGivenBikeObject() {
-        //given
-        bikeRepository.deleteAll();
-        Long expected = bikeRepository.count() + 1;
-        Bike bike = new Bike();
-
-        //when
+    public void save_ShouldCallOnRepositoryExactlyOnce_WhenGivenBikeObject() {
+        //Arrange - takes from @BeforeEach setUp()
+        //Act
         bikeServiceHandler.save(bike);
-        Long actual = bikeRepository.count();
 
-        //then
-        assertEquals(expected, actual);
+        //Assert
+        verify(bikeRepository, times(1)).save(bike);
     }
 
     @Test
     public void findBikeById_ShouldThrowIllegalArgumentException_WhenGivenIdDoesNotExistInDatabase() {
-        //given
-        bikeRepository.deleteAll();
-
-        //when
-        //then
         assertThrows(IllegalArgumentException.class, () -> bikeServiceHandler.findBikeById(1L));
     }
 }
