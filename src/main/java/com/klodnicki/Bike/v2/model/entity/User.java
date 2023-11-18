@@ -25,7 +25,7 @@ public class User {
     private boolean isAccountValid;
     private String role;
     private double balance;
-    //User is a parent class (owning side) of the relation
+    //User is non-owning side of the relation
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private Rent rent;
     @OneToOne(mappedBy = "user")

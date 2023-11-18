@@ -25,7 +25,7 @@ public class ChargingStation {
     private String city;
     private int freeSlots;
 
-    //ChargingStation is a parent class (owning side) of the relation
+    //ChargingStation is a non-owning side of the relation
     @OneToOne(mappedBy = "chargingStation", cascade = CascadeType.ALL)
     private Rent rent;
 

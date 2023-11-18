@@ -23,6 +23,6 @@ public class BikeRequestDTO {
     private BikeType bikeType;
     private double amountToBePaid;
     private GpsCoordinates gpsCoordinates;
-    private UserForAdminResponseDTO userForAdminResponseDTO;
-    private StationForAdminResponseDTO stationForAdminResponseDTO;
+    private UserForAdminResponseDTO user;
+    private StationForAdminResponseDTO chargingStation;
 }
