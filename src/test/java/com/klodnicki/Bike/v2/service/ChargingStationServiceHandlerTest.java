@@ -69,9 +69,9 @@ class ChargingStationServiceHandlerTest {
         List<StationForAdminResponseDTO> expectedStationDTOS = new ArrayList<>();
         StationForAdminResponseDTO stationDTO = new StationForAdminResponseDTO();
         when(chargingStationRepository.findAll()).thenReturn(stations);
+        when(modelMapper.map(chargingStation, StationForAdminResponseDTO.class)).thenReturn(stationDTO);
 
         for (int i = 0; i < 5; i++) {
-            when(modelMapper.map(chargingStation, StationForAdminResponseDTO.class)).thenReturn(stationDTO);
             expectedStationDTOS.add(stationDTO);
             stations.add(chargingStation);
         }
