@@ -36,7 +36,7 @@ class AdminChargingStationControllerIntegrationTest {
                 100, new ArrayList<>());
         chargingStationRepository.save(chargingStation);
 
-        bike = new Bike(null, BikeType.ELECTRIC, null, null, chargingStation);
+        bike = new Bike(null, BikeType.ELECTRIC, null, null, null);
         bikeRepository.save(bike);
     }
 
@@ -44,9 +44,7 @@ class AdminChargingStationControllerIntegrationTest {
     public void addBikeToList_ShouldAddBikeToStationListOfBikesAndReturnChargingStation_WhenStationIdAndBikeIdAreGiven() {
         List<Bike> bikeList = new ArrayList<>();
         bikeList.add(bike);
-        ChargingStation chargingStation2 = new ChargingStation(2L, "station name2", "station address2",
-                "station city2", 100,  bikeList);
-        chargingStationRepository.save(chargingStation2);
+        chargingStation.setBikeList(bikeList);
 
         webTestClient.post()
                 .uri(uriBuilder -> uriBuilder
@@ -59,8 +57,8 @@ class AdminChargingStationControllerIntegrationTest {
                 .consumeWith(response -> {
                             ChargingStation station = response.getResponseBody();
                             assertNotNull(station);
-                            assertFalse(bikeList.isEmpty());
-                            assertIterableEquals(chargingStation2.getBikeList(), chargingStation.getBikeList());
+                            assertFalse(station.getBikeList().isEmpty());
+                            assertIterableEquals(chargingStation.getBikeList(), station.getBikeList());
                         }
                 );
     }
