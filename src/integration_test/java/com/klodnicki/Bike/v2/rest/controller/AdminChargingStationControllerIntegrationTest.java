@@ -36,7 +36,7 @@ class AdminChargingStationControllerIntegrationTest {
 
     @BeforeEach
     public void setUp() {
-        chargingStation = new ChargingStation(1L, "station name", "station address", "station city",
+        chargingStation = new ChargingStation(null, "station name", "station address", "station city",
                 100, new ArrayList<>());
         chargingStationRepository.save(chargingStation);
 
