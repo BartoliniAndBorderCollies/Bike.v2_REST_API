@@ -1,5 +1,6 @@
 package com.klodnicki.Bike.v2.rest.controller;
 
+import com.klodnicki.Bike.v2.DTO.station.ListStationsForAdminResponseDTO;
 import com.klodnicki.Bike.v2.DTO.station.StationForAdminResponseDTO;
 import com.klodnicki.Bike.v2.model.BikeType;
 import com.klodnicki.Bike.v2.model.entity.Bike;
@@ -105,6 +106,32 @@ class AdminChargingStationControllerIntegrationTest {
                     assertEquals(chargingStation.getAddress(), stationDTO.getAddress());
                     assertEquals(chargingStation.getCity(), stationDTO.getCity());
                     assertEquals(chargingStation.getFreeSlots(), stationDTO.getFreeSlots());
+                });
+    }
+
+    @Test
+    public void findAll_ShouldReturnOneObjectCalledListStationsForAdminResponseDTO_WhenStationsExistInDatabase() {
+        List<StationForAdminResponseDTO> listOfStationsDTO = new ArrayList<>();
+        chargingStationRepository.deleteAll();
+
+        ChargingStation chargingStation2 = new ChargingStation(null, "station name2", "station address2",
+                "station city2", 1000, new ArrayList<>());
+        chargingStationRepository.save(chargingStation2);
+
+        StationForAdminResponseDTO station = modelMapper.map(chargingStation2, StationForAdminResponseDTO.class);
+        listOfStationsDTO.add(station);
+
+        ListStationsForAdminResponseDTO expected = new ListStationsForAdminResponseDTO(listOfStationsDTO);
+
+        webTestClient.get()
+                .uri("/api/admin/stations")
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(ListStationsForAdminResponseDTO.class)
+                .consumeWith(response -> {
+                    ListStationsForAdminResponseDTO responseList = response.getResponseBody();
+                    assertNotNull(responseList);
+                    assertIterableEquals(expected.getListOfStationsDTOs(), responseList.getListOfStationsDTOs());
                 });
     }
 }
