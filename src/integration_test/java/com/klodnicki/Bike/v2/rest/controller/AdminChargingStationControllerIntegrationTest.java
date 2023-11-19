@@ -1,5 +1,6 @@
 package com.klodnicki.Bike.v2.rest.controller;
 
+import com.klodnicki.Bike.v2.DTO.station.StationForAdminResponseDTO;
 import com.klodnicki.Bike.v2.model.BikeType;
 import com.klodnicki.Bike.v2.model.entity.Bike;
 import com.klodnicki.Bike.v2.model.entity.ChargingStation;
@@ -7,6 +8,7 @@ import com.klodnicki.Bike.v2.repository.BikeRepository;
 import com.klodnicki.Bike.v2.repository.ChargingStationRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestPropertySource;
@@ -27,6 +29,8 @@ class AdminChargingStationControllerIntegrationTest {
     private ChargingStationRepository chargingStationRepository;
     @Autowired
     private BikeRepository bikeRepository;
+    @Autowired
+    private ModelMapper modelMapper;
     private ChargingStation chargingStation;
     private Bike bike;
 
@@ -59,6 +63,28 @@ class AdminChargingStationControllerIntegrationTest {
                             assertNotNull(station);
                             assertFalse(station.getBikeList().isEmpty());
                             assertIterableEquals(chargingStation.getBikeList(), station.getBikeList());
+                        }
+                );
+    }
+
+    @Test
+    public void add_ShouldAddChargingStationToDatabaseAndReturnStationForAdminResponseDTO_WhenChargingStationIsGiven() {
+        StationForAdminResponseDTO expected = modelMapper.map(chargingStation, StationForAdminResponseDTO.class);
+
+        webTestClient.post()
+                .uri("/api/admin/stations/add")
+                .bodyValue(chargingStation)
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(StationForAdminResponseDTO.class)
+                .consumeWith(response -> {
+                            StationForAdminResponseDTO stationDTO = response.getResponseBody();
+                            assertNotNull(stationDTO);
+                            assertEquals(expected.getId(), stationDTO.getId());
+                            assertEquals(expected.getName(), stationDTO.getName());
+                            assertEquals(expected.getAddress(), stationDTO.getAddress());
+                            assertEquals(expected.getCity(), stationDTO.getCity());
+                            assertEquals(expected.getFreeSlots(), stationDTO.getFreeSlots());
                         }
                 );
     }
