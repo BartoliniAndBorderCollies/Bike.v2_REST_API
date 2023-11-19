@@ -88,4 +88,23 @@ class AdminChargingStationControllerIntegrationTest {
                         }
                 );
     }
+
+    @Test
+    public void findById_ShouldReturnStationForAdminResponseDTO_WhenStationIdIsGivenAndStationExistsInDatabase() {
+
+        webTestClient.get()
+                .uri("/api/admin/stations/" + chargingStation.getId())
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(StationForAdminResponseDTO.class)
+                .consumeWith(response -> {
+                    StationForAdminResponseDTO stationDTO = response.getResponseBody();
+                    assertNotNull(stationDTO);
+                    assertEquals(chargingStation.getId(), stationDTO.getId());
+                    assertEquals(chargingStation.getName(), stationDTO.getName());
+                    assertEquals(chargingStation.getAddress(), stationDTO.getAddress());
+                    assertEquals(chargingStation.getCity(), stationDTO.getCity());
+                    assertEquals(chargingStation.getFreeSlots(), stationDTO.getFreeSlots());
+                });
+    }
 }
