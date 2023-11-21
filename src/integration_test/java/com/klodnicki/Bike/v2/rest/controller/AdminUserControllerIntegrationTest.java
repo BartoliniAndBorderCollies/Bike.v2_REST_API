@@ -14,6 +14,7 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -32,6 +33,7 @@ class AdminUserControllerIntegrationTest {
 
     @BeforeEach
     public void setUp() {
+        userRepository.deleteAll();
 
         user1 = new User(null, "test name1", "phone number", "email",
                 11223344, true, "user", 100.00, null, null);
@@ -81,6 +83,19 @@ class AdminUserControllerIntegrationTest {
                     assertNotNull(responseMessage);
                     assertFalse(updatedUser.isAccountValid());
                     assertEquals("User banned successfully", responseMessage);
+                });
+    }
+
+    @Test
+    public void deleteUser_ShouldDeleteUserFromDatabase_WhenUserIdIsGiven() {
+        webTestClient.delete()
+                .uri("/api/admin/users/" + user1.getId())
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody()
+                .consumeWith(response -> {
+                    Optional<User> deletedUser = userRepository.findById(user1.getId());
+                    assertTrue(deletedUser.isEmpty());
                 });
     }
 }
