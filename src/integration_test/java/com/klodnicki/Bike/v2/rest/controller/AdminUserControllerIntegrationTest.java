@@ -49,7 +49,7 @@ class AdminUserControllerIntegrationTest {
         userList.add(user2);
 
         List<UserForAdminResponseDTO> listUsersDTO = new ArrayList<>();
-        for (User user: userList) {
+        for (User user : userList) {
             UserForAdminResponseDTO userDTO = modelMapper.map(user, UserForAdminResponseDTO.class);
             listUsersDTO.add(userDTO);
         }
@@ -65,6 +65,22 @@ class AdminUserControllerIntegrationTest {
                     ListUsersForAdminResponseDTO responseDTO = response.getResponseBody();
                     assertNotNull(responseDTO);
                     assertIterableEquals(expected.getListOfUsersDTOs(), responseDTO.getListOfUsersDTOs());
+                });
+    }
+
+    @Test
+    public void banUser_ShouldReturnResponseEntityAsStringAndSetAccountValidToFalse_WhenUserIdIsGiven() {
+        webTestClient.put()
+                .uri("/api/admin/users/" + user1.getId())
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(String.class)
+                .consumeWith(response -> {
+                    String responseMessage = response.getResponseBody();
+                    User updatedUser = userRepository.findById(user1.getId()).orElseThrow(IllegalArgumentException::new);
+                    assertNotNull(responseMessage);
+                    assertFalse(updatedUser.isAccountValid());
+                    assertEquals("User banned successfully", responseMessage);
                 });
     }
 }
