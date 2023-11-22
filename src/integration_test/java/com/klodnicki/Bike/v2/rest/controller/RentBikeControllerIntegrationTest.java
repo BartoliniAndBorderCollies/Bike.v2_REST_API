@@ -32,26 +32,18 @@ class RentBikeControllerIntegrationTest {
     private BikeRepository bikeRepository;
     @Autowired
     private ModelMapper modelMapper;
-    private Bike bike1NotRented;
-    private Bike bike2NotRented;
-    private Bike bike3Rented;
+    private Bike bike;
+
+    private ChargingStation chargingStation;
 
     @BeforeEach
     public void setUp() {
-        ChargingStation chargingStation = new ChargingStation(null, "station name", "station address", "station city",
+        chargingStation = new ChargingStation(null, "station name", "station address", "station city",
                 100, new ArrayList<>());
         chargingStationRepository.save(chargingStation);
 
-        bike1NotRented = new Bike(null, BikeType.ELECTRIC, null, null, chargingStation);
-        bike2NotRented = new Bike(null, BikeType.TRADITIONAL, null, null, chargingStation);
-        bike3Rented = new Bike(null, BikeType.ELECTRIC, null, null, chargingStation);
-        bike1NotRented.setRented(false);
-        bike2NotRented.setRented(false);
-        bike3Rented.setRented(true);
-
-        bikeRepository.save(bike1NotRented);
-        bikeRepository.save(bike2NotRented);
-        bikeRepository.save(bike3Rented);
+        bike = new Bike(null, BikeType.ELECTRIC, null, null, chargingStation);
+        bikeRepository.save(bike);
     }
 
     @Test
