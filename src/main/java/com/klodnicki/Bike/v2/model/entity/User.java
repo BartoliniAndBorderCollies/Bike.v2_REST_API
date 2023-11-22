@@ -30,6 +30,6 @@ public class User {
     //User is non-owning side of the relation
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private Rent rent;
-    @OneToOne(mappedBy = "user")
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private Bike bike;
 }
