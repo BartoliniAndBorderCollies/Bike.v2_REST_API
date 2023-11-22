@@ -94,10 +94,10 @@ class RentBikeControllerIntegrationTest {
 
     @Test
     public void findBikeForNormalUserById_ShouldReturnBikeForNormalUserResponseDTO_WhenBikeExistsInDatabaseAndBikeIdIsGiven(){
-        BikeForNormalUserResponseDTO expected = modelMapper.map(bike1NotRented, BikeForNormalUserResponseDTO.class);
+        BikeForNormalUserResponseDTO expected = modelMapper.map(bike, BikeForNormalUserResponseDTO.class);
 
         webTestClient.get()
-                .uri("/api/bikes/" + bike1NotRented.getId())
+                .uri("/api/bikes/" + bike.getId())
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody(BikeForNormalUserResponseDTO.class)
@@ -107,5 +107,4 @@ class RentBikeControllerIntegrationTest {
                     assertEquals(expected, bikeResponseDTO);
                 });
     }
-
 }
