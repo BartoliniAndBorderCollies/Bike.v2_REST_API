@@ -2,11 +2,16 @@ package com.klodnicki.Bike.v2.rest.controller;
 
 import com.klodnicki.Bike.v2.DTO.bike.BikeForNormalUserResponseDTO;
 import com.klodnicki.Bike.v2.DTO.bike.ListBikesForNormalUserResponseDTO;
+import com.klodnicki.Bike.v2.DTO.rent.RentResponseDTO;
 import com.klodnicki.Bike.v2.model.BikeType;
+import com.klodnicki.Bike.v2.model.RentRequest;
 import com.klodnicki.Bike.v2.model.entity.Bike;
 import com.klodnicki.Bike.v2.model.entity.ChargingStation;
+import com.klodnicki.Bike.v2.model.entity.User;
 import com.klodnicki.Bike.v2.repository.BikeRepository;
 import com.klodnicki.Bike.v2.repository.ChargingStationRepository;
+import com.klodnicki.Bike.v2.repository.RentRepository;
+import com.klodnicki.Bike.v2.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.modelmapper.ModelMapper;
@@ -31,9 +36,14 @@ class RentBikeControllerIntegrationTest {
     @Autowired
     private BikeRepository bikeRepository;
     @Autowired
+    private UserRepository userRepository;
+    @Autowired
+    private RentRepository rentRepository;
+    @Autowired
     private ModelMapper modelMapper;
     private Bike bike;
     private ChargingStation chargingStation;
+    private User user;
 
     @BeforeEach
     public void setUp() {
@@ -43,6 +53,10 @@ class RentBikeControllerIntegrationTest {
 
         bike = new Bike(null, BikeType.ELECTRIC, null, null, chargingStation);
         bikeRepository.save(bike);
+
+        user = new User(null, "user name", "user phone nr", "user email",
+                12345, true, "user", 100.00, null, null);
+        userRepository.save(user);
     }
 
     @Test
