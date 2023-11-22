@@ -33,7 +33,6 @@ class RentBikeControllerIntegrationTest {
     @Autowired
     private ModelMapper modelMapper;
     private Bike bike;
-
     private ChargingStation chargingStation;
 
     @BeforeEach
@@ -60,7 +59,6 @@ class RentBikeControllerIntegrationTest {
         bikeRepository.save(bike1NotRented);
         bikeRepository.save(bike2NotRented);
         bikeRepository.save(bike3Rented);
-
 
         List<BikeForNormalUserResponseDTO> dtoList = new ArrayList<>();
         List<Bike> bikeList = new ArrayList<>();
