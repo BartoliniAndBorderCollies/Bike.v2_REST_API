@@ -119,4 +119,27 @@ class RentBikeControllerIntegrationTest {
                     assertEquals(expected, bikeResponseDTO);
                 });
     }
+
+    @Test
+    public void rentBike_ShouldReturnRentResponseDTOAndSaveRentInDatabase_WhenRentRequestIsGiven() {
+        rentRepository.deleteAll();
+        RentRequest rentRequest = new RentRequest(null, user.getId(), bike.getId(), 10);
+
+        webTestClient.post()
+                .uri("/api/rentals/add")
+                .bodyValue(rentRequest)
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(RentResponseDTO.class)
+                .consumeWith(response -> {
+                    RentResponseDTO responseDTO = response.getResponseBody();
+                    assertNotNull(responseDTO);
+                    assertTrue(rentRepository.count()>0);
+                    assertEquals(rentRequest.getDaysOfRent(), responseDTO.getDaysOfRent());
+                    assertEquals(user.getName(), responseDTO.getUserForNormalUserResponseDTO().getName());
+                    assertEquals(user.getRole(), responseDTO.getUserForNormalUserResponseDTO().getRole());
+                    assertEquals(bike.getSerialNumber(), responseDTO.getBikeForNormalUserResponseDTO().getSerialNumber());
+                    assertEquals(bike.getBikeType(), responseDTO.getBikeForNormalUserResponseDTO().getBikeType());
+                });
+    }
 }
