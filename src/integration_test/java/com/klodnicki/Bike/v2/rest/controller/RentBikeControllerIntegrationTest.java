@@ -48,6 +48,20 @@ class RentBikeControllerIntegrationTest {
 
     @Test
     public void findAvailableBikes_ShouldReturnOneObjectCalledListBikesForNormalUserResponseDTOAndMustBeNotRented_WhenBikesExistInDatabase() {
+        bikeRepository.deleteAll();
+
+        Bike bike1NotRented = new Bike(1L, BikeType.ELECTRIC, null, null, chargingStation);
+        Bike bike2NotRented = new Bike(2L, BikeType.TRADITIONAL, null, null, chargingStation);
+        Bike bike3Rented = new Bike(3L, BikeType.ELECTRIC, null, null, chargingStation);
+        bike1NotRented.setRented(false);
+        bike2NotRented.setRented(false);
+        bike3Rented.setRented(true);
+
+        bikeRepository.save(bike1NotRented);
+        bikeRepository.save(bike2NotRented);
+        bikeRepository.save(bike3Rented);
+
+
         List<BikeForNormalUserResponseDTO> dtoList = new ArrayList<>();
         List<Bike> bikeList = new ArrayList<>();
         bikeList.add(bike1NotRented);
