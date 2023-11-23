@@ -93,13 +93,8 @@ public class RentBikeServiceHandler implements RentBikeServiceApi {
                 null);
         rentRepository.save(rent);
 
-        return new RentResponseDTO(
-                rent.getId(),
-                rent.getRentalStartTime(),
-                null,
-                rent.getDaysOfRent(),
-                modelMapper.map(rent, BikeForNormalUserResponseDTO.class),
-                modelMapper.map(rent, UserForNormalUserResponseDTO.class), null);
+        return new RentResponseDTO(rent.getId(), rent.getRentalStartTime(), null, rent.getDaysOfRent(),
+                prepareBikeDTO(rent), prepareUserDTO(rent),null);
     }
 
     private UserForNormalUserResponseDTO prepareUserDTO (Rent rent) {
