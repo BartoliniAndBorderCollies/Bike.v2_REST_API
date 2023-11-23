@@ -14,6 +14,7 @@ import com.klodnicki.Bike.v2.repository.BikeRepository;
 import com.klodnicki.Bike.v2.repository.ChargingStationRepository;
 import com.klodnicki.Bike.v2.repository.RentRepository;
 import com.klodnicki.Bike.v2.repository.UserRepository;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.modelmapper.ModelMapper;
@@ -60,6 +61,14 @@ class RentBikeControllerIntegrationTest {
         user = new User(null, "user name", "user phone nr", "user email",
                 12345, true, "user", 100.00, null, null);
         userRepository.save(user);
+    }
+
+    @AfterEach
+    public void clearTestDatabase() {
+        userRepository.deleteAll();
+        chargingStationRepository.deleteAll();
+        rentRepository.deleteAll();
+        bikeRepository.deleteAll();
     }
 
     @Test
