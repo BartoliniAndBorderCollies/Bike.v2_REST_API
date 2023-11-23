@@ -191,7 +191,6 @@ class RentBikeControllerIntegrationTest {
 
     @Test
     public void returnBike_ShouldReturnResponseEntityAsStringAndReturnBikeToStation_WhenRentAndStationIdsAreGiven() {
-        rentRepository.deleteAll();
 
         Rent rent = new Rent(null, LocalDateTime.of(2023, 11, 23, 10, 0, 0),
                 null, 10, 100.00, bike, user, null);
@@ -218,5 +217,10 @@ class RentBikeControllerIntegrationTest {
                     //I use stream in assertion to check if on the bikeList is the bike with the specific id
                     assertTrue(returnChargingStation.getBikeList().stream().anyMatch(b -> b.getId().equals(bike.getId())));
                 });
+        rent.setBike(null);
+        rent.setUser(null);
+        bike.setChargingStation(null);
+        rentRepository.save(rent);
+        bikeRepository.save(bike);
     }
 }
