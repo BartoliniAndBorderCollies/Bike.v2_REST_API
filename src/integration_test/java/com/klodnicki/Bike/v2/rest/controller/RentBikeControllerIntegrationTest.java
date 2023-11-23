@@ -159,7 +159,6 @@ class RentBikeControllerIntegrationTest {
 
     @Test
     public void updateRent_ShouldUpdateDaysOfRentAndReturnRentResponseDTO_WhenRentIdAndRentRequestDTOIsGiven() {
-        rentRepository.deleteAll();
 
         Rent rent = new Rent(null, LocalDateTime.of(2023, 11, 23, 10, 0, 0),
                 null, 10, 100.00, bike, user, null);
@@ -184,6 +183,10 @@ class RentBikeControllerIntegrationTest {
                     assertNotNull(responseDTO);
                     assertEquals(expected.getDaysOfRent(), responseDTO.getDaysOfRent());
                 });
+
+        rent.setBike(null);
+        rent.setUser(null);
+        rentRepository.save(rent);
     }
 
     @Test
