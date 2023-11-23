@@ -174,4 +174,35 @@ class RentBikeControllerIntegrationTest {
                    assertEquals(expected.getDaysOfRent(), responseDTO.getDaysOfRent());
                 });
     }
+
+    @Test
+    public void returnBike_ShouldReturnResponseEntityAsStringAndReturnBikeToStation_WhenRentAndStationIdsAreGiven() {
+        rentRepository.deleteAll();
+
+        Rent rent = new Rent(null, LocalDateTime.of(2023, 11, 23, 10, 0, 0),
+                null, 10, 100.00, bike, user,null);
+        rentRepository.save(rent);
+
+        webTestClient.put()
+                .uri(uriBuilder -> uriBuilder
+                        .path("/api/returns/" + rent.getId())
+                        .queryParam("returnChargingStationId", chargingStation.getId())
+                        .build())
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(String.class)
+                .consumeWith(response -> {
+                    String responseMessage = response.getResponseBody();
+                    ChargingStation returnChargingStation =
+                            chargingStationRepository.findById(chargingStation.getId()).orElseThrow(IllegalArgumentException::new);
+                    assertNotNull(responseMessage);
+                    assertEquals("Bike successfully returned.", responseMessage);
+                    assertEquals(chargingStation.getFreeSlots()-1, returnChargingStation.getFreeSlots());
+                    assertEquals(rent.getAmountToBePaid(), returnChargingStation.getRent().getAmountToBePaid());
+                    assertEquals(rent.getUser().getBalance()-rent.getAmountToBePaid(), returnChargingStation.getRent().getUser().getBalance());
+                    assertFalse(returnChargingStation.getBikeList().isEmpty());
+                    //I use stream in assertion to check if on the bikeList is the bike with the specific id
+                    assertTrue(returnChargingStation.getBikeList().stream().anyMatch(b -> b.getId().equals(bike.getId())));
+                });
+    }
 }
