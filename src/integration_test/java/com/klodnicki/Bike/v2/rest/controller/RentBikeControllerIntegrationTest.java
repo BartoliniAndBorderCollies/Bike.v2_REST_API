@@ -2,11 +2,13 @@ package com.klodnicki.Bike.v2.rest.controller;
 
 import com.klodnicki.Bike.v2.DTO.bike.BikeForNormalUserResponseDTO;
 import com.klodnicki.Bike.v2.DTO.bike.ListBikesForNormalUserResponseDTO;
+import com.klodnicki.Bike.v2.DTO.rent.RentRequestDTO;
 import com.klodnicki.Bike.v2.DTO.rent.RentResponseDTO;
 import com.klodnicki.Bike.v2.model.BikeType;
 import com.klodnicki.Bike.v2.model.RentRequest;
 import com.klodnicki.Bike.v2.model.entity.Bike;
 import com.klodnicki.Bike.v2.model.entity.ChargingStation;
+import com.klodnicki.Bike.v2.model.entity.Rent;
 import com.klodnicki.Bike.v2.model.entity.User;
 import com.klodnicki.Bike.v2.repository.BikeRepository;
 import com.klodnicki.Bike.v2.repository.ChargingStationRepository;
@@ -20,6 +22,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -140,6 +143,35 @@ class RentBikeControllerIntegrationTest {
                     assertEquals(user.getRole(), responseDTO.getUserForNormalUserResponseDTO().getRole());
                     assertEquals(bike.getSerialNumber(), responseDTO.getBikeForNormalUserResponseDTO().getSerialNumber());
                     assertEquals(bike.getBikeType(), responseDTO.getBikeForNormalUserResponseDTO().getBikeType());
+                });
+    }
+
+    @Test
+    public void updateRent_ShouldUpdateDaysOfRentAndReturnRentResponseDTO_WhenRentIdAndRentRequestDTOIsGiven() {
+        rentRepository.deleteAll();
+
+        Rent rent = new Rent(null, LocalDateTime.of(2023, 11, 23, 10, 0, 0),
+                null, 10, 100.00, bike, user,null);
+        rentRepository.save(rent);
+
+        RentRequestDTO rentRequestDTO = new RentRequestDTO(null, LocalDateTime.of(2023, 11, 23,
+                10, 0, 0), null, 5,null,
+                null, null);
+
+        RentResponseDTO expected = new RentResponseDTO(1L, rentRequestDTO.getRentalStartTime(),
+                rentRequestDTO.getRentalEndTime(), rentRequestDTO.getDaysOfRent(), rentRequestDTO.getBikeForNormalUserResponseDTO(),
+                rentRequestDTO.getUserForNormalUserResponseDTO(), rentRequestDTO.getStationForNormalUserResponseDTO());
+
+        webTestClient.put()
+                .uri("/api/rentals/" + rent.getId())
+                .bodyValue(rentRequestDTO)
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(RentResponseDTO.class)
+                .consumeWith(response -> {
+                   RentResponseDTO responseDTO = response.getResponseBody();
+                   assertNotNull(responseDTO);
+                   assertEquals(expected.getDaysOfRent(), responseDTO.getDaysOfRent());
                 });
     }
 }
