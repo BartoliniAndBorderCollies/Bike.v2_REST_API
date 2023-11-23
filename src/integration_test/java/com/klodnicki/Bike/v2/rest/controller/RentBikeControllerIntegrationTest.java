@@ -134,7 +134,9 @@ class RentBikeControllerIntegrationTest {
 
     @Test
     public void rentBike_ShouldReturnRentResponseDTOAndSaveRentInDatabase_WhenRentRequestIsGiven() {
-        rentRepository.deleteAll();
+
+        bike.setChargingStation(chargingStation);
+        bikeRepository.save(bike);
         RentRequest rentRequest = new RentRequest(null, user.getId(), bike.getId(), 10);
 
         webTestClient.post()
