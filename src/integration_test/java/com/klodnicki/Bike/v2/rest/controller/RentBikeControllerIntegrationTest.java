@@ -117,7 +117,7 @@ class RentBikeControllerIntegrationTest {
     }
 
     @Test
-    public void findBikeForNormalUserById_ShouldReturnBikeForNormalUserResponseDTO_WhenBikeExistsInDatabaseAndBikeIdIsGiven(){
+    public void findBikeForNormalUserById_ShouldReturnBikeForNormalUserResponseDTO_WhenBikeExistsInDatabaseAndBikeIdIsGiven() {
         BikeForNormalUserResponseDTO expected = modelMapper.map(bike, BikeForNormalUserResponseDTO.class);
 
         webTestClient.get()
@@ -126,7 +126,7 @@ class RentBikeControllerIntegrationTest {
                 .expectStatus().isOk()
                 .expectBody(BikeForNormalUserResponseDTO.class)
                 .consumeWith(response -> {
-                    BikeForNormalUserResponseDTO  bikeResponseDTO = response.getResponseBody();
+                    BikeForNormalUserResponseDTO bikeResponseDTO = response.getResponseBody();
                     assertNotNull(bikeResponseDTO);
                     assertEquals(expected, bikeResponseDTO);
                 });
@@ -146,7 +146,7 @@ class RentBikeControllerIntegrationTest {
                 .consumeWith(response -> {
                     RentResponseDTO responseDTO = response.getResponseBody();
                     assertNotNull(responseDTO);
-                    assertTrue(rentRepository.count()>0);
+                    assertTrue(rentRepository.count() > 0);
                     assertEquals(rentRequest.getDaysOfRent(), responseDTO.getDaysOfRent());
                     assertEquals(user.getName(), responseDTO.getUserForNormalUserResponseDTO().getName());
                     assertEquals(user.getRole(), responseDTO.getUserForNormalUserResponseDTO().getRole());
@@ -160,11 +160,11 @@ class RentBikeControllerIntegrationTest {
         rentRepository.deleteAll();
 
         Rent rent = new Rent(null, LocalDateTime.of(2023, 11, 23, 10, 0, 0),
-                null, 10, 100.00, bike, user,null);
+                null, 10, 100.00, bike, user, null);
         rentRepository.save(rent);
 
         RentRequestDTO rentRequestDTO = new RentRequestDTO(null, LocalDateTime.of(2023, 11, 23,
-                10, 0, 0), null, 5,null,
+                10, 0, 0), null, 5, null,
                 null, null);
 
         RentResponseDTO expected = new RentResponseDTO(1L, rentRequestDTO.getRentalStartTime(),
@@ -178,9 +178,9 @@ class RentBikeControllerIntegrationTest {
                 .expectStatus().isOk()
                 .expectBody(RentResponseDTO.class)
                 .consumeWith(response -> {
-                   RentResponseDTO responseDTO = response.getResponseBody();
-                   assertNotNull(responseDTO);
-                   assertEquals(expected.getDaysOfRent(), responseDTO.getDaysOfRent());
+                    RentResponseDTO responseDTO = response.getResponseBody();
+                    assertNotNull(responseDTO);
+                    assertEquals(expected.getDaysOfRent(), responseDTO.getDaysOfRent());
                 });
     }
 
@@ -189,7 +189,7 @@ class RentBikeControllerIntegrationTest {
         rentRepository.deleteAll();
 
         Rent rent = new Rent(null, LocalDateTime.of(2023, 11, 23, 10, 0, 0),
-                null, 10, 100.00, bike, user,null);
+                null, 10, 100.00, bike, user, null);
         rentRepository.save(rent);
 
         webTestClient.put()
@@ -206,9 +206,9 @@ class RentBikeControllerIntegrationTest {
                             chargingStationRepository.findById(chargingStation.getId()).orElseThrow(IllegalArgumentException::new);
                     assertNotNull(responseMessage);
                     assertEquals("Bike successfully returned.", responseMessage);
-                    assertEquals(chargingStation.getFreeSlots()-1, returnChargingStation.getFreeSlots());
+                    assertEquals(chargingStation.getFreeSlots() - 1, returnChargingStation.getFreeSlots());
                     assertEquals(rent.getAmountToBePaid(), returnChargingStation.getRent().getAmountToBePaid());
-                    assertEquals(rent.getUser().getBalance()-rent.getAmountToBePaid(), returnChargingStation.getRent().getUser().getBalance());
+                    assertEquals(rent.getUser().getBalance() - rent.getAmountToBePaid(), returnChargingStation.getRent().getUser().getBalance());
                     assertFalse(returnChargingStation.getBikeList().isEmpty());
                     //I use stream in assertion to check if on the bikeList is the bike with the specific id
                     assertTrue(returnChargingStation.getBikeList().stream().anyMatch(b -> b.getId().equals(bike.getId())));
