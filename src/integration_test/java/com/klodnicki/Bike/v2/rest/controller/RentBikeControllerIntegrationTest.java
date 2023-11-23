@@ -55,7 +55,8 @@ class RentBikeControllerIntegrationTest {
                 100, new ArrayList<>());
         chargingStationRepository.save(chargingStation);
 
-        bike = new Bike(null, BikeType.ELECTRIC, null, null, chargingStation);
+        bike = new Bike(null, BikeType.ELECTRIC, null, null, null);
+        bike.setRented(true);
         bikeRepository.save(bike);
 
         user = new User(null, "user name", "user phone nr", "user email",
