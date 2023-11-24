@@ -2,6 +2,7 @@ package com.klodnicki.Bike.v2.rest.controller;
 
 import com.klodnicki.Bike.v2.model.entity.Feedback;
 import com.klodnicki.Bike.v2.repository.FeedbackRepository;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -18,6 +19,11 @@ class FeedbackControllerIntegrationTest {
     private WebTestClient webTestClient;
     @Autowired
     private FeedbackRepository feedbackRepository;
+
+    @AfterEach
+    public void clearDatabase() {
+        feedbackRepository.deleteAll();
+    }
 
     @Test
     public void addFeedback_ShouldReturnResponseEntityAsStringAndSaveFeedbackInDatabase_WhenFeedbackObjectIsGiven() {
