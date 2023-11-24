@@ -17,6 +17,7 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -80,6 +81,9 @@ class AdminChargingStationControllerIntegrationTest {
                 .expectBody(StationForAdminResponseDTO.class)
                 .consumeWith(response -> {
                             StationForAdminResponseDTO stationDTO = response.getResponseBody();
+                            Optional<ChargingStation> stationInDatabase = chargingStationRepository.findById(chargingStation.getId());
+                            assertTrue(chargingStationRepository.count() > 0);
+                            assertTrue(stationInDatabase.isPresent());
                             assertNotNull(stationDTO);
                             assertEquals(expected.getId(), stationDTO.getId());
                             assertEquals(expected.getName(), stationDTO.getName());
