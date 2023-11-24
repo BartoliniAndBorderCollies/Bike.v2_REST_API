@@ -73,7 +73,7 @@ class RentBikeControllerIntegrationTest {
     }
 
     @Test
-    public void findAvailableBikes_ShouldReturnOneObjectCalledListBikesForNormalUserResponseDTOAndMustBeNotRented_WhenBikesExistInDatabase() {
+    public void findAvailableBikes_ShouldBuildAndReturnNotRentedBikesInListBikesForNormalUserResponseDTO_WhenBikesExistInDatabase() {
 
         Bike bike1NotRented = new Bike(1L, BikeType.ELECTRIC, null, null, null);
         Bike bike2NotRented = new Bike(2L, BikeType.TRADITIONAL, null, null, null);
@@ -117,7 +117,7 @@ class RentBikeControllerIntegrationTest {
     }
 
     @Test
-    public void findBikeForNormalUserById_ShouldReturnBikeForNormalUserResponseDTO_WhenBikeExistsInDatabaseAndBikeIdIsGiven() {
+    public void findBikeForNormalUserById_ShouldMapAndReturnBikeForNormalUserResponseDTO_WhenBikeExistsInDatabaseAndBikeIdIsGiven() {
         BikeForNormalUserResponseDTO expected = modelMapper.map(bike, BikeForNormalUserResponseDTO.class);
 
         webTestClient.get()
@@ -133,7 +133,7 @@ class RentBikeControllerIntegrationTest {
     }
 
     @Test
-    public void rentBike_ShouldReturnRentResponseDTOAndSaveRentInDatabase_WhenRentRequestIsGiven() {
+    public void rentBike_ShouldInstantiateAndReturnRentResponseDTOAndSaveRentInDatabase_WhenRentRequestIsGiven() {
 
         bike.setChargingStation(chargingStation);
         bikeRepository.save(bike);
@@ -158,7 +158,7 @@ class RentBikeControllerIntegrationTest {
     }
 
     @Test
-    public void updateRent_ShouldUpdateDaysOfRentAndReturnRentResponseDTO_WhenRentIdAndRentRequestDTOIsGiven() {
+    public void updateRent_ShouldUpdateDaysOfRentAndMapAndReturnRentResponseDTO_WhenRentIdAndRentRequestDTOIsGiven() {
 
         Rent rent = new Rent(null, LocalDateTime.of(2023, 11, 23, 10, 0, 0),
                 null, 10, 100.00, bike, user, null);
