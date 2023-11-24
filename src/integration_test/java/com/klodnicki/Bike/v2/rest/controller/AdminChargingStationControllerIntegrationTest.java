@@ -7,6 +7,7 @@ import com.klodnicki.Bike.v2.model.entity.Bike;
 import com.klodnicki.Bike.v2.model.entity.ChargingStation;
 import com.klodnicki.Bike.v2.repository.BikeRepository;
 import com.klodnicki.Bike.v2.repository.ChargingStationRepository;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.modelmapper.ModelMapper;
@@ -44,6 +45,12 @@ class AdminChargingStationControllerIntegrationTest {
 
         bike = new Bike(null, BikeType.ELECTRIC, null, null, null);
         bikeRepository.save(bike);
+    }
+
+    @AfterEach
+    public void clearDatabase() {
+        bikeRepository.deleteAll();
+        chargingStationRepository.deleteAll();
     }
 
     @Test
