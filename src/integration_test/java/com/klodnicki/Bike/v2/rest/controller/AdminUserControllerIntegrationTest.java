@@ -51,7 +51,7 @@ class AdminUserControllerIntegrationTest {
     }
 
     @Test
-    public void findAllUsers_ShouldReturnOneObjectCalledListUsersForAdminResponseDTO_WhenUsersExistInDatabase() {
+    public void findAllUsers_ShouldMapAndReturnListUsersForAdminResponseDTO_WhenUsersExistInDatabase() {
         List<User> userList = new ArrayList<>();
         userList.add(user1);
         userList.add(user2);
