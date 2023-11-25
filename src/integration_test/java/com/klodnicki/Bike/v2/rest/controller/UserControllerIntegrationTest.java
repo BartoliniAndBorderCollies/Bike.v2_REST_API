@@ -4,6 +4,7 @@ import com.klodnicki.Bike.v2.DTO.user.UserForAdminResponseDTO;
 import com.klodnicki.Bike.v2.model.entity.User;
 import com.klodnicki.Bike.v2.repository.UserRepository;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,14 @@ class UserControllerIntegrationTest {
     private UserRepository userRepository;
     @Autowired
     private ModelMapper modelMapper;
+    private User user;
+
+    @BeforeEach
+    public void setUp() {
+        user = new User(null, "user name", "phone nr", "email", 123456,
+                true, "user", 100.00, null, null);
+        userRepository.save(user);
+    }
 
     @AfterEach
     public void clearDatabase() {
