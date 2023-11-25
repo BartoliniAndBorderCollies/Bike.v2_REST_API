@@ -54,9 +54,6 @@ class AdminBikeControllerIntegrationTest {
 
     @Test
     void addBike_ShouldAddBikeToDatabaseAndReturnBikeForAdminResponseDTO_WhenBikeRequestDTOIsProvided() {
-        //I must create chargingStation and save it in repo, otherwise I get InvalidDataAccessApiUsageException:
-        // org.hibernate.TransientPropertyValueException: object references an unsaved transient instance -
-        // save the transient instance before flushing
         StationForAdminResponseDTO stationDTO = modelMapper.map(chargingStation, StationForAdminResponseDTO.class);
 
         BikeRequestDTO bikeRequestDTO = new BikeRequestDTO(1L, "test serialNumber", false,
