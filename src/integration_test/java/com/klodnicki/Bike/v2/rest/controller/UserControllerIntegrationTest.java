@@ -42,9 +42,6 @@ class UserControllerIntegrationTest {
 
     @Test
     public void add_ShouldAddUserToDatabaseAndMapAndReturnUserForAdminResponseDTO_WhenUserIsGiven() {
-        User user = new User(null, "user name", "phone nr", "email", 123456,
-                true, "user", 100.00, null, null);
-        userRepository.save(user);
         UserForAdminResponseDTO expected = modelMapper.map(user, UserForAdminResponseDTO.class);
 
         webTestClient.post()
