@@ -58,4 +58,19 @@ class UserControllerIntegrationTest {
                     assertTrue(savedUser.isPresent());
                 });
     }
+
+    @Test
+    public void findById_ShouldMapAndReturnUserForAdminResponseDTO_WhenUserIdIsGivenAndUserExistsInDatabase() {
+        UserForAdminResponseDTO expected = modelMapper.map(user, UserForAdminResponseDTO.class);
+
+        webTestClient.get()
+                .uri("/user/" + user.getId())
+                .exchange()
+                .expectBody(UserForAdminResponseDTO.class)
+                .consumeWith(response -> {
+                    UserForAdminResponseDTO userDTO = response.getResponseBody();
+                    assertNotNull(userDTO);
+                    assertEquals(expected, userDTO);
+                });
+    }
 }
