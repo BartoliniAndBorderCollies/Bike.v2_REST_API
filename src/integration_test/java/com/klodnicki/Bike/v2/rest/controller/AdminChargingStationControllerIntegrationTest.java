@@ -102,7 +102,7 @@ class AdminChargingStationControllerIntegrationTest {
     }
 
     @Test
-    public void findById_ShouldReturnStationForAdminResponseDTO_WhenStationIdIsGivenAndStationExistsInDatabase() {
+    public void findById_MapsAndReturnsStationForAdminResponseDTO_WhenStationExistsInDatabase(){
 
         webTestClient.get()
                 .uri("/api/admin/stations/" + chargingStation.getId())
@@ -121,7 +121,7 @@ class AdminChargingStationControllerIntegrationTest {
     }
 
     @Test
-    public void findAll_ShouldReturnOneObjectCalledListStationsForAdminResponseDTO_WhenStationsExistInDatabase() {
+    public void findAll_MapsAndReturnsListOfStationsForAdminResponseDTO_WhenStationsExistInDatabase() {
         List<StationForAdminResponseDTO> listOfStationsDTO = new ArrayList<>();
         chargingStationRepository.deleteAll();
 
