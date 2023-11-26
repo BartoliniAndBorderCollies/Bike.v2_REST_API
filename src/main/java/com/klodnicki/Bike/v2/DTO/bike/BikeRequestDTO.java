@@ -21,11 +21,10 @@ public class BikeRequestDTO {
     private Long id;
     @NotBlank(message = "Serial number must not be blank")
     private String serialNumber;
-    @AssertFalse(message = "New bike cannot be already rented")
     private boolean isRented;
     @NotNull(message = "Bike type must not be null")
     private BikeType bikeType;
-    @DecimalMin(value = "0.0", inclusive = false, message = "Amount to be paid must be greater than 0")
+    @PositiveOrZero(message = "Amount to be paid must be positive or zero")
     private double amountToBePaid;
     @NotNull(message = "GPS coordinates must not be null")
     private GpsCoordinates gpsCoordinates;
