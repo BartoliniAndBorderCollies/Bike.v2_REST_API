@@ -3,6 +3,7 @@ package com.klodnicki.Bike.v2.rest.controller;
 import com.klodnicki.Bike.v2.DTO.user.UserForAdminResponseDTO;
 import com.klodnicki.Bike.v2.model.entity.User;
 import com.klodnicki.Bike.v2.service.api.UserServiceApi;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,7 +15,7 @@ public class UserController {
     private final UserServiceApi userService;
 
     @PostMapping("/add")
-    public UserForAdminResponseDTO add(@RequestBody User user) {
+    public UserForAdminResponseDTO add(@Valid @RequestBody User user) {
         return userService.add(user);
     }
 
