@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Objects;
+
 @Entity
 @Getter
 @Setter
@@ -18,4 +20,17 @@ public class Feedback {
     private Long id;
 
     private String comment;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Feedback feedback = (Feedback) o;
+        return Objects.equals(id, feedback.id) && Objects.equals(comment, feedback.comment);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, comment);
+    }
 }
