@@ -26,7 +26,8 @@ class FeedbackControllerIntegrationTest {
     }
 
     @Test
-    public void addFeedback_ShouldReturnResponseEntityAsStringAndSaveFeedbackInDatabase_WhenFeedbackObjectIsGiven() {
+    public void addFeedback_ShouldSaveFeedbackAndReturnCorrectResponse_WhenProvidedAnyFeedback() {
+
         Feedback feedback = new Feedback(null, "feedback test");
         feedbackRepository.save(feedback);
 
