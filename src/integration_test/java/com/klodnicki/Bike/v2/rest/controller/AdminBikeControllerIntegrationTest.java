@@ -13,6 +13,7 @@ import com.klodnicki.Bike.v2.model.entity.User;
 import com.klodnicki.Bike.v2.repository.BikeRepository;
 import com.klodnicki.Bike.v2.repository.ChargingStationRepository;
 import com.klodnicki.Bike.v2.repository.UserRepository;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.modelmapper.ModelMapper;
@@ -48,15 +49,17 @@ class AdminBikeControllerIntegrationTest {
         chargingStationRepository.save(chargingStation);
         bike = new Bike(null, BikeType.ELECTRIC, null, null, chargingStation);
         bikeRepository.save(bike);
+    }
 
-
+    @AfterEach
+    void clearDatabase() {
+        bikeRepository.deleteAll();
+        chargingStationRepository.deleteAll();
+        userRepository.deleteAll();
     }
 
     @Test
     void addBike_ShouldAddBikeToDatabaseAndReturnBikeForAdminResponseDTO_WhenBikeRequestDTOIsProvided() {
-        //I must create chargingStation and save it in repo, otherwise I get InvalidDataAccessApiUsageException:
-        // org.hibernate.TransientPropertyValueException: object references an unsaved transient instance -
-        // save the transient instance before flushing
         StationForAdminResponseDTO stationDTO = modelMapper.map(chargingStation, StationForAdminResponseDTO.class);
 
         BikeRequestDTO bikeRequestDTO = new BikeRequestDTO(1L, "test serialNumber", false,
