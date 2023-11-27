@@ -148,7 +148,7 @@ class RentBikeControllerIntegrationTest {
                 .consumeWith(response -> {
                     RentResponseDTO responseDTO = response.getResponseBody();
                     assertNotNull(responseDTO);
-                    assertTrue(rentRepository.count() > 0);
+                    assertEquals(1, rentRepository.count());
                     assertEquals(rentRequest.getDaysOfRent(), responseDTO.getDaysOfRent());
                     assertEquals(user.getName(), responseDTO.getUserForNormalUserResponseDTO().getName());
                     assertEquals(user.getRole(), responseDTO.getUserForNormalUserResponseDTO().getRole());
