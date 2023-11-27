@@ -53,7 +53,7 @@ class UserControllerIntegrationTest {
                     UserForAdminResponseDTO userDTO = response.getResponseBody();
                     Optional<User> savedUser = userRepository.findById(user.getId());
                     assertNotNull(userDTO);
-                    assertTrue(userRepository.count() > 0);
+                    assertEquals(1, userRepository.count());
                     assertEquals(expected, userDTO);
                     assertTrue(savedUser.isPresent());
                 });
