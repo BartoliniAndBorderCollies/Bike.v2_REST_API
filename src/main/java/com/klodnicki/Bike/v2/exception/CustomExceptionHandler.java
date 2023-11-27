@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 
 @ControllerAdvice
-public class CustomErrorHandler {
+public class CustomExceptionHandler {
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(ConstraintViolationException.class)
