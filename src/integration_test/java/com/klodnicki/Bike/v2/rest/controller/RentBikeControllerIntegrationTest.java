@@ -164,7 +164,7 @@ class RentBikeControllerIntegrationTest {
                 null, 10, 100.00, bike, user, null);
         rentRepository.save(rent);
 
-        RentRequestDTO rentRequestDTO = new RentRequestDTO(null, LocalDateTime.of(2023, 11, 23,
+        RentRequestDTO rentRequestDTO = new RentRequestDTO(1L, LocalDateTime.of(2023, 11, 23,
                 10, 0, 0), null, 5, null,
                 null, null);
 
