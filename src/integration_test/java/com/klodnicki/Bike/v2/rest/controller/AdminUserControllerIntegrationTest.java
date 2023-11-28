@@ -36,9 +36,9 @@ class AdminUserControllerIntegrationTest {
     public void setUp() {
         userRepository.deleteAll();
 
-        user1 = new User(null, "test name1", "phone number", "email",
+        user1 = new User(null, "test name1", "phone number", "email@email.pl",
                 11223344, true, "user", 100.00, null, null);
-        user2 = new User(null, "test name2", "phone number2", "email2",
+        user2 = new User(null, "test name2", "phone number2", "email2@email.pl",
                 11223344, true, "user2", 0.00, null, null);
 
         userRepository.save(user1);
