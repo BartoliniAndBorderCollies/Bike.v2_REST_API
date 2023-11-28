@@ -153,7 +153,8 @@ class AdminBikeControllerIntegrationTest {
     @Test
     void updateBikeById_ShouldUpdateBike_WhenBikeExistInDatabaseAndBikeIdAndBikeRequestDTOIsGiven() {
         //Arrange
-        User user = new User();
+        User user = new User(null, "user name", "123-456-789", "email@email.pl",
+                123456678, true, "user", 100.00, null, null);
         userRepository.save(user);
         UserForAdminResponseDTO userDTO = modelMapper.map(user, UserForAdminResponseDTO.class);
 
