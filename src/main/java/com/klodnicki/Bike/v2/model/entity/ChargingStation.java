@@ -3,6 +3,8 @@ package com.klodnicki.Bike.v2.model.entity;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.PositiveOrZero;
 import lombok.*;
 
 import java.util.HashSet;
@@ -20,15 +22,17 @@ public class ChargingStation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
+    @NotBlank(message = "Station must have name")
     private String name;
+    @NotBlank(message = "Station must have address")
     private String address;
+    @NotBlank(message = "City must not be blank")
     private String city;
+    @PositiveOrZero(message = "Free slots must be zero or positive")
     private int freeSlots;
-
     //ChargingStation is a non-owning side of the relation
     @OneToOne(mappedBy = "chargingStation", cascade = CascadeType.ALL)
     private Rent rent;
-
     @OneToMany(mappedBy = "chargingStation", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Bike> bikeList;
 
