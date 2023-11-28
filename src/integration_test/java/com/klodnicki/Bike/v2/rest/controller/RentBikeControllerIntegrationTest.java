@@ -59,7 +59,7 @@ class RentBikeControllerIntegrationTest {
         bike.setRented(true);
         bikeRepository.save(bike);
 
-        user = new User(null, "user name", "user phone nr", "user email",
+        user = new User(null, "user name", "user phone nr", "email@email.pl",
                 12345, true, "user", 100.00, null, null);
         userRepository.save(user);
     }
