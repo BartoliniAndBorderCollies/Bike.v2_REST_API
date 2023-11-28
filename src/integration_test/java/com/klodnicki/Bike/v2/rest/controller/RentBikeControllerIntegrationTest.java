@@ -137,7 +137,7 @@ class RentBikeControllerIntegrationTest {
 
         bike.setChargingStation(chargingStation);
         bikeRepository.save(bike);
-        RentRequest rentRequest = new RentRequest(null, user.getId(), bike.getId(), 10);
+        RentRequest rentRequest = new RentRequest(1L, user.getId(), bike.getId(), 10);
 
         webTestClient.post()
                 .uri("/api/rentals/add")
