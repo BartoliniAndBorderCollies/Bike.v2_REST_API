@@ -41,8 +41,11 @@ class AdminBikeControllerIntegrationTest {
     private BikeRepository bikeRepository;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private UserServiceHandler userServiceHandler;
     private ChargingStation chargingStation;
     private Bike bike;
+    private String basicAuthHeader;
 
     @BeforeEach
     void setUp() {
@@ -50,6 +53,15 @@ class AdminBikeControllerIntegrationTest {
         chargingStationRepository.save(chargingStation);
         bike = new Bike(null, BikeType.ELECTRIC, null, null, chargingStation);
         bikeRepository.save(bike);
+
+        User user = new User(null, "test name1", "phone number", "email", "password",
+                null,11223344, true, "user", 100.00, null, null);
+
+        userServiceHandler.add(user);
+
+        basicAuthHeader = "Basic " + Base64.getEncoder()
+                .encodeToString((user.getEmailAddress() + ":" + "password").getBytes());// I need to provide a raw password,
+        // using getPassword() would take hash coded
     }
 
     @AfterEach
