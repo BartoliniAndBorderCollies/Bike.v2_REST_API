@@ -9,6 +9,7 @@ import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -20,9 +21,11 @@ public class UserServiceHandler implements UserServiceApi {
 
     private final UserRepository userRepository;
     private final ModelMapper modelMapper;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public UserForAdminResponseDTO add(User user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         User user1 = userRepository.save(user);
 
         return modelMapper.map(user1, UserForAdminResponseDTO.class);
