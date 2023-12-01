@@ -30,6 +30,7 @@ public class SecurityConfig {
                         .authenticated()
                         .anyRequest()
                         .permitAll())
+                .headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable)) //ta linia umozliwia dostep do bazy danych h2 console
                 .formLogin(Customizer.withDefaults())
 //                .logout(Customizer.withDefaults())
                 .build();
