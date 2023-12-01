@@ -65,6 +65,7 @@ class AdminChargingStationControllerIntegrationTest {
     public void clearDatabase() {
         bikeRepository.deleteAll();
         chargingStationRepository.deleteAll();
+        userRepository.deleteAll();
     }
 
     @Test
