@@ -4,16 +4,19 @@ import com.klodnicki.Bike.v2.DTO.user.ListUsersForAdminResponseDTO;
 import com.klodnicki.Bike.v2.DTO.user.UserForAdminResponseDTO;
 import com.klodnicki.Bike.v2.model.entity.User;
 import com.klodnicki.Bike.v2.repository.UserRepository;
+import com.klodnicki.Bike.v2.service.UserServiceHandler;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpHeaders;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
 
@@ -73,6 +76,7 @@ class AdminUserControllerIntegrationTest {
 
         webTestClient.get()
                 .uri("/api/admin/users")
+                .header(HttpHeaders.AUTHORIZATION, basicAuthHeader)
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody(ListUsersForAdminResponseDTO.class)
@@ -87,6 +91,7 @@ class AdminUserControllerIntegrationTest {
     public void banUser_ShouldReturnResponseEntityAsStringAndSetAccountValidToFalse_WhenUserIdIsGiven() {
         webTestClient.put()
                 .uri("/api/admin/users/" + user1.getId())
+                .header(HttpHeaders.AUTHORIZATION, basicAuthHeader)
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody(String.class)
@@ -103,6 +108,7 @@ class AdminUserControllerIntegrationTest {
     public void deleteUser_ShouldDeleteUserFromDatabase_WhenUserIdIsGiven() {
         webTestClient.delete()
                 .uri("/api/admin/users/" + user1.getId())
+                .header(HttpHeaders.AUTHORIZATION, basicAuthHeader)
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody()
