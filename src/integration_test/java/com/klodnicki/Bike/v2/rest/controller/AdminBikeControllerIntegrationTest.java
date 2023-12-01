@@ -13,15 +13,18 @@ import com.klodnicki.Bike.v2.model.entity.User;
 import com.klodnicki.Bike.v2.repository.BikeRepository;
 import com.klodnicki.Bike.v2.repository.ChargingStationRepository;
 import com.klodnicki.Bike.v2.repository.UserRepository;
+import com.klodnicki.Bike.v2.service.UserServiceHandler;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpHeaders;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
+import java.util.Base64;
 import java.util.ArrayList;
 import java.util.Optional;
 
@@ -81,6 +84,7 @@ class AdminBikeControllerIntegrationTest {
 
         webTestClient.post()
                 .uri("/api/admin/bikes/add")
+                .header(HttpHeaders.AUTHORIZATION, basicAuthHeader)
                 .bodyValue(bikeRequestDTO)
                 .exchange()
                 .expectStatus().isOk()
@@ -105,6 +109,7 @@ class AdminBikeControllerIntegrationTest {
         webTestClient.get()
 
                 .uri("/api/admin/bikes/" + bike.getId())
+                .header(HttpHeaders.AUTHORIZATION, basicAuthHeader)
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody(BikeForAdminResponseDTO.class)
@@ -124,6 +129,7 @@ class AdminBikeControllerIntegrationTest {
         webTestClient.get()
 
                 .uri("/api/admin/bikes")
+                .header(HttpHeaders.AUTHORIZATION, basicAuthHeader)
                 // tutaj możesz umieścić headery do tego URI powyżej
                 // albo np. cookies
                 .exchange()
@@ -149,6 +155,7 @@ class AdminBikeControllerIntegrationTest {
         //Act
         webTestClient.delete()
                 .uri("/api/admin/bikes/" + bike.getId())
+                .header(HttpHeaders.AUTHORIZATION, basicAuthHeader)
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody()
@@ -183,6 +190,7 @@ class AdminBikeControllerIntegrationTest {
         //Act
         webTestClient.put()
                 .uri("/api/admin/bikes/" + bike.getId())
+                .header(HttpHeaders.AUTHORIZATION, basicAuthHeader)
                 .bodyValue(bikeRequestDTO)
                 .exchange()
                 .expectStatus().isOk()
