@@ -5,18 +5,23 @@ import com.klodnicki.Bike.v2.DTO.station.StationForAdminResponseDTO;
 import com.klodnicki.Bike.v2.model.BikeType;
 import com.klodnicki.Bike.v2.model.entity.Bike;
 import com.klodnicki.Bike.v2.model.entity.ChargingStation;
+import com.klodnicki.Bike.v2.model.entity.User;
 import com.klodnicki.Bike.v2.repository.BikeRepository;
 import com.klodnicki.Bike.v2.repository.ChargingStationRepository;
+import com.klodnicki.Bike.v2.repository.UserRepository;
+import com.klodnicki.Bike.v2.service.UserServiceHandler;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpHeaders;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
 
@@ -79,6 +84,7 @@ class AdminChargingStationControllerIntegrationTest {
                         .path("/api/admin/stations/list/add/" + chargingStation.getId())
                         .queryParam("bikeId", bike.getId())
                         .build())
+                .header(HttpHeaders.AUTHORIZATION, basicAuthHeader)
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody(ChargingStation.class)
@@ -97,6 +103,7 @@ class AdminChargingStationControllerIntegrationTest {
 
         webTestClient.post()
                 .uri("/api/admin/stations/add")
+                .header(HttpHeaders.AUTHORIZATION, basicAuthHeader)
                 .bodyValue(chargingStation)
                 .exchange()
                 .expectStatus().isOk()
@@ -121,6 +128,7 @@ class AdminChargingStationControllerIntegrationTest {
 
         webTestClient.get()
                 .uri("/api/admin/stations/" + chargingStation.getId())
+                .header(HttpHeaders.AUTHORIZATION, basicAuthHeader)
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody(StationForAdminResponseDTO.class)
@@ -151,6 +159,7 @@ class AdminChargingStationControllerIntegrationTest {
 
         webTestClient.get()
                 .uri("/api/admin/stations")
+                .header(HttpHeaders.AUTHORIZATION, basicAuthHeader)
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody(ListStationsForAdminResponseDTO.class)
