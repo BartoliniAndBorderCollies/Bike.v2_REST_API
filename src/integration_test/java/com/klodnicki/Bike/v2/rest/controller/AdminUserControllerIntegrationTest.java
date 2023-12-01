@@ -29,8 +29,11 @@ class AdminUserControllerIntegrationTest {
     private UserRepository userRepository;
     @Autowired
     private ModelMapper modelMapper;
+    @Autowired
+    private UserServiceHandler userServiceHandler;
     private User user1;
     private User user2;
+    private String basicAuthHeader;
 
     @BeforeEach
     public void setUp() {
@@ -41,8 +44,12 @@ class AdminUserControllerIntegrationTest {
         user2 = new User(null, "test name2", "phone number2", "email2", "password",
                 null,11223344, true, "user2", 0.00, null, null);
 
-        userRepository.save(user1);
-        userRepository.save(user2);
+        userServiceHandler.add(user1);
+        userServiceHandler.add(user2);
+
+        basicAuthHeader = "Basic " + Base64.getEncoder()
+                .encodeToString((user1.getEmailAddress() + ":" + "password").getBytes()); // I need to provide a raw password,
+        // using getPassword() would take hash coded
     }
 
     @AfterEach
