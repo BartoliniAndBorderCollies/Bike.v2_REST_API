@@ -35,6 +35,7 @@ public class User implements UserDetails {
     @Email
     private String emailAddress;
     private String password;
+    @Transient
     private Set<GrantedAuthority> authorities;
     private int accountNumber;
     private boolean isAccountValid;
