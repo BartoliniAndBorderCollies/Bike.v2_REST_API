@@ -28,7 +28,8 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(requests -> requests
                         .requestMatchers(mvc.pattern("/api/admin/**"))
-                        .authenticated()
+                        .hasRole("ADMIN")
+//                        .authenticated()// teraz jest tylko logowanie
                         .anyRequest()
                         .permitAll())
                 .headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable)) //ta linia umozliwia dostep do bazy danych h2 console
