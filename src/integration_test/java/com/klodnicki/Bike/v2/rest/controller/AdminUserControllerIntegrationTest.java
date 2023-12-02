@@ -2,7 +2,9 @@ package com.klodnicki.Bike.v2.rest.controller;
 
 import com.klodnicki.Bike.v2.DTO.user.ListUsersForAdminResponseDTO;
 import com.klodnicki.Bike.v2.DTO.user.UserForAdminResponseDTO;
+import com.klodnicki.Bike.v2.model.entity.Authority;
 import com.klodnicki.Bike.v2.model.entity.User;
+import com.klodnicki.Bike.v2.repository.AuthorityRepository;
 import com.klodnicki.Bike.v2.repository.UserRepository;
 import com.klodnicki.Bike.v2.service.UserServiceHandler;
 import org.junit.jupiter.api.AfterEach;
@@ -15,10 +17,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
-import java.util.ArrayList;
-import java.util.Base64;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -37,15 +36,26 @@ class AdminUserControllerIntegrationTest {
     private User user1;
     private User user2;
     private String basicAuthHeader;
+    private Authority authority;
+    private Authority authority2;
+    @Autowired
+    private AuthorityRepository authorityRepository;
 
     @BeforeEach
     public void setUp() {
         userRepository.deleteAll();
+        authority = new Authority(null, "ROLE_ADMIN");
+        authority2 = new Authority(null, "ROLE_ADMIN");
+        Set<Authority> authoritySet = new HashSet<>();
+        authoritySet.add(authority);
+
+        Set<Authority> authoritySet2 = new HashSet<>();
+        authoritySet2.add(authority2); //must have separate authority otherwise I get "detached entity passed to persist"
 
         user1 = new User(null, "test name1", "phone number", "email", "password",
-                null,11223344, true, "user", 100.00, null, null);
+                authoritySet,11223344, true, "user", 100.00, null, null);
         user2 = new User(null, "test name2", "phone number2", "email2", "password",
-                null,11223344, true, "user2", 0.00, null, null);
+                authoritySet2,11223344, true, "user2", 0.00, null, null);
 
         userServiceHandler.add(user1);
         userServiceHandler.add(user2);
