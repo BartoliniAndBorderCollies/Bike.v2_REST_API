@@ -58,6 +58,7 @@ class AdminUserControllerIntegrationTest {
     @AfterEach
     public void clearDatabase() {
         userRepository.deleteAll();
+        authorityRepository.deleteAll();
     }
 
     @Test
