@@ -80,6 +80,7 @@ class AdminChargingStationControllerIntegrationTest {
         bikeRepository.deleteAll();
         chargingStationRepository.deleteAll();
         userRepository.deleteAll();
+        authorityRepository.deleteAll();
     }
 
     @Test
