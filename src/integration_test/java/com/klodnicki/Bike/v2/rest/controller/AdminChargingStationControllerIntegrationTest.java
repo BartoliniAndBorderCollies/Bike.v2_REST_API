@@ -3,9 +3,11 @@ package com.klodnicki.Bike.v2.rest.controller;
 import com.klodnicki.Bike.v2.DTO.station.ListStationsForAdminResponseDTO;
 import com.klodnicki.Bike.v2.DTO.station.StationForAdminResponseDTO;
 import com.klodnicki.Bike.v2.model.BikeType;
+import com.klodnicki.Bike.v2.model.entity.Authority;
 import com.klodnicki.Bike.v2.model.entity.Bike;
 import com.klodnicki.Bike.v2.model.entity.ChargingStation;
 import com.klodnicki.Bike.v2.model.entity.User;
+import com.klodnicki.Bike.v2.repository.AuthorityRepository;
 import com.klodnicki.Bike.v2.repository.BikeRepository;
 import com.klodnicki.Bike.v2.repository.ChargingStationRepository;
 import com.klodnicki.Bike.v2.repository.UserRepository;
@@ -20,10 +22,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
-import java.util.ArrayList;
-import java.util.Base64;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -46,9 +45,14 @@ class AdminChargingStationControllerIntegrationTest {
     private String basicAuthHeader;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private AuthorityRepository authorityRepository;
+    private Authority admin;
+    private User user;
 
     @BeforeEach
     public void setUp() {
+        String password = "password";
         chargingStation = new ChargingStation(null, "station name", "station address", "station city",
                 100, new ArrayList<>());
         chargingStationRepository.save(chargingStation);
@@ -56,13 +60,18 @@ class AdminChargingStationControllerIntegrationTest {
         bike = new Bike(null, BikeType.ELECTRIC, null, null, null);
         bikeRepository.save(bike);
 
-        User user = new User(null, "test name1", "phone number", "email", "password",
-                null,11223344, true, "user", 100.00, null, null);
+        Set<Authority> authority = new HashSet<>();
+        admin = new Authority(null, "ROLE_ADMIN");
+//        authorityRepository.save(admin); - not needed cause I added cascade
+        authority.add(admin);
+
+        user = new User(null, "test name1", "phone number", "email", password,
+                authority,11223344, true, "user", 100.00, null, null);
 
         userServiceHandler.add(user);
 
         basicAuthHeader = "Basic " + Base64.getEncoder()
-                .encodeToString((user.getEmailAddress() + ":" + "password").getBytes());// I need to provide a raw password,
+                .encodeToString((user.getEmailAddress() + ":" + password).getBytes());// I need to provide a raw password,
         // using getPassword() would take hash coded
     }
 
