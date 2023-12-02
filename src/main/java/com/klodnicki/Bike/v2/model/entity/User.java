@@ -35,8 +35,11 @@ public class User implements UserDetails {
     @Email
     private String emailAddress;
     private String password;
-    @Transient
-    private Set<GrantedAuthority> authorities;
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    @JoinTable(name = "user_authority",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "authority_id"))
+    private Set<Authority> authorities;
     private int accountNumber;
     private boolean isAccountValid;
     @NotBlank(message = "Role must not be blank")
