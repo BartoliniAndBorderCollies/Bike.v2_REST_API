@@ -7,9 +7,11 @@ import com.klodnicki.Bike.v2.DTO.station.StationForAdminResponseDTO;
 import com.klodnicki.Bike.v2.DTO.user.UserForAdminResponseDTO;
 import com.klodnicki.Bike.v2.model.BikeType;
 import com.klodnicki.Bike.v2.model.GpsCoordinates;
+import com.klodnicki.Bike.v2.model.entity.Authority;
 import com.klodnicki.Bike.v2.model.entity.Bike;
 import com.klodnicki.Bike.v2.model.entity.ChargingStation;
 import com.klodnicki.Bike.v2.model.entity.User;
+import com.klodnicki.Bike.v2.repository.AuthorityRepository;
 import com.klodnicki.Bike.v2.repository.BikeRepository;
 import com.klodnicki.Bike.v2.repository.ChargingStationRepository;
 import com.klodnicki.Bike.v2.repository.UserRepository;
@@ -25,8 +27,10 @@ import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
 import java.util.Base64;
+import java.util.HashSet;
 import java.util.ArrayList;
 import java.util.Optional;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -49,6 +53,9 @@ class AdminBikeControllerIntegrationTest {
     private ChargingStation chargingStation;
     private Bike bike;
     private String basicAuthHeader;
+    @Autowired
+    private AuthorityRepository authorityRepository;
+    private Authority authority;
 
     @BeforeEach
     void setUp() {
@@ -57,8 +64,12 @@ class AdminBikeControllerIntegrationTest {
         bike = new Bike(null, BikeType.ELECTRIC, null, null, chargingStation);
         bikeRepository.save(bike);
 
+        authority = new Authority(null, "ROLE_ADMIN");
+        Set<Authority> authoritySet = new HashSet<>();
+        authoritySet.add(authority);
+
         User user = new User(null, "test name1", "phone number", "email", "password",
-                null,11223344, true, "user", 100.00, null, null);
+                authoritySet,11223344, true, "user", 100.00, null, null);
 
         userServiceHandler.add(user);
 
