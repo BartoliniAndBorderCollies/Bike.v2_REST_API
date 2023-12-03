@@ -15,12 +15,14 @@ import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Service;
 
 
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -97,11 +99,17 @@ public class RentBikeServiceHandler implements RentBikeServiceApi {
     }
 
     private UserForNormalUserResponseDTO prepareUserDTO (Rent rent) {
+        Set<Authority> authorities = new HashSet<>();
+        for (GrantedAuthority grantedAuthority : rent.getUser().getAuthorities()) {
+            if (grantedAuthority instanceof Authority) {
+                authorities.add((Authority) grantedAuthority);
+            }
+        }
         UserForNormalUserResponseDTO userDTO = UserForNormalUserResponseDTO.builder()
                 .id(rent.getUser().getId())
                 .name(rent.getUser().getName())
                 .isAccountValid(rent.getUser().isAccountValid())
-                .authorities((Set<Authority>) rent.getUser().getAuthorities())
+                .authorities(authorities)
                 .build();
         return userDTO;
     }
