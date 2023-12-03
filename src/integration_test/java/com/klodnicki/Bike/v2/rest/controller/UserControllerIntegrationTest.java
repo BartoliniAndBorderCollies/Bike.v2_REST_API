@@ -1,6 +1,7 @@
 package com.klodnicki.Bike.v2.rest.controller;
 
 import com.klodnicki.Bike.v2.DTO.user.UserForAdminResponseDTO;
+import com.klodnicki.Bike.v2.model.entity.Authority;
 import com.klodnicki.Bike.v2.model.entity.User;
 import com.klodnicki.Bike.v2.repository.UserRepository;
 import org.junit.jupiter.api.AfterEach;
@@ -12,7 +13,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -30,9 +33,13 @@ class UserControllerIntegrationTest {
 
     @BeforeEach
     public void setUp() {
+        Authority authority = new Authority(null, "ROLE_ADMIN");
+        Set<Authority> authoritySet = new HashSet<>();
+        authoritySet.add(authority);
+
         String password = "123456";
         user = new User(null, "user name", "phone nr", "email", password,
-                null, 1234567, true, 100.00, null, null);
+                authoritySet, 1234567, true, 100.00, null, null);
         userRepository.save(user);
     }
 
