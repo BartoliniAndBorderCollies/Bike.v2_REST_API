@@ -56,6 +56,7 @@ class AdminBikeControllerIntegrationTest {
     @Autowired
     private AuthorityRepository authorityRepository;
     private Authority authority;
+    private User user;
 
     @BeforeEach
     void setUp() {
@@ -69,7 +70,7 @@ class AdminBikeControllerIntegrationTest {
         Set<Authority> authoritySet = new HashSet<>();
         authoritySet.add(authority);
 
-        User user = new User(null, "test name1", "phone number", "email", password,
+        user = new User(null, "test name1", "phone number", "email", password,
                 authoritySet,11223344, true, 100.00, null, null);
 
         userServiceHandler.add(user);
