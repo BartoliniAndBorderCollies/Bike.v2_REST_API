@@ -101,7 +101,10 @@ public class RentBikeServiceHandler implements RentBikeServiceApi {
     private UserForNormalUserResponseDTO prepareUserDTO (Rent rent) {
         Set<Authority> authorities = new HashSet<>();
         for (GrantedAuthority grantedAuthority : rent.getUser().getAuthorities()) {
-            if (grantedAuthority instanceof Authority) {
+            if (grantedAuthority instanceof Authority) { // Authority is a subclass of GrantedAuthority so I check it and then
+                //I convert it to Authority and pass it to builder so that DTO will have appropriate type in authorities
+                //If I don't do this then I get java.lang.ClassCastException: class java.util.LinkedList cannot be cast to
+                // class java.util.Set, is because I was trying to cast a LinkedList to a Set
                 authorities.add((Authority) grantedAuthority);
             }
         }
