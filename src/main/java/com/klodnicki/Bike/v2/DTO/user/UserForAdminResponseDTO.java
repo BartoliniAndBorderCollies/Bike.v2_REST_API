@@ -1,6 +1,9 @@
 package com.klodnicki.Bike.v2.DTO.user;
 
+import com.klodnicki.Bike.v2.model.entity.Authority;
 import lombok.*;
+
+import java.util.Set;
 
 @Data
 @AllArgsConstructor
@@ -15,4 +18,5 @@ public class UserForAdminResponseDTO {
     private boolean isAccountValid;
     private String role;
     private double balance;
+    private Set<Authority> authorities;
 }
