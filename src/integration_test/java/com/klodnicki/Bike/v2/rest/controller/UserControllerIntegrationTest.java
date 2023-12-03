@@ -3,6 +3,7 @@ package com.klodnicki.Bike.v2.rest.controller;
 import com.klodnicki.Bike.v2.DTO.user.UserForAdminResponseDTO;
 import com.klodnicki.Bike.v2.model.entity.Authority;
 import com.klodnicki.Bike.v2.model.entity.User;
+import com.klodnicki.Bike.v2.repository.AuthorityRepository;
 import com.klodnicki.Bike.v2.repository.UserRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -30,6 +31,8 @@ class UserControllerIntegrationTest {
     @Autowired
     private ModelMapper modelMapper;
     private User user;
+    @Autowired
+    private AuthorityRepository authorityRepository;
 
     @BeforeEach
     public void setUp() {
@@ -46,6 +49,7 @@ class UserControllerIntegrationTest {
     @AfterEach
     public void clearDatabase() {
         userRepository.deleteAll();
+        authorityRepository.deleteAll();
     }
 
     @Test
