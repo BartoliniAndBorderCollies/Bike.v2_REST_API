@@ -11,6 +11,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.servlet.util.matcher.MvcRequestMatcher;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
 
 @EnableWebSecurity
@@ -34,7 +35,17 @@ public class SecurityConfig {
                         .permitAll())
                 .headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable)) //ta linia umozliwia dostep do bazy danych h2 console
                 .formLogin(Customizer.withDefaults())
-//                .logout(Customizer.withDefaults())
+//                .formLogin(formLogin -> formLogin.loginPage("/login")
+//                        .failureForwardUrl("/login?error")
+//                        .successForwardUrl("/home?loginSuccess"))
+                .logout(Customizer.withDefaults())
+//                .logout(formLogout -> formLogout
+//                        .logoutUrl("/custom-logout")
+//                        .logoutRequestMatcher(new AntPathRequestMatcher("/custom-logout", "GET"))
+//                        .logoutSuccessUrl("/login?logout=true")
+//                        .invalidateHttpSession(true)
+//                        .clearAuthentication(true)
+//                        .deleteCookies("JSESSIONID"))
                 .httpBasic(Customizer.withDefaults())//ta linia umożliwa BasicAuth w postmanie
                 .build();
     }
