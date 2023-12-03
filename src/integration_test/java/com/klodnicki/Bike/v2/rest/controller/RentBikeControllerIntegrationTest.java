@@ -155,7 +155,7 @@ class RentBikeControllerIntegrationTest {
                     assertEquals(1, rentRepository.count());
                     assertEquals(rentRequest.getDaysOfRent(), responseDTO.getDaysOfRent());
                     assertEquals(user.getName(), responseDTO.getUserForNormalUserResponseDTO().getName());
-                    assertEquals(user.getRole(), responseDTO.getUserForNormalUserResponseDTO().getRole());
+                    assertIterableEquals(user.getAuthorities(), responseDTO.getUserForNormalUserResponseDTO().getAuthorities());
                     assertEquals(bike.getSerialNumber(), responseDTO.getBikeForNormalUserResponseDTO().getSerialNumber());
                     assertEquals(bike.getBikeType(), responseDTO.getBikeForNormalUserResponseDTO().getBikeType());
                 });
