@@ -7,10 +7,7 @@ import com.klodnicki.Bike.v2.DTO.rent.RentResponseDTO;
 import com.klodnicki.Bike.v2.DTO.user.UserForNormalUserResponseDTO;
 import com.klodnicki.Bike.v2.exception.NotFoundInDatabaseException;
 import com.klodnicki.Bike.v2.model.RentRequest;
-import com.klodnicki.Bike.v2.model.entity.Bike;
-import com.klodnicki.Bike.v2.model.entity.ChargingStation;
-import com.klodnicki.Bike.v2.model.entity.Rent;
-import com.klodnicki.Bike.v2.model.entity.User;
+import com.klodnicki.Bike.v2.model.entity.*;
 import com.klodnicki.Bike.v2.repository.RentRepository;
 import com.klodnicki.Bike.v2.service.api.*;
 import jakarta.transaction.Transactional;
@@ -25,6 +22,7 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Service
 @AllArgsConstructor
@@ -103,7 +101,7 @@ public class RentBikeServiceHandler implements RentBikeServiceApi {
                 .id(rent.getUser().getId())
                 .name(rent.getUser().getName())
                 .isAccountValid(rent.getUser().isAccountValid())
-                .role(rent.getUser().getRole())
+                .authorities((Set<Authority>) rent.getUser().getAuthorities())
                 .build();
         return userDTO;
     }
