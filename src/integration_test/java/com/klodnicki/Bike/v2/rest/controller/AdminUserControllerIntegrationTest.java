@@ -62,8 +62,8 @@ class AdminUserControllerIntegrationTest {
         userServiceHandler.add(user2);
 
         basicAuthHeader = "Basic " + Base64.getEncoder()
-                .encodeToString((user1.getEmailAddress() + ":" + "password").getBytes()); // I need to provide a raw password,
-        // using getPassword() would take hash coded
+                .encodeToString((user1.getEmailAddress() + ":" + password).getBytes()); // I need to provide a raw password,
+        // using user.1getPassword() would take hash coded
     }
 
     @AfterEach

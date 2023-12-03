@@ -76,7 +76,7 @@ class AdminBikeControllerIntegrationTest {
         userServiceHandler.add(user);
 
         basicAuthHeader = "Basic " + Base64.getEncoder()
-                .encodeToString((user.getEmailAddress() + ":" + "password").getBytes());// I need to provide a raw password,
+                .encodeToString((user.getEmailAddress() + ":" + password).getBytes());// I need to provide a raw password,
         // using getPassword() would take hash coded
     }
 
