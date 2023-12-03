@@ -30,7 +30,8 @@ class UserControllerIntegrationTest {
 
     @BeforeEach
     public void setUp() {
-        user = new User(null, "user name", "phone nr", "email", "123456",
+        String password = "123456";
+        user = new User(null, "user name", "phone nr", "email", password,
                 null, 1234567, true, "user", 100.00, null, null);
         userRepository.save(user);
     }

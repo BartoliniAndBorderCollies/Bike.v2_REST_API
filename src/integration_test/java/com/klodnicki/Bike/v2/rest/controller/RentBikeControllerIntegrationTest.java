@@ -51,6 +51,7 @@ class RentBikeControllerIntegrationTest {
 
     @BeforeEach
     public void setUp() {
+        String password = "password";
         chargingStation = new ChargingStation(null, "station name", "station address", "station city",
                 100, new ArrayList<>());
         chargingStationRepository.save(chargingStation);
@@ -60,7 +61,7 @@ class RentBikeControllerIntegrationTest {
         bikeRepository.save(bike);
 
         user = new User(null, "user name", "user phone nr", "user email",
-                "password", null, 12345, true, "user", 100.00,
+                password, null, 12345, true, "user", 100.00,
                 null, null);
         userRepository.save(user);
     }

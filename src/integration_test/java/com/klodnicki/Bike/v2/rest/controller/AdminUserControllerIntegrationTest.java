@@ -43,6 +43,7 @@ class AdminUserControllerIntegrationTest {
 
     @BeforeEach
     public void setUp() {
+        String password = "password";
         userRepository.deleteAll();
         authority = new Authority(null, "ROLE_ADMIN");
         authority2 = new Authority(null, "ROLE_ADMIN");
@@ -52,9 +53,9 @@ class AdminUserControllerIntegrationTest {
         Set<Authority> authoritySet2 = new HashSet<>();
         authoritySet2.add(authority2); //must have separate authority otherwise I get "detached entity passed to persist"
 
-        user1 = new User(null, "test name1", "phone number", "email", "password",
+        user1 = new User(null, "test name1", "phone number", "email", password,
                 authoritySet,11223344, true, "user", 100.00, null, null);
-        user2 = new User(null, "test name2", "phone number2", "email2", "password",
+        user2 = new User(null, "test name2", "phone number2", "email2", password,
                 authoritySet2,11223344, true, "user2", 0.00, null, null);
 
         userServiceHandler.add(user1);

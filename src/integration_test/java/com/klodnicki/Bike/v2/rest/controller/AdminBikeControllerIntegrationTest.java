@@ -59,6 +59,7 @@ class AdminBikeControllerIntegrationTest {
 
     @BeforeEach
     void setUp() {
+        String password = "password";
         chargingStation = new ChargingStation(null, "station name", "station address", "station city", 100, new ArrayList<>());
         chargingStationRepository.save(chargingStation);
         bike = new Bike(null, BikeType.ELECTRIC, null, null, chargingStation);
@@ -68,7 +69,7 @@ class AdminBikeControllerIntegrationTest {
         Set<Authority> authoritySet = new HashSet<>();
         authoritySet.add(authority);
 
-        User user = new User(null, "test name1", "phone number", "email", "password",
+        User user = new User(null, "test name1", "phone number", "email", password,
                 authoritySet,11223344, true, "user", 100.00, null, null);
 
         userServiceHandler.add(user);
