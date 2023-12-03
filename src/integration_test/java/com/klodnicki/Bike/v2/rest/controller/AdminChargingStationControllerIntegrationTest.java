@@ -66,7 +66,7 @@ class AdminChargingStationControllerIntegrationTest {
         authority.add(admin);
 
         user = new User(null, "test name1", "phone number", "email", password,
-                authority,11223344, true, "user", 100.00, null, null);
+                authority,11223344, true, 100.00, null, null);
 
         userServiceHandler.add(user);
 

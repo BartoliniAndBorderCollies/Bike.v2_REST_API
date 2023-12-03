@@ -32,7 +32,7 @@ class UserControllerIntegrationTest {
     public void setUp() {
         String password = "123456";
         user = new User(null, "user name", "phone nr", "email", password,
-                null, 1234567, true, "user", 100.00, null, null);
+                null, 1234567, true, 100.00, null, null);
         userRepository.save(user);
     }
 
