@@ -6,10 +6,7 @@ import com.klodnicki.Bike.v2.DTO.rent.RentRequestDTO;
 import com.klodnicki.Bike.v2.DTO.rent.RentResponseDTO;
 import com.klodnicki.Bike.v2.model.BikeType;
 import com.klodnicki.Bike.v2.model.RentRequest;
-import com.klodnicki.Bike.v2.model.entity.Bike;
-import com.klodnicki.Bike.v2.model.entity.ChargingStation;
-import com.klodnicki.Bike.v2.model.entity.Rent;
-import com.klodnicki.Bike.v2.model.entity.User;
+import com.klodnicki.Bike.v2.model.entity.*;
 import com.klodnicki.Bike.v2.repository.BikeRepository;
 import com.klodnicki.Bike.v2.repository.ChargingStationRepository;
 import com.klodnicki.Bike.v2.repository.RentRepository;
@@ -25,7 +22,9 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -60,9 +59,12 @@ class RentBikeControllerIntegrationTest {
         bike.setRented(true);
         bikeRepository.save(bike);
 
+        Authority authority = new Authority(null, "ROLE_ADMIN");
+        Set<Authority> authoritySet = new HashSet<>();
+        authoritySet.add(authority);
+
         user = new User(null, "user name", "user phone nr", "user email",
-                password, null, 12345, true, "user", 100.00,
-                null, null);
+                password, authoritySet, 12345, true, 100.00,null, null);
         userRepository.save(user);
     }
 
