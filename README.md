@@ -8,7 +8,6 @@ This application is currently under development. It is being designed as a RESTf
 - Hibernate
 - Junit
 - Mockito
-- Integration testing
 - Spring Security
 - Jakarta validation
 - mySQL
