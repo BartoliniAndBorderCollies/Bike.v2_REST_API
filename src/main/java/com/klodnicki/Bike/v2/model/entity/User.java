@@ -42,8 +42,6 @@ public class User implements UserDetails {
     private Set<Authority> authorities;
     private int accountNumber;
     private boolean isAccountValid;
-    @NotBlank(message = "Role must not be blank")
-    private String role;
     @Min(value = -50, message = "Maximum debit is 50 $")
     private double balance;
     //User is non-owning side of the relation
