@@ -19,7 +19,7 @@ public class Feedback {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
-    @NotBlank
+    @NotBlank(message = "Please leave us your comment!")
     private String comment;
 
     @Override
