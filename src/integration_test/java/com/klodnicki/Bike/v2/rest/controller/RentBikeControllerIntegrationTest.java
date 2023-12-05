@@ -59,7 +59,7 @@ class RentBikeControllerIntegrationTest {
         bike.setRented(true);
         bikeRepository.save(bike);
 
-        user = new User(null, "user name", "user phone nr", "user email",
+        user = new User(null, "user name", "user phone nr", "email@email.pl",
                 12345, true, "user", 100.00, null, null);
         userRepository.save(user);
     }
@@ -137,7 +137,7 @@ class RentBikeControllerIntegrationTest {
 
         bike.setChargingStation(chargingStation);
         bikeRepository.save(bike);
-        RentRequest rentRequest = new RentRequest(null, user.getId(), bike.getId(), 10);
+        RentRequest rentRequest = new RentRequest(1L, user.getId(), bike.getId(), 10);
 
         webTestClient.post()
                 .uri("/api/rentals/add")
@@ -164,7 +164,7 @@ class RentBikeControllerIntegrationTest {
                 null, 10, 100.00, bike, user, null);
         rentRepository.save(rent);
 
-        RentRequestDTO rentRequestDTO = new RentRequestDTO(null, LocalDateTime.of(2023, 11, 23,
+        RentRequestDTO rentRequestDTO = new RentRequestDTO(1L, LocalDateTime.of(2023, 11, 23,
                 10, 0, 0), null, 5, null,
                 null, null);
 

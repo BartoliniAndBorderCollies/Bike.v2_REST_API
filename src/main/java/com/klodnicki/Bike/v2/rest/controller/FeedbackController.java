@@ -2,6 +2,7 @@ package com.klodnicki.Bike.v2.rest.controller;
 
 import com.klodnicki.Bike.v2.model.entity.Feedback;
 import com.klodnicki.Bike.v2.service.api.FeedbackServiceApi;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,7 +19,7 @@ public class FeedbackController {
 
 
     @PostMapping("/add")
-    public ResponseEntity<?> addFeedback(@RequestBody Feedback feedback) {
+    public ResponseEntity<?> addFeedback(@Valid @RequestBody Feedback feedback) {
         return feedbackService.add(feedback);
     }
 }

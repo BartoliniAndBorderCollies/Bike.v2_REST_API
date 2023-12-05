@@ -4,6 +4,7 @@ import com.klodnicki.Bike.v2.DTO.bike.BikeForAdminResponseDTO;
 import com.klodnicki.Bike.v2.DTO.bike.BikeRequestDTO;
 import com.klodnicki.Bike.v2.DTO.bike.ListBikesForAdminResponseDTO;
 import com.klodnicki.Bike.v2.service.api.BikeServiceApi;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,7 +22,7 @@ public class AdminBikeController {
     private final BikeServiceApi bikeService;
 
     @PostMapping("/add")
-    public BikeForAdminResponseDTO addBike(@RequestBody BikeRequestDTO bikeDTO) {
+    public BikeForAdminResponseDTO addBike(@Valid @RequestBody BikeRequestDTO bikeDTO) {
         return bikeService.add(bikeDTO);
     }
 
@@ -43,7 +44,7 @@ public class AdminBikeController {
     }
 
     @PutMapping("/{id}")
-    public BikeForAdminResponseDTO updateBikeById(@PathVariable Long id, @RequestBody BikeRequestDTO bikeDTO) {
+    public BikeForAdminResponseDTO updateBikeById(@PathVariable Long id, @Valid @RequestBody BikeRequestDTO bikeDTO) {
         return bikeService.update(id, bikeDTO);
     }
 }

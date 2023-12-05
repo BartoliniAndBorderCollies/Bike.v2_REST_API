@@ -22,6 +22,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -45,7 +46,7 @@ class AdminBikeControllerIntegrationTest {
 
     @BeforeEach
     void setUp() {
-        chargingStation = new ChargingStation();
+        chargingStation = new ChargingStation(null, "station name", "station address", "station city", 100, new ArrayList<>());
         chargingStationRepository.save(chargingStation);
         bike = new Bike(null, BikeType.ELECTRIC, null, null, chargingStation);
         bikeRepository.save(bike);
@@ -152,7 +153,8 @@ class AdminBikeControllerIntegrationTest {
     @Test
     void updateBikeById_ShouldUpdateBike_WhenBikeExistInDatabaseAndBikeIdAndBikeRequestDTOIsGiven() {
         //Arrange
-        User user = new User();
+        User user = new User(null, "user name", "123-456-789", "email@email.pl",
+                123456678, true, "user", 100.00, null, null);
         userRepository.save(user);
         UserForAdminResponseDTO userDTO = modelMapper.map(user, UserForAdminResponseDTO.class);
 

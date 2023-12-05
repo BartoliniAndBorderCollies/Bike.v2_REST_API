@@ -6,6 +6,7 @@ import com.klodnicki.Bike.v2.DTO.rent.RentRequestDTO;
 import com.klodnicki.Bike.v2.DTO.rent.RentResponseDTO;
 import com.klodnicki.Bike.v2.model.RentRequest;
 import com.klodnicki.Bike.v2.service.api.RentBikeServiceApi;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -33,12 +34,12 @@ public class RentBikeController {
     }
 
     @PostMapping("/rentals/add")
-    public RentResponseDTO rentBike(@RequestBody RentRequest rentRequest) {
+    public RentResponseDTO rentBike(@Valid @RequestBody RentRequest rentRequest) {
         return rentBikeService.rent(rentRequest);
     }
 
     @PutMapping("/rentals/{id}")
-    public RentResponseDTO updateRent(@PathVariable Long id, @RequestBody RentRequestDTO rentRequestDTO) {
+    public RentResponseDTO updateRent(@PathVariable Long id, @Valid @RequestBody RentRequestDTO rentRequestDTO) {
         return rentBikeService.updateRent(id, rentRequestDTO);
     }
 

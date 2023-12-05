@@ -4,6 +4,7 @@ import com.klodnicki.Bike.v2.DTO.station.ListStationsForAdminResponseDTO;
 import com.klodnicki.Bike.v2.DTO.station.StationForAdminResponseDTO;
 import com.klodnicki.Bike.v2.model.entity.ChargingStation;
 import com.klodnicki.Bike.v2.service.api.ChargingStationServiceApi;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,7 +23,7 @@ public class AdminChargingStationController {
     }
 
     @PostMapping("/add")
-    public StationForAdminResponseDTO add(@RequestBody ChargingStation chargingStation) {
+    public StationForAdminResponseDTO add(@Valid @RequestBody ChargingStation chargingStation) {
         return chargingStationService.add(chargingStation);
     }
 
