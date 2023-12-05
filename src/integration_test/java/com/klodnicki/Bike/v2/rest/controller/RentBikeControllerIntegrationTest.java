@@ -63,7 +63,7 @@ class RentBikeControllerIntegrationTest {
         Set<Authority> authoritySet = new HashSet<>();
         authoritySet.add(authority);
 
-        user = new User(null, "user name", "user phone nr", "user email",
+        user = new User(null, "user name", "user phone nr", "email@email.pl",
                 password, authoritySet, 12345, true, 100.00,null, null);
         userRepository.save(user);
     }

@@ -70,7 +70,7 @@ class AdminBikeControllerIntegrationTest {
         Set<Authority> authoritySet = new HashSet<>();
         authoritySet.add(authority);
 
-        user = new User(null, "test name1", "phone number", "email", password,
+        user = new User(null, "test name1", "phone number", "email@email.pl", password,
                 authoritySet, 11223344, true, 100.00, null, null);
 
         userServiceHandler.add(user);

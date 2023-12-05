@@ -41,7 +41,7 @@ class UserControllerIntegrationTest {
         authoritySet.add(authority);
 
         String password = "123456";
-        user = new User(null, "user name", "phone nr", "email", password,
+        user = new User(null, "user name", "phone nr", "email@email.pl", password,
                 authoritySet, 1234567, true, 100.00, null, null);
         userRepository.save(user);
     }

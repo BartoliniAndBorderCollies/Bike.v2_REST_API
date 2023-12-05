@@ -65,7 +65,7 @@ class AdminChargingStationControllerIntegrationTest {
 //        authorityRepository.save(admin); - not needed cause I added cascade
         authority.add(admin);
 
-        user = new User(null, "test name1", "phone number", "email", password,
+        user = new User(null, "test name1", "phone number", "email@email.pl", password,
                 authority,11223344, true, 100.00, null, null);
 
         userServiceHandler.add(user);

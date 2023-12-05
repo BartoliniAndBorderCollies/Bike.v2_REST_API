@@ -53,9 +53,9 @@ class AdminUserControllerIntegrationTest {
         Set<Authority> authoritySet2 = new HashSet<>();
         authoritySet2.add(authority2); //must have separate authority otherwise I get "detached entity passed to persist"
 
-        user1 = new User(null, "test name1", "phone number", "email", password,
+        user1 = new User(null, "test name1", "phone number", "email@email.pl", password,
                 authoritySet,11223344, true, 100.00, null, null);
-        user2 = new User(null, "test name2", "phone number2", "email2", password,
+        user2 = new User(null, "test name2", "phone number2", "email2@email.pl", password,
                 authoritySet2,11223344, true, 0.00, null, null);
 
         userServiceHandler.add(user1);
