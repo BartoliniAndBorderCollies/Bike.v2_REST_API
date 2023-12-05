@@ -1,4 +1,4 @@
-package com.klodnicki.Bike.v2.exception;
+package com.klodnicki.Bike.v2.rest.controller.advice;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
