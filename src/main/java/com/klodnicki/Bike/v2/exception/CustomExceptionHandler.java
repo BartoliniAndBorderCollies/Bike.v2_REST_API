@@ -18,6 +18,7 @@ public class CustomExceptionHandler {
         if (detailMessageArguments != null) {
             return new ResponseEntity<>("Something went wrong!: \n" + detailMessageArguments[1], HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>("Your request miss required data, check your request with validation requirements",
+                HttpStatus.BAD_REQUEST);
     }
 }
