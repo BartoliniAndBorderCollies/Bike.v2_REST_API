@@ -1,6 +1,7 @@
 package com.klodnicki.Bike.v2.service;
 
 import com.klodnicki.Bike.v2.DTO.user.UserForAdminResponseDTO;
+import com.klodnicki.Bike.v2.exception.NotFoundInDatabaseException;
 import com.klodnicki.Bike.v2.model.entity.User;
 import com.klodnicki.Bike.v2.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -84,7 +85,7 @@ class UserServiceHandlerTest {
     }
 
     @Test
-    public void findById_ShouldReturnUserForAdminResponseDTO_WhenProvidedId() {
+    public void findById_ShouldReturnUserForAdminResponseDTO_WhenProvidedId() throws NotFoundInDatabaseException {
         //Arrange
         UserForAdminResponseDTO userDTO = new UserForAdminResponseDTO();
 
@@ -114,7 +115,7 @@ class UserServiceHandlerTest {
     }
 
     @Test
-    public void banUser_ShouldReturnResponseEntityWithCodeOK_WhenProvidedId() {
+    public void banUser_ShouldReturnResponseEntityWithCodeOK_WhenProvidedId() throws NotFoundInDatabaseException {
         //Arrange
         User user = mock(User.class);
         user.setId(1L);
