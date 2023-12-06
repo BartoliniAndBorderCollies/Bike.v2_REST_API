@@ -111,8 +111,8 @@ class ChargingStationServiceHandlerTest {
     }
 
     @Test
-    public void findStationById_ShouldThrowIllegalArgumentException_WhenNotFoundChargingStationInDatabase() {
-        assertThrows(IllegalArgumentException.class, () -> chargingStationServiceHandler.findStationById(1L));
+    public void findStationById_ShouldThrowNotFoundInDbException_WhenNotFoundChargingStationInDatabase() {
+        assertThrows(NotFoundInDatabaseException.class, () -> chargingStationServiceHandler.findStationById(1L));
     }
 
 
