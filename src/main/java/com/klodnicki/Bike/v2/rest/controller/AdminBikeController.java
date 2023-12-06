@@ -3,6 +3,7 @@ package com.klodnicki.Bike.v2.rest.controller;
 import com.klodnicki.Bike.v2.DTO.bike.BikeForAdminResponseDTO;
 import com.klodnicki.Bike.v2.DTO.bike.BikeRequestDTO;
 import com.klodnicki.Bike.v2.DTO.bike.ListBikesForAdminResponseDTO;
+import com.klodnicki.Bike.v2.exception.NotFoundInDatabaseException;
 import com.klodnicki.Bike.v2.service.api.BikeServiceApi;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -27,7 +28,7 @@ public class AdminBikeController {
     }
 
     @GetMapping("/{id}")
-    public BikeForAdminResponseDTO findBikeById (@PathVariable Long id) {
+    public BikeForAdminResponseDTO findBikeById (@PathVariable Long id) throws NotFoundInDatabaseException {
         return bikeService.findById(id);
     }
 

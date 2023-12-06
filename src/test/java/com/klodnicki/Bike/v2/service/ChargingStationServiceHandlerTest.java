@@ -85,7 +85,7 @@ class ChargingStationServiceHandlerTest {
     }
 
     @Test
-    public void findById_ShouldReturnStationForAdminResponseDTO_WhenExistInDatabase() {
+    public void findById_ShouldReturnStationForAdminResponseDTO_WhenExistInDatabase() throws NotFoundInDatabaseException {
         //Arrange
         when(chargingStationRepository.findById(chargingStation.getId())).thenReturn(Optional.of(chargingStation));
         StationForAdminResponseDTO stationDTO = new StationForAdminResponseDTO();

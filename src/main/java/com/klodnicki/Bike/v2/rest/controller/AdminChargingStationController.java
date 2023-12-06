@@ -30,7 +30,7 @@ public class AdminChargingStationController {
     }
 
     @GetMapping("/{id}")
-    public StationForAdminResponseDTO findById(@PathVariable("id") Long id) {
+    public StationForAdminResponseDTO findById(@PathVariable("id") Long id) throws NotFoundInDatabaseException {
         return chargingStationService.findById(id);
     }
 
