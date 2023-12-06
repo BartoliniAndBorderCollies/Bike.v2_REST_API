@@ -14,5 +14,5 @@ public interface RentBikeServiceApi extends RentServiceApi<RentResponseDTO, Resp
 
     List<BikeForNormalUserResponseDTO> findAvailableBikes();
     BikeForNormalUserResponseDTO findBikeForNormalUserById(Long id) throws NotFoundInDatabaseException;
-    RentResponseDTO updateRent(Long id, RentRequestDTO rentRequestDTO);
+    RentResponseDTO updateRent(Long id, RentRequestDTO rentRequestDTO) throws NotFoundInDatabaseException;
 }

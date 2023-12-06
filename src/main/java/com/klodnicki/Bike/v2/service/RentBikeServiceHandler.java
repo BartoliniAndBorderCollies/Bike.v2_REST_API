@@ -37,7 +37,7 @@ public class RentBikeServiceHandler implements RentBikeServiceApi {
     private final RentRepository rentRepository;
 
     @Override
-    public RentResponseDTO updateRent(Long id, RentRequestDTO rentRequestDTO) {
+    public RentResponseDTO updateRent(Long id, RentRequestDTO rentRequestDTO) throws NotFoundInDatabaseException {
         Rent rent = findRentById(id);
 
         if (rentRequestDTO.getDaysOfRent() > 0) {
@@ -152,7 +152,7 @@ public class RentBikeServiceHandler implements RentBikeServiceApi {
         return new ResponseEntity<>("Bike successfully returned.", HttpStatus.OK);
     }
 
-    private double countRentalCost(Long rentId) {
+    private double countRentalCost(Long rentId) throws NotFoundInDatabaseException {
         Rent rent = findRentById(rentId);
         int rentalDays = rent.getDaysOfRent();
 

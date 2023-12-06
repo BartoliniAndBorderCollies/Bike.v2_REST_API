@@ -61,7 +61,7 @@ class RentBikeServiceHandlerTest {
     }
 
     @Test
-    public void updateRent_ShouldReturnUpdatedDaysOfRentResponseDTO_WhenGivenCorrectArguments() {
+    public void updateRent_ShouldReturnUpdatedDaysOfRentResponseDTO_WhenGivenCorrectArguments() throws NotFoundInDatabaseException {
         //Arrange
         Rent rent = mock(Rent.class);
 

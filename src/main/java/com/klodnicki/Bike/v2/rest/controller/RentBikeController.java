@@ -40,7 +40,8 @@ public class RentBikeController {
     }
 
     @PutMapping("/rentals/{id}")
-    public RentResponseDTO updateRent(@PathVariable Long id, @Valid @RequestBody RentRequestDTO rentRequestDTO) {
+    public RentResponseDTO updateRent(@PathVariable Long id, @Valid @RequestBody RentRequestDTO rentRequestDTO)
+            throws NotFoundInDatabaseException {
         return rentBikeService.updateRent(id, rentRequestDTO);
     }
 
