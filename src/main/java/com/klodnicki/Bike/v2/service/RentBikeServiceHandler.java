@@ -166,7 +166,7 @@ public class RentBikeServiceHandler implements RentBikeServiceApi {
         return durationInMinutes * 0.1;
     }
 
-    private Rent findRentById(Long id) {
-        return rentRepository.findById(id).orElseThrow(IllegalArgumentException::new);
+    private Rent findRentById(Long id) throws NotFoundInDatabaseException {
+        return rentRepository.findById(id).orElseThrow(() -> new NotFoundInDatabaseException(Rent.class));
     }
 }
