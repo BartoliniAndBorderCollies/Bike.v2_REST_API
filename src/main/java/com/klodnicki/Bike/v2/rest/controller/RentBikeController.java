@@ -30,7 +30,7 @@ public class RentBikeController {
     }
 
     @GetMapping("/bikes/{id}")
-    public BikeForNormalUserResponseDTO findBikeForNormalUserById(@PathVariable Long id) {
+    public BikeForNormalUserResponseDTO findBikeForNormalUserById(@PathVariable Long id) throws NotFoundInDatabaseException {
         return rentBikeService.findBikeForNormalUserById(id);
     }
 

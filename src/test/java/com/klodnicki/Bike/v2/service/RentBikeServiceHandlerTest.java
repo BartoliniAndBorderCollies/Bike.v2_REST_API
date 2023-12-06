@@ -107,7 +107,8 @@ class RentBikeServiceHandlerTest {
     }
 
     @Test
-    public void findBikeForNormalUserById_ShouldReturnBikeForNormalUserResponseDTO_WhenGivenCorrectId() {
+    public void findBikeForNormalUserById_ShouldReturnBikeForNormalUserResponseDTO_WhenGivenCorrectId()
+            throws NotFoundInDatabaseException {
         //Arrange
         when(bikeRepository.findById(bike.getId())).thenReturn(Optional.of(bike));
 

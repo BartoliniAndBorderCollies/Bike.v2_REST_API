@@ -2,6 +2,7 @@ package com.klodnicki.Bike.v2.service.api;
 
 import com.klodnicki.Bike.v2.DTO.bike.BikeForAdminResponseDTO;
 import com.klodnicki.Bike.v2.DTO.bike.BikeRequestDTO;
+import com.klodnicki.Bike.v2.exception.NotFoundInDatabaseException;
 import com.klodnicki.Bike.v2.model.entity.Bike;
 import com.klodnicki.Bike.v2.service.api.operation.*;
 
@@ -14,5 +15,5 @@ public interface BikeServiceApi extends AddOperation<BikeForAdminResponseDTO, Bi
         SaveOperation<Bike> {
 
     List<Bike> findByIsRentedFalse();
-    Bike findBikeById(Long id);
+    Bike findBikeById(Long id) throws NotFoundInDatabaseException;
 }

@@ -2,6 +2,7 @@ package com.klodnicki.Bike.v2.service;
 
 import com.klodnicki.Bike.v2.DTO.bike.BikeForAdminResponseDTO;
 import com.klodnicki.Bike.v2.DTO.bike.BikeRequestDTO;
+import com.klodnicki.Bike.v2.exception.NotFoundInDatabaseException;
 import com.klodnicki.Bike.v2.model.entity.Bike;
 import com.klodnicki.Bike.v2.repository.BikeRepository;
 import com.klodnicki.Bike.v2.service.api.*;
@@ -50,14 +51,14 @@ public class BikeServiceHandler implements BikeServiceApi {
     }
 
     @Override
-    public BikeForAdminResponseDTO findById(Long id) {
+    public BikeForAdminResponseDTO findById(Long id) throws NotFoundInDatabaseException {
         Bike savedBike = findBikeById(id);
 
         return modelMapper.map(savedBike, BikeForAdminResponseDTO.class);
     }
 
     @Override
-    public BikeForAdminResponseDTO update(Long id, BikeRequestDTO updatedBikeRequestDTO) {
+    public BikeForAdminResponseDTO update(Long id, BikeRequestDTO updatedBikeRequestDTO) throws NotFoundInDatabaseException {
 
         Bike bike = findBikeById(id);
 

@@ -45,7 +45,8 @@ public class AdminBikeController {
     }
 
     @PutMapping("/{id}")
-    public BikeForAdminResponseDTO updateBikeById(@PathVariable Long id, @Valid @RequestBody BikeRequestDTO bikeDTO) {
+    public BikeForAdminResponseDTO updateBikeById(@PathVariable Long id, @Valid @RequestBody BikeRequestDTO bikeDTO)
+            throws NotFoundInDatabaseException {
         return bikeService.update(id, bikeDTO);
     }
 }

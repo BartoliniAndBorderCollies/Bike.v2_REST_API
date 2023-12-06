@@ -68,7 +68,7 @@ public class RentBikeServiceHandler implements RentBikeServiceApi {
     }
 
     @Override
-    public BikeForNormalUserResponseDTO findBikeForNormalUserById(Long id) {
+    public BikeForNormalUserResponseDTO findBikeForNormalUserById(Long id) throws NotFoundInDatabaseException {
         Bike bike = bikeService.findBikeById(id);
         return modelMapper.map(bike, BikeForNormalUserResponseDTO.class);
     }
