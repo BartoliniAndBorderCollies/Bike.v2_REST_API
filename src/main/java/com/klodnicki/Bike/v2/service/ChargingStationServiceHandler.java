@@ -39,8 +39,9 @@ public class ChargingStationServiceHandler implements ChargingStationServiceApi 
         return stationsDTO;
     }
     @Override
-    public StationForAdminResponseDTO findById(Long id) {
-        ChargingStation chargingStation = chargingStationRepository.findById(id).orElseThrow(IllegalArgumentException::new);
+    public StationForAdminResponseDTO findById(Long id) throws NotFoundInDatabaseException {
+        ChargingStation chargingStation = chargingStationRepository.findById(id).orElseThrow(() ->
+                new NotFoundInDatabaseException(ChargingStation.class));
         return modelMapper.map(chargingStation, StationForAdminResponseDTO.class);
     }
     @Override
