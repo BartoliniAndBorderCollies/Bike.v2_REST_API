@@ -200,7 +200,7 @@ class BikeServiceHandlerTest {
     }
 
     @Test
-    public void findBikeById_ShouldThrowIllegalArgumentException_WhenGivenIdDoesNotExistInDatabase() {
-        assertThrows(IllegalArgumentException.class, () -> bikeServiceHandler.findBikeById(1L));
+    public void findBikeById_ShouldThrowNotFoundInDbException_WhenGivenIdDoesNotExistInDatabase() {
+        assertThrows(NotFoundInDatabaseException.class, () -> bikeServiceHandler.findBikeById(1L));
     }
 }
