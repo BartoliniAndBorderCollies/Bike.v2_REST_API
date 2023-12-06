@@ -109,8 +109,8 @@ class UserServiceHandlerTest {
     }
 
     @Test
-    public void findUserById_ShouldThrowException_WhenUserIsNotFound() {
-        assertThrows(IllegalArgumentException.class, () -> userServiceHandler.findUserById(1L));
+    public void findUserById_ShouldThrowNotFoundInDbException_WhenUserIsNotFound() {
+        assertThrows(NotFoundInDatabaseException.class, () -> userServiceHandler.findUserById(1L));
     }
 
     @Test
