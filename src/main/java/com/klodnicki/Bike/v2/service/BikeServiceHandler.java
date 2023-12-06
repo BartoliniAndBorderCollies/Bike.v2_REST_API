@@ -84,8 +84,8 @@ public class BikeServiceHandler implements BikeServiceApi {
     }
 
     @Override
-    public Bike findBikeById(Long id) {
-        return bikeRepository.findById(id).orElseThrow(IllegalArgumentException::new);
+    public Bike findBikeById(Long id) throws NotFoundInDatabaseException {
+        return bikeRepository.findById(id).orElseThrow(() -> new NotFoundInDatabaseException(Bike.class));
     }
 
     private void updateBikeIfValuesAreNotNulls(BikeRequestDTO updatedBikeRequestDTO, Bike bike) {
