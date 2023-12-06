@@ -48,8 +48,8 @@ public class UserServiceHandler implements UserServiceApi {
         userRepository.deleteById(id);
     }
     @Override
-    public User findUserById(Long id) {
-        return userRepository.findById(id).orElseThrow(IllegalArgumentException::new);
+    public User findUserById(Long id) throws NotFoundInDatabaseException {
+        return userRepository.findById(id).orElseThrow(() -> new NotFoundInDatabaseException(User.class));
     }
 
     @Override
