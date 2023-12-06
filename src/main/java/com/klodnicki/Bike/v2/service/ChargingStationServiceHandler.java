@@ -1,6 +1,7 @@
 package com.klodnicki.Bike.v2.service;
 
 import com.klodnicki.Bike.v2.DTO.station.StationForAdminResponseDTO;
+import com.klodnicki.Bike.v2.exception.NotFoundInDatabaseException;
 import com.klodnicki.Bike.v2.model.entity.Bike;
 import com.klodnicki.Bike.v2.model.entity.ChargingStation;
 import com.klodnicki.Bike.v2.repository.ChargingStationRepository;
@@ -43,8 +44,8 @@ public class ChargingStationServiceHandler implements ChargingStationServiceApi 
         return modelMapper.map(chargingStation, StationForAdminResponseDTO.class);
     }
     @Override
-    public ChargingStation findStationById(Long id) {
-        return chargingStationRepository.findById(id).orElseThrow(IllegalArgumentException::new);
+    public ChargingStation findStationById(Long id) throws NotFoundInDatabaseException {
+        return chargingStationRepository.findById(id).orElseThrow(() -> new NotFoundInDatabaseException(ChargingStation.class));
     }
     @Override
     public ChargingStation save(ChargingStation chargingStation) {
