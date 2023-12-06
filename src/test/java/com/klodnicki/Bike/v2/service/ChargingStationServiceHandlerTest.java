@@ -1,6 +1,7 @@
 package com.klodnicki.Bike.v2.service;
 
 import com.klodnicki.Bike.v2.DTO.station.StationForAdminResponseDTO;
+import com.klodnicki.Bike.v2.exception.NotFoundInDatabaseException;
 import com.klodnicki.Bike.v2.model.entity.Bike;
 import com.klodnicki.Bike.v2.model.entity.ChargingStation;
 import com.klodnicki.Bike.v2.repository.BikeRepository;
@@ -98,7 +99,7 @@ class ChargingStationServiceHandlerTest {
     }
 
     @Test
-    public void findStationById_ShouldReturnChargingStation_WhenExistInDatabase() {
+    public void findStationById_ShouldReturnChargingStation_WhenExistInDatabase() throws NotFoundInDatabaseException {
         //Arrange
         when(chargingStationRepository.findById(chargingStation.getId())).thenReturn(Optional.of(chargingStation));
 
@@ -126,7 +127,7 @@ class ChargingStationServiceHandlerTest {
     }
 
     @Test
-    public void addBikeToList_ShouldAddBikeToList_WhenIdsOfBikeAndStationAreProvided() {
+    public void addBikeToList_ShouldAddBikeToList_WhenIdsOfBikeAndStationAreProvided() throws NotFoundInDatabaseException {
         //Arrange
         List<Bike> bikeList = new ArrayList<>();
         Bike bike = new Bike();

@@ -3,6 +3,7 @@ package com.klodnicki.Bike.v2.service;
 import com.klodnicki.Bike.v2.DTO.bike.BikeForNormalUserResponseDTO;
 import com.klodnicki.Bike.v2.DTO.rent.RentRequestDTO;
 import com.klodnicki.Bike.v2.DTO.rent.RentResponseDTO;
+import com.klodnicki.Bike.v2.exception.NotFoundInDatabaseException;
 import com.klodnicki.Bike.v2.model.RentRequest;
 import com.klodnicki.Bike.v2.model.entity.Bike;
 import com.klodnicki.Bike.v2.model.entity.ChargingStation;
@@ -126,7 +127,7 @@ class RentBikeServiceHandlerTest {
         private User user;
 
         @BeforeEach
-        public void setUpForRentMethods() {
+        public void setUpForRentMethods() throws NotFoundInDatabaseException {
 
             List<Bike> bikeList = new ArrayList<>();
 
@@ -158,7 +159,7 @@ class RentBikeServiceHandlerTest {
         }
 
         @Test
-        public void rent_ShouldRemoveFromBikeList_WhenProvidedBikeObject() {
+        public void rent_ShouldRemoveFromBikeList_WhenProvidedBikeObject() throws NotFoundInDatabaseException {
             //Arrange
             //Act
             rentBikeServiceHandler.rent(rentRequest);
@@ -169,7 +170,7 @@ class RentBikeServiceHandlerTest {
         }
 
         @Test
-        public void rent_ShouldIncrementFreeSlotsByOne_WhenBikeIsRented() {
+        public void rent_ShouldIncrementFreeSlotsByOne_WhenBikeIsRented() throws NotFoundInDatabaseException {
             //Arrange
             chargingStation.setFreeSlots(1);
             int expected = chargingStation.getFreeSlots() + 1;
@@ -183,7 +184,7 @@ class RentBikeServiceHandlerTest {
         }
 
         @Test
-        public void rent_ShouldCallOnRentRepositoryExactlyOnceWithCorrectState_WhenRentProvided() {
+        public void rent_ShouldCallOnRentRepositoryExactlyOnceWithCorrectState_WhenRentProvided() throws NotFoundInDatabaseException {
             //Arrange
             //Act
             rentBikeServiceHandler.rent(rentRequest);
@@ -216,7 +217,7 @@ class RentBikeServiceHandlerTest {
         private List<Bike> bikeList;
 
         @BeforeEach
-        public void setUpForReturnVehicleMethod() {
+        public void setUpForReturnVehicleMethod() throws NotFoundInDatabaseException {
             bikeList = new ArrayList<>();
 
             rent = mock(Rent.class);
@@ -236,7 +237,7 @@ class RentBikeServiceHandlerTest {
         }
 
         @Test
-        public void returnVehicle_ShouldAddReturnedBikeToStation_WhenGivenBikeObject() {
+        public void returnVehicle_ShouldAddReturnedBikeToStation_WhenGivenBikeObject() throws NotFoundInDatabaseException {
             //Arrange
             bikeList.add(bike);
 
@@ -249,7 +250,7 @@ class RentBikeServiceHandlerTest {
         }
 
         @Test
-        public void returnVehicle_ShouldDecrementStationFreeSlotsByOne_WhenBikeIsReturned() {
+        public void returnVehicle_ShouldDecrementStationFreeSlotsByOne_WhenBikeIsReturned() throws NotFoundInDatabaseException {
             //Arrange
             chargingStation.setFreeSlots(1); //should decrement by one
 

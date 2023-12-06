@@ -5,6 +5,7 @@ import com.klodnicki.Bike.v2.DTO.bike.BikeForNormalUserResponseDTO;
 import com.klodnicki.Bike.v2.DTO.rent.RentRequestDTO;
 import com.klodnicki.Bike.v2.DTO.rent.RentResponseDTO;
 import com.klodnicki.Bike.v2.DTO.user.UserForNormalUserResponseDTO;
+import com.klodnicki.Bike.v2.exception.NotFoundInDatabaseException;
 import com.klodnicki.Bike.v2.model.RentRequest;
 import com.klodnicki.Bike.v2.model.entity.Bike;
 import com.klodnicki.Bike.v2.model.entity.ChargingStation;
@@ -74,7 +75,7 @@ public class RentBikeServiceHandler implements RentBikeServiceApi {
 
     @Override
     @Transactional
-    public RentResponseDTO rent(RentRequest rentRequest) {
+    public RentResponseDTO rent(RentRequest rentRequest) throws NotFoundInDatabaseException {
         Bike bike = bikeService.findBikeById(rentRequest.getBikeId());
         User user = userService.findUserById(rentRequest.getUserId());
         ChargingStation chargingStation = chargingStationService.findStationById(bike.getChargingStation().getId());
@@ -122,7 +123,7 @@ public class RentBikeServiceHandler implements RentBikeServiceApi {
 
     @Override
     @Transactional
-    public ResponseEntity<?> returnVehicle(Long rentId, Long returnChargingStationId) {
+    public ResponseEntity<?> returnVehicle(Long rentId, Long returnChargingStationId) throws NotFoundInDatabaseException {
         Rent rent = findRentById(rentId);
         Bike bike = rent.getBike();
         User user = rent.getUser();

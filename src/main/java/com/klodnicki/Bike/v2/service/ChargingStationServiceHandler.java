@@ -53,7 +53,7 @@ public class ChargingStationServiceHandler implements ChargingStationServiceApi 
     }
 
     @Override
-    public ChargingStation addBikeToList(Long chargingStationId, Long bikeId) {
+    public ChargingStation addBikeToList(Long chargingStationId, Long bikeId) throws NotFoundInDatabaseException {
         ChargingStation chargingStation = findStationById(chargingStationId);
         Bike bike = bikeService.findBikeById(bikeId);
 
