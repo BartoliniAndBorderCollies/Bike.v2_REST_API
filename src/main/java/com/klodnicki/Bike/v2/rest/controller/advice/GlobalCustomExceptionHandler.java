@@ -23,6 +23,6 @@ public class GlobalCustomExceptionHandler {
 
     @ExceptionHandler(NotFoundInDatabaseException.class)
     public ResponseEntity<?> handleNotFoundInDatabaseException(NotFoundInDatabaseException e) {
-        return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
     }
 }
