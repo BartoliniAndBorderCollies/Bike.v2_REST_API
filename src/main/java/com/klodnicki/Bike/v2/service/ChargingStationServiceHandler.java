@@ -59,7 +59,7 @@ public class ChargingStationServiceHandler implements ChargingStationServiceApi 
      *
      * @param id The ID of the charging station to be found.
      * @return StationForAdminResponseDTO The response object containing the details of the found charging station.
-     * @throws IllegalArgumentException If no charging station with the given ID is found.
+     * @throws IllegalArgumentException If no charging station with the given ID is found. //TODO this will be replaced when branch with custom exceptions is merged
      */
     @Override
     public StationForAdminResponseDTO findById(Long id) throws NotFoundInDatabaseException {
@@ -85,7 +85,7 @@ public class ChargingStationServiceHandler implements ChargingStationServiceApi 
      * @param chargingStationId The ID of the charging station.
      * @param bikeId The ID of the bike to be added.
      * @return ChargingStation The updated charging station.
-     * @throws IllegalArgumentException If no charging station or bike with the given IDs is found.
+     * @throws IllegalArgumentException If no charging station or bike with the given IDs is found. //TODO this will be replaced when branch with custom exceptions is merged
      */
     @Override
     public ChargingStation addBikeToList(Long chargingStationId, Long bikeId) throws NotFoundInDatabaseException {
