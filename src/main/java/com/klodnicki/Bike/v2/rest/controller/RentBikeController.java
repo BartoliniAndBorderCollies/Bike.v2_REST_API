@@ -21,7 +21,15 @@ public class RentBikeController {
 
     private final RentBikeServiceApi rentBikeService;
 
-
+    /**
+     * This method is used to retrieve all available bikes.
+     * Available bike is a bike which has isRented status set as false.
+     * The method returns a ListBikesForNormalUserResponseDTO object which contains a list of BikeForNormalUserResponseDTO objects.
+     *
+     * @return ListBikesForNormalUserResponseDTO This returns the response object with a list of all available bikes.
+     *
+     * @GetMapping("/bikes")
+     */
     @GetMapping("/bikes")
     public ListBikesForNormalUserResponseDTO findAvailableBikes() {
         List<BikeForNormalUserResponseDTO> bikeDTOs = rentBikeService.findAvailableBikes();
@@ -33,18 +41,47 @@ public class RentBikeController {
     public BikeForNormalUserResponseDTO findBikeForNormalUserById(@PathVariable Long id) throws NotFoundInDatabaseException {
         return rentBikeService.findBikeForNormalUserById(id);
     }
-
+    /**
+     * This method is used to rent a bike.
+     * It takes a RentRequest object as input and returns a RentResponseDTO object.
+     * The RentRequest must fulfil some requirements since it is preceded by @Valid.
+     *
+     * @param rentRequest This is a request object which contains the details of the bike to be rented.
+     * @return RentResponseDTO This returns the response object with details of the rented bike.
+     *
+     * @PostMapping("/rentals/add")
+     */
     @PostMapping("/rentals/add")
     public RentResponseDTO rentBike(@Valid @RequestBody RentRequest rentRequest) throws NotFoundInDatabaseException {
         return rentBikeService.rent(rentRequest);
     }
-
+    /**
+     * This method is used to update a rent.
+     * It takes a RentRequestDTO object and an ID of Rent as input and returns a RentResponseDTO object.
+     * The RentRequest must fulfil some requirements since it is preceded by @Valid.
+     *
+     * @param id This is the ID of the rent to be updated.
+     * @param rentRequestDTO This is a request object which contains the updated details of the rent.
+     * @return RentResponseDTO This returns the response object with details of the updated rent.
+     *
+     * @PutMapping("/rentals/{id}")
+     */
     @PutMapping("/rentals/{id}")
     public RentResponseDTO updateRent(@PathVariable Long id, @Valid @RequestBody RentRequestDTO rentRequestDTO)
             throws NotFoundInDatabaseException {
         return rentBikeService.updateRent(id, rentRequestDTO);
     }
 
+    /**
+     * This method is used to return a rented bike.
+     * It takes a rent ID and a return charging station ID as input and returns a ResponseEntity object.
+     *
+     * @param rentId This is the ID of the rent to be returned.
+     * @param returnChargingStationId This is the ID of the charging station where the bike will be returned.
+     * @return ResponseEntity This returns the response entity after the bike has been returned.
+     *
+     * @PutMapping("/returns/{rentId}")
+     */
     @PutMapping("/returns/{rentId}")
     public ResponseEntity<?> returnBike(@PathVariable Long rentId, @RequestParam Long returnChargingStationId)
             throws NotFoundInDatabaseException {
