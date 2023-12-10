@@ -18,6 +18,14 @@ public class AdminUserController {
     private final UserServiceApi userService;
 
 
+    /**
+     * This method is used to retrieve all users.
+     * It returns a ListUsersForAdminResponseDTO object which contains a list of UserForAdminResponseDTO objects.
+     *
+     * @return ListUsersForAdminResponseDTO This returns the response object with a list of all users.
+     *
+     * @GetMapping
+     */
     @GetMapping
     public ListUsersForAdminResponseDTO findAllUsers() {
         List<UserForAdminResponseDTO> listOfUsers =  userService.findAll();
@@ -25,6 +33,15 @@ public class AdminUserController {
         return new ListUsersForAdminResponseDTO(listOfUsers);
     }
 
+    /**
+     * This method is used to ban a user by their ID.
+     * It takes a user ID as input and returns a ResponseEntity object.
+     *
+     * @param id This is the ID of the user to be banned.
+     * @return ResponseEntity This returns the response entity after the user has been banned.
+     *
+     * @PutMapping("/{id}")
+     */
     @PutMapping("/{id}")
     public ResponseEntity<?> banUser(@PathVariable Long id) throws NotFoundInDatabaseException {
         return userService.banUser(id);
