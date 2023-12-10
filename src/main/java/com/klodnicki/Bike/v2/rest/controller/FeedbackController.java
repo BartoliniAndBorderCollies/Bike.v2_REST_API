@@ -18,6 +18,16 @@ public class FeedbackController {
     private final FeedbackServiceApi feedbackService;
 
 
+    /**
+     * This method is used to add a new feedback.
+     * It takes a Feedback object as input and returns a ResponseEntity object.
+     * The Feedback must fulfil some requirements since it is preceded by @Valid.
+     *
+     * @param feedback This is a request object which contains the details of the feedback to be added.
+     * @return ResponseEntity This returns the response entity after the feedback has been added.
+     *
+     * @PostMapping("/add")
+     */
     @PostMapping("/add")
     public ResponseEntity<?> addFeedback(@Valid @RequestBody Feedback feedback) {
         return feedbackService.add(feedback);
