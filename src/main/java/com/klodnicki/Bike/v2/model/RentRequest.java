@@ -7,6 +7,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+/**
+ * Represents a request to rent a bike.
+ * This class encapsulates all the data needed to process a bike rental request.
+ */
 @Getter
 @Setter
 @AllArgsConstructor
