@@ -22,6 +22,15 @@ public class AdminBikeController {
 
     private final BikeServiceApi bikeService;
 
+    /**
+     * This method is used to add a new bike.
+     * It takes a BikeRequestDTO object as input and returns a BikeForAdminResponseDTO object.
+     *
+     * @param bikeDTO This is a request object which contains the details of the bike to be added.
+     * @return BikeForAdminResponseDTO This returns the response object with details of the added bike.
+     *
+     * @PostMapping("/add")
+     */
     @PostMapping("/add")
     public BikeForAdminResponseDTO addBike(@Valid @RequestBody BikeRequestDTO bikeDTO) {
         return bikeService.add(bikeDTO);
@@ -32,6 +41,14 @@ public class AdminBikeController {
         return bikeService.findById(id);
     }
 
+    /**
+     * This method is used to retrieve all bikes.
+     * It returns a ListBikesForAdminResponseDTO object which contains a list of BikeForAdminResponseDTO objects.
+     *
+     * @return ListBikesForAdminResponseDTO This returns the response object with a list of all bikes.
+     *
+     * @GetMapping
+     */
     @GetMapping
     public ListBikesForAdminResponseDTO findAllBikes() {
         List<BikeForAdminResponseDTO> listBikesDTO = bikeService.findAll();
@@ -44,6 +61,17 @@ public class AdminBikeController {
         bikeService.deleteById(id);
     }
 
+    /**
+     * This method is used to update a bike by its ID.
+     * It takes a BikeRequestDTO object and an ID of Bike as input and returns a BikeForAdminResponseDTO object.
+     * BikeRequestDTO must fulfil some specific requirements since it is preceded by @Valid.
+     *
+     * @param id This is the ID of the bike to be updated.
+     * @param bikeDTO This is a request object which contains the updated details of the bike.
+     * @return BikeForAdminResponseDTO This returns the response object with details of the updated bike.
+     *
+     * @PutMapping("/{id}")
+     */
     @PutMapping("/{id}")
     public BikeForAdminResponseDTO updateBikeById(@PathVariable Long id, @Valid @RequestBody BikeRequestDTO bikeDTO)
             throws NotFoundInDatabaseException {
