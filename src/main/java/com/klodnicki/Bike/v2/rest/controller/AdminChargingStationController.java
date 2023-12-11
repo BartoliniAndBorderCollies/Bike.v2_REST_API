@@ -2,6 +2,7 @@ package com.klodnicki.Bike.v2.rest.controller;
 
 import com.klodnicki.Bike.v2.DTO.station.ListStationsForAdminResponseDTO;
 import com.klodnicki.Bike.v2.DTO.station.StationForAdminResponseDTO;
+import com.klodnicki.Bike.v2.exception.NotFoundInDatabaseException;
 import com.klodnicki.Bike.v2.model.entity.ChargingStation;
 import com.klodnicki.Bike.v2.service.api.ChargingStationServiceApi;
 import jakarta.validation.Valid;
@@ -18,7 +19,8 @@ public class AdminChargingStationController {
     private final ChargingStationServiceApi chargingStationService;
 
     @PostMapping("/list/add/{id}")
-    public ChargingStation addBikeToList(@PathVariable("id") Long chargingStationId, @RequestParam Long bikeId) {
+    public ChargingStation addBikeToList(@PathVariable("id") Long chargingStationId, @RequestParam Long bikeId)
+            throws NotFoundInDatabaseException {
         return chargingStationService.addBikeToList(chargingStationId, bikeId);
     }
 
@@ -28,7 +30,7 @@ public class AdminChargingStationController {
     }
 
     @GetMapping("/{id}")
-    public StationForAdminResponseDTO findById(@PathVariable("id") Long id) {
+    public StationForAdminResponseDTO findById(@PathVariable("id") Long id) throws NotFoundInDatabaseException {
         return chargingStationService.findById(id);
     }
 

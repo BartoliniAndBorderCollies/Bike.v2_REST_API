@@ -4,6 +4,7 @@ import com.klodnicki.Bike.v2.DTO.bike.BikeForNormalUserResponseDTO;
 import com.klodnicki.Bike.v2.DTO.bike.ListBikesForNormalUserResponseDTO;
 import com.klodnicki.Bike.v2.DTO.rent.RentRequestDTO;
 import com.klodnicki.Bike.v2.DTO.rent.RentResponseDTO;
+import com.klodnicki.Bike.v2.exception.NotFoundInDatabaseException;
 import com.klodnicki.Bike.v2.model.RentRequest;
 import com.klodnicki.Bike.v2.service.api.RentBikeServiceApi;
 import jakarta.validation.Valid;
@@ -29,22 +30,24 @@ public class RentBikeController {
     }
 
     @GetMapping("/bikes/{id}")
-    public BikeForNormalUserResponseDTO findBikeForNormalUserById(@PathVariable Long id) {
+    public BikeForNormalUserResponseDTO findBikeForNormalUserById(@PathVariable Long id) throws NotFoundInDatabaseException {
         return rentBikeService.findBikeForNormalUserById(id);
     }
 
     @PostMapping("/rentals/add")
-    public RentResponseDTO rentBike(@Valid @RequestBody RentRequest rentRequest) {
+    public RentResponseDTO rentBike(@Valid @RequestBody RentRequest rentRequest) throws NotFoundInDatabaseException {
         return rentBikeService.rent(rentRequest);
     }
 
     @PutMapping("/rentals/{id}")
-    public RentResponseDTO updateRent(@PathVariable Long id, @Valid @RequestBody RentRequestDTO rentRequestDTO) {
+    public RentResponseDTO updateRent(@PathVariable Long id, @Valid @RequestBody RentRequestDTO rentRequestDTO)
+            throws NotFoundInDatabaseException {
         return rentBikeService.updateRent(id, rentRequestDTO);
     }
 
     @PutMapping("/returns/{rentId}")
-    public ResponseEntity<?> returnBike(@PathVariable Long rentId, @RequestParam Long returnChargingStationId) {
+    public ResponseEntity<?> returnBike(@PathVariable Long rentId, @RequestParam Long returnChargingStationId)
+            throws NotFoundInDatabaseException {
         return rentBikeService.returnVehicle(rentId, returnChargingStationId);
     }
 }

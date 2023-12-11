@@ -1,6 +1,7 @@
 package com.klodnicki.Bike.v2.service;
 
 import com.klodnicki.Bike.v2.DTO.user.UserForAdminResponseDTO;
+import com.klodnicki.Bike.v2.exception.NotFoundInDatabaseException;
 import com.klodnicki.Bike.v2.model.entity.User;
 import com.klodnicki.Bike.v2.repository.UserRepository;
 import com.klodnicki.Bike.v2.service.api.UserServiceApi;
@@ -38,7 +39,7 @@ public class UserServiceHandler implements UserServiceApi {
         return listUsersDTO;
     }
     @Override
-    public UserForAdminResponseDTO findById(Long id) {
+    public UserForAdminResponseDTO findById(Long id) throws NotFoundInDatabaseException {
         User user = findUserById(id);
 
         return modelMapper.map(user, UserForAdminResponseDTO.class);
@@ -48,12 +49,12 @@ public class UserServiceHandler implements UserServiceApi {
         userRepository.deleteById(id);
     }
     @Override
-    public User findUserById(Long id) {
-        return userRepository.findById(id).orElseThrow(IllegalArgumentException::new);
+    public User findUserById(Long id) throws NotFoundInDatabaseException {
+        return userRepository.findById(id).orElseThrow(() -> new NotFoundInDatabaseException(User.class));
     }
 
     @Override
-    public ResponseEntity<?> banUser(Long id) {
+    public ResponseEntity<?> banUser(Long id) throws NotFoundInDatabaseException {
         User user = findUserById(id);
 
         user.setAccountValid(false);

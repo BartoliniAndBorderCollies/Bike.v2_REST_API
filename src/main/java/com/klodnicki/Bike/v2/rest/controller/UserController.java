@@ -1,6 +1,7 @@
 package com.klodnicki.Bike.v2.rest.controller;
 
 import com.klodnicki.Bike.v2.DTO.user.UserForAdminResponseDTO;
+import com.klodnicki.Bike.v2.exception.NotFoundInDatabaseException;
 import com.klodnicki.Bike.v2.model.entity.User;
 import com.klodnicki.Bike.v2.service.api.UserServiceApi;
 import jakarta.validation.Valid;
@@ -20,7 +21,7 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public UserForAdminResponseDTO findById(@PathVariable("id") Long id) {
+    public UserForAdminResponseDTO findById(@PathVariable("id") Long id) throws NotFoundInDatabaseException {
         return userService.findById(id);
     }
 }

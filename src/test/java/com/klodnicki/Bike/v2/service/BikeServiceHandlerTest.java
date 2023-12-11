@@ -5,6 +5,7 @@ import com.klodnicki.Bike.v2.DTO.bike.BikeForAdminResponseDTO;
 import com.klodnicki.Bike.v2.DTO.bike.BikeRequestDTO;
 import com.klodnicki.Bike.v2.DTO.station.StationForAdminResponseDTO;
 import com.klodnicki.Bike.v2.DTO.user.UserForAdminResponseDTO;
+import com.klodnicki.Bike.v2.exception.NotFoundInDatabaseException;
 import com.klodnicki.Bike.v2.model.BikeType;
 import com.klodnicki.Bike.v2.model.GpsCoordinates;
 import com.klodnicki.Bike.v2.model.entity.Bike;
@@ -97,7 +98,8 @@ class BikeServiceHandlerTest {
     }
 
     @Test
-    public void findById_ShouldReturnBikeForAdminResponseDTO_WhenBikeExistsInDatabaseAndIdOfBikeIsProvided() {
+    public void findById_ShouldReturnBikeForAdminResponseDTO_WhenBikeExistsInDatabaseAndIdOfBikeIsProvided()
+            throws NotFoundInDatabaseException {
         //Arrange - takes from @BeforeEach setUp()
         //Act
         BikeForAdminResponseDTO actual = bikeServiceHandler.findById(bike.getId());
@@ -107,7 +109,8 @@ class BikeServiceHandlerTest {
     }
 
     @Test
-    public void update_ShouldReturnUpdatedBikeForAdminResponseDTO_WhenGivenCorrectIdAndBikeRequestDTO() {
+    public void update_ShouldReturnUpdatedBikeForAdminResponseDTO_WhenGivenCorrectIdAndBikeRequestDTO()
+            throws NotFoundInDatabaseException {
         //Arrange
         bike = new Bike();
         bike.setRent(new Rent());
@@ -142,7 +145,7 @@ class BikeServiceHandlerTest {
     }
 
     @Test
-    public void update_ShouldReturnEmptyOptional_WhenBikeRequestDTOValuesAreNulls() {
+    public void update_ShouldReturnEmptyOptional_WhenBikeRequestDTOValuesAreNulls() throws NotFoundInDatabaseException {
         //Arrange
         BikeRequestDTO bikeRequestDTO = new BikeRequestDTO(null, null, true, null,
                 100.00, null, new UserForAdminResponseDTO(), new StationForAdminResponseDTO());
@@ -200,7 +203,7 @@ class BikeServiceHandlerTest {
     }
 
     @Test
-    public void findBikeById_ShouldThrowIllegalArgumentException_WhenGivenIdDoesNotExistInDatabase() {
-        assertThrows(IllegalArgumentException.class, () -> bikeServiceHandler.findBikeById(1L));
+    public void findBikeById_ShouldThrowNotFoundInDbException_WhenGivenIdDoesNotExistInDatabase() {
+        assertThrows(NotFoundInDatabaseException.class, () -> bikeServiceHandler.findBikeById(1L));
     }
 }

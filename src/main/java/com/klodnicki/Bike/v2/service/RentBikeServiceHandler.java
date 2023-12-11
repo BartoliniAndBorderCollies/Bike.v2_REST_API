@@ -5,6 +5,7 @@ import com.klodnicki.Bike.v2.DTO.bike.BikeForNormalUserResponseDTO;
 import com.klodnicki.Bike.v2.DTO.rent.RentRequestDTO;
 import com.klodnicki.Bike.v2.DTO.rent.RentResponseDTO;
 import com.klodnicki.Bike.v2.DTO.user.UserForNormalUserResponseDTO;
+import com.klodnicki.Bike.v2.exception.NotFoundInDatabaseException;
 import com.klodnicki.Bike.v2.model.RentRequest;
 import com.klodnicki.Bike.v2.model.entity.Bike;
 import com.klodnicki.Bike.v2.model.entity.ChargingStation;
@@ -36,7 +37,7 @@ public class RentBikeServiceHandler implements RentBikeServiceApi {
     private final RentRepository rentRepository;
 
     @Override
-    public RentResponseDTO updateRent(Long id, RentRequestDTO rentRequestDTO) {
+    public RentResponseDTO updateRent(Long id, RentRequestDTO rentRequestDTO) throws NotFoundInDatabaseException {
         Rent rent = findRentById(id);
 
         if (rentRequestDTO.getDaysOfRent() > 0) {
@@ -67,14 +68,14 @@ public class RentBikeServiceHandler implements RentBikeServiceApi {
     }
 
     @Override
-    public BikeForNormalUserResponseDTO findBikeForNormalUserById(Long id) {
+    public BikeForNormalUserResponseDTO findBikeForNormalUserById(Long id) throws NotFoundInDatabaseException {
         Bike bike = bikeService.findBikeById(id);
         return modelMapper.map(bike, BikeForNormalUserResponseDTO.class);
     }
 
     @Override
     @Transactional
-    public RentResponseDTO rent(RentRequest rentRequest) {
+    public RentResponseDTO rent(RentRequest rentRequest) throws NotFoundInDatabaseException {
         Bike bike = bikeService.findBikeById(rentRequest.getBikeId());
         User user = userService.findUserById(rentRequest.getUserId());
         ChargingStation chargingStation = chargingStationService.findStationById(bike.getChargingStation().getId());
@@ -122,7 +123,7 @@ public class RentBikeServiceHandler implements RentBikeServiceApi {
 
     @Override
     @Transactional
-    public ResponseEntity<?> returnVehicle(Long rentId, Long returnChargingStationId) {
+    public ResponseEntity<?> returnVehicle(Long rentId, Long returnChargingStationId) throws NotFoundInDatabaseException {
         Rent rent = findRentById(rentId);
         Bike bike = rent.getBike();
         User user = rent.getUser();
@@ -151,7 +152,7 @@ public class RentBikeServiceHandler implements RentBikeServiceApi {
         return new ResponseEntity<>("Bike successfully returned.", HttpStatus.OK);
     }
 
-    private double countRentalCost(Long rentId) {
+    private double countRentalCost(Long rentId) throws NotFoundInDatabaseException {
         Rent rent = findRentById(rentId);
         int rentalDays = rent.getDaysOfRent();
 
@@ -165,7 +166,7 @@ public class RentBikeServiceHandler implements RentBikeServiceApi {
         return durationInMinutes * 0.1;
     }
 
-    private Rent findRentById(Long id) {
-        return rentRepository.findById(id).orElseThrow(IllegalArgumentException::new);
+    private Rent findRentById(Long id) throws NotFoundInDatabaseException {
+        return rentRepository.findById(id).orElseThrow(() -> new NotFoundInDatabaseException(Rent.class));
     }
 }
