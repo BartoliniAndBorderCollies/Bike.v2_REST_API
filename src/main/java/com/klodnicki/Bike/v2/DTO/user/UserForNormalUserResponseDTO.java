@@ -1,5 +1,6 @@
 package com.klodnicki.Bike.v2.DTO.user;
 
+import com.klodnicki.Bike.v2.DTO.authority.AuthorityDTO;
 import com.klodnicki.Bike.v2.model.entity.Authority;
 import lombok.*;
 
@@ -15,6 +16,5 @@ public class UserForNormalUserResponseDTO {
     private Long id;
     private String name;
     private boolean isAccountValid;
-    private Set<Authority> authorities;
-
+    private Set<AuthorityDTO> authorities;
 }
