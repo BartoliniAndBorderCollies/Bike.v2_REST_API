@@ -61,7 +61,7 @@ public class UserServiceHandler implements UserServiceApi {
      *
      * @param id The ID of the User object to be retrieved from the repository.
      * @return A UserForAdminResponseDTO object that represents the retrieved User.
-     * @throws IllegalArgumentException If no User with the given ID is found. //TODO this will be replaced when branch with custom exceptions is merged
+     * @throws NotFoundInDatabaseException If no User with the given ID is found.
      */
     @Override
     public UserForAdminResponseDTO findById(Long id) throws NotFoundInDatabaseException {
@@ -85,7 +85,7 @@ public class UserServiceHandler implements UserServiceApi {
      *
      * @param id The ID of the User object to be banned.
      * @return A ResponseEntity with a success message and HTTP status code.
-     * @throws IllegalArgumentException If no User with the given ID is found. //TODO this will be replaced when branch with custom exceptions is merged
+     * @throws NotFoundInDatabaseException If no User with the given ID is found.
      */
     @Override
     public ResponseEntity<?> banUser(Long id) throws NotFoundInDatabaseException {

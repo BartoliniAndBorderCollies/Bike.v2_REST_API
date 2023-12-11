@@ -46,7 +46,7 @@ public class RentBikeServiceHandler implements RentBikeServiceApi {
      * @param id The ID of the rent to be updated.
      * @param rentRequestDTO The {@link RentRequestDTO} object containing the updated number of days of rent.
      * @return RentResponseDTO The response object containing the details of the updated rent.
-     * @throws IllegalArgumentException If no rent with the given ID is found. //TODO this will be replaced when branch with custom exceptions is merged
+     * @throws NotFoundInDatabaseException If no rent with the given ID is found.
      */
     @Override
     public RentResponseDTO updateRent(Long id, RentRequestDTO rentRequestDTO) throws NotFoundInDatabaseException {
@@ -93,7 +93,7 @@ public class RentBikeServiceHandler implements RentBikeServiceApi {
      *
      * @param id The ID of the bike to be found.
      * @return BikeForNormalUserResponseDTO The response object containing the details of the found bike.
-     * @throws IllegalArgumentException If no bike with the given ID is found.//TODO this will be replaced when branch with custom exceptions is merged
+     * @throws NotFoundInDatabaseException If no bike with the given ID is found.
      */
     @Override
     public BikeForNormalUserResponseDTO findBikeForNormalUserById(Long id) throws NotFoundInDatabaseException {
@@ -109,7 +109,7 @@ public class RentBikeServiceHandler implements RentBikeServiceApi {
      *
      * @param rentRequest The request object containing the IDs of the bike and user, and the number of days of rent.
      * @return RentResponseDTO The response object containing the details of the rent.
-     * @throws IllegalArgumentException If no bike, user, or charging station with the given IDs is found. //TODO this will be replaced when branch with custom exceptions is merged
+     * @throws NotFoundInDatabaseException If no bike, user, or charging station with the given IDs is found.
      */
     @Override
     @Transactional
