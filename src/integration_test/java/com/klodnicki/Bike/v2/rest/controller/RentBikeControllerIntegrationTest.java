@@ -1,5 +1,6 @@
 package com.klodnicki.Bike.v2.rest.controller;
 
+import com.klodnicki.Bike.v2.DTO.authority.AuthorityDTO;
 import com.klodnicki.Bike.v2.DTO.bike.BikeForNormalUserResponseDTO;
 import com.klodnicki.Bike.v2.DTO.bike.ListBikesForNormalUserResponseDTO;
 import com.klodnicki.Bike.v2.DTO.rent.RentRequestDTO;
@@ -25,6 +26,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -155,7 +157,15 @@ class RentBikeControllerIntegrationTest {
                     assertEquals(1, rentRepository.count());
                     assertEquals(rentRequest.getDaysOfRent(), responseDTO.getDaysOfRent());
                     assertEquals(user.getName(), responseDTO.getUserForNormalUserResponseDTO().getName());
-                    assertIterableEquals(user.getAuthorities(), responseDTO.getUserForNormalUserResponseDTO().getAuthorities());
+
+                    // Convert user's authorities to AuthorityDTOs
+                    Set<AuthorityDTO> userAuthorityDTOs = user.getAuthorities().stream()
+                            .map(authority -> modelMapper.map(authority, AuthorityDTO.class))
+                            .collect(Collectors.toSet());
+
+                    // Compare AuthorityDTOs
+                    assertIterableEquals(userAuthorityDTOs, responseDTO.getUserForNormalUserResponseDTO().getAuthorities());
+
                     assertEquals(bike.getSerialNumber(), responseDTO.getBikeForNormalUserResponseDTO().getSerialNumber());
                     assertEquals(bike.getBikeType(), responseDTO.getBikeForNormalUserResponseDTO().getBikeType());
                 });
