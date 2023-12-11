@@ -48,7 +48,7 @@ public class RentBikeController {
      *
      * @param rentRequest This is a request object which contains the details of the bike to be rented.
      * @return RentResponseDTO This returns the response object with details of the rented bike.
-     *
+     * TODO: add throws
      * @PostMapping("/rentals/add")
      */
     @PostMapping("/rentals/add")
@@ -63,7 +63,7 @@ public class RentBikeController {
      * @param id This is the ID of the rent to be updated.
      * @param rentRequestDTO This is a request object which contains the updated details of the rent.
      * @return RentResponseDTO This returns the response object with details of the updated rent.
-     *
+     *TODO: add throws
      * @PutMapping("/rentals/{id}")
      */
     @PutMapping("/rentals/{id}")
