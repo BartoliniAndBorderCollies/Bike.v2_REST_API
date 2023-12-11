@@ -1,6 +1,7 @@
 package com.klodnicki.Bike.v2.service;
 
 
+import com.klodnicki.Bike.v2.DTO.authority.AuthorityDTO;
 import com.klodnicki.Bike.v2.DTO.bike.BikeForNormalUserResponseDTO;
 import com.klodnicki.Bike.v2.DTO.rent.RentRequestDTO;
 import com.klodnicki.Bike.v2.DTO.rent.RentResponseDTO;
@@ -99,20 +100,16 @@ public class RentBikeServiceHandler implements RentBikeServiceApi {
     }
 
     private UserForNormalUserResponseDTO prepareUserDTO (Rent rent) {
-        Set<Authority> authorities = new HashSet<>();
+        Set<AuthorityDTO> authorityDTOs = new HashSet<>();
         for (GrantedAuthority grantedAuthority : rent.getUser().getAuthorities()) {
-            if (grantedAuthority instanceof Authority) { // Authority is a subclass of GrantedAuthority so I check it and then
-                //I convert it to Authority and pass it to builder so that DTO will have appropriate type in authorities
-                //If I don't do this then I get java.lang.ClassCastException: class java.util.LinkedList cannot be cast to
-                // class java.util.Set, is because I was trying to cast a LinkedList to a Set
-                authorities.add((Authority) grantedAuthority);
-            }
+            AuthorityDTO authorityDTO = modelMapper.map(grantedAuthority, AuthorityDTO.class);
+            authorityDTOs.add(authorityDTO);
         }
         UserForNormalUserResponseDTO userDTO = UserForNormalUserResponseDTO.builder()
                 .id(rent.getUser().getId())
                 .name(rent.getUser().getName())
                 .isAccountValid(rent.getUser().isAccountValid())
-                .authorities(authorities)
+                .authorities(authorityDTOs)
                 .build();
         return userDTO;
     }
