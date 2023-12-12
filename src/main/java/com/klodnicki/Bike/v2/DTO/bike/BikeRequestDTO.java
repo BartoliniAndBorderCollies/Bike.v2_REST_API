@@ -11,6 +11,13 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 
+/**
+ * Data Transfer Object (DTO) for Bike Request. This class is used to transfer data between
+ * different parts of the application. It includes various fields related to a bike request.
+ * The class is annotated with @Getter, @Setter, @AllArgsConstructor, and @NoArgsConstructor
+ * from the Lombok library to automatically generate boilerplate code like getters, setters,
+ * and constructors.
+ */
 @Getter
 @Setter
 @AllArgsConstructor
@@ -28,6 +35,12 @@ public class BikeRequestDTO {
     private double amountToBePaid;
     @NotNull(message = "GPS coordinates must not be null")
     private GpsCoordinates gpsCoordinates;
+    /**
+     * User information in the context of Admin operations.
+     */
     private UserForAdminResponseDTO user;
+    /**
+     * Charging station information in the context of Admin operations.
+     */
     private StationForAdminResponseDTO chargingStation;
 }

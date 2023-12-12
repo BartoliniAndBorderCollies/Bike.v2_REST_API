@@ -8,6 +8,12 @@ import lombok.*;
 
 import java.time.LocalDateTime;
 
+/**
+ * Data Transfer Object (DTO) for Bike information in the context of Admin operations.
+ * This class is annotated with @Data, @Builder, @AllArgsConstructor, and @NoArgsConstructor from Lombok library to
+ * automatically generate boilerplate code like getters, setters, equals, hashcode and toString methods,
+ * a builder pattern, and constructors with no arguments and all arguments.
+ */
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -21,6 +27,12 @@ public class BikeForAdminResponseDTO {
     private LocalDateTime rentalEndTime;
     private double amountToBePaid;
     private GpsCoordinates gpsCoordinates;
+    /**
+     * User information in the context of Admin operations.
+     */
     private UserForAdminResponseDTO user;
+    /**
+     * Charging station information in the context of Admin operations.
+     */
     private StationForAdminResponseDTO chargingStation;
 }
