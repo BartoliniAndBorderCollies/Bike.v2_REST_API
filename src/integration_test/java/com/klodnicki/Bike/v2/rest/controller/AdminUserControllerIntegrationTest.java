@@ -7,12 +7,14 @@ import com.klodnicki.Bike.v2.model.entity.User;
 import com.klodnicki.Bike.v2.repository.AuthorityRepository;
 import com.klodnicki.Bike.v2.repository.UserRepository;
 import com.klodnicki.Bike.v2.service.UserServiceHandler;
+import configuration.IntegrationTestConfig;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpHeaders;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.reactive.server.WebTestClient;
@@ -23,6 +25,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestPropertySource(locations = "/application-test.properties")
+@Import(IntegrationTestConfig.class)
 class AdminUserControllerIntegrationTest {
 
     @Autowired
