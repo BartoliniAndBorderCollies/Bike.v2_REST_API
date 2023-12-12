@@ -14,6 +14,13 @@ import lombok.Setter;
 
 import java.time.LocalDateTime;
 
+/**
+ * Data Transfer Object (DTO) for Rent Request. This class is used to transfer data between
+ * different parts of the application. It includes various fields related to a rent request.
+ * The class is annotated with @Getter, @Setter, @NoArgsConstructor, and @AllArgsConstructor
+ * from the Lombok library to automatically generate boilerplate code like getters, setters,
+ * and constructors.
+ */
 @Getter
 @Setter
 @NoArgsConstructor
@@ -28,7 +35,16 @@ public class RentRequestDTO {
     private LocalDateTime rentalEndTime;
     @PositiveOrZero(message = "Must be positive or zero")
     private int daysOfRent;
+    /**
+     * Bike information in the context of normal user operations.
+     */
     private BikeForNormalUserResponseDTO bikeForNormalUserResponseDTO;
+    /**
+     * User information in the context of normal user operations.
+     */
     private UserForNormalUserResponseDTO userForNormalUserResponseDTO;
+    /**
+     * Charging station information in the context of normal user operations.
+     */
     private StationForNormalUserResponseDTO stationForNormalUserResponseDTO;
 }
