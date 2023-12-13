@@ -16,6 +16,11 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.Set;
 
+/**
+ * An entity class that represents a User in the system.
+ * This class includes properties specific to a User.
+ * It is annotated with JPA annotations to map it to the database.
+ */
 @Entity
 @Table(name = "Bike_users")
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
@@ -45,8 +50,16 @@ public class User implements UserDetails {
     @Min(value = -50, message = "Maximum debit is 50 $")
     private double balance;
     //User is non-owning side of the relation
+    /**
+     * The Rent associated with the User.
+     * This is the non-owning side of the relation with Rent.
+     */
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private Rent rent;
+    /**
+     * The Bike associated with the User.
+     * This is the non-owning side of the relation with Bike.
+     */
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private Bike bike;
 

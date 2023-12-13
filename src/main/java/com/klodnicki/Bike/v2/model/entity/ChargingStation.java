@@ -12,6 +12,11 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
+/**
+ * An entity class that represents a ChargingStation in the system.
+ * This class includes properties specific to a ChargingStation.
+ * It is annotated with JPA annotations to map it to the database.
+ */
 @Entity
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 @Getter
