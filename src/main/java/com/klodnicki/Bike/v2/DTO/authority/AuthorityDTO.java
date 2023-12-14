@@ -7,6 +7,11 @@ import lombok.Setter;
 
 import java.util.Objects;
 
+/**
+ * Data Transfer Object (DTO) for Authority.
+ * This class is annotated with annotations from Lombok library to
+ * automatically generate boilerplate code like getters, setters, equals, hashcode and toString methods, and constructors with no arguments and all arguments.
+ */
 @Getter
 @Setter
 @NoArgsConstructor
