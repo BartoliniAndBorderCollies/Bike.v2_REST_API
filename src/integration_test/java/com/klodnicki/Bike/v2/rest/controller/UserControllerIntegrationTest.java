@@ -1,23 +1,30 @@
 package com.klodnicki.Bike.v2.rest.controller;
 
 import com.klodnicki.Bike.v2.DTO.user.UserForAdminResponseDTO;
+import com.klodnicki.Bike.v2.model.entity.Authority;
 import com.klodnicki.Bike.v2.model.entity.User;
+import com.klodnicki.Bike.v2.repository.AuthorityRepository;
 import com.klodnicki.Bike.v2.repository.UserRepository;
+import configuration.IntegrationTestConfig;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Import;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestPropertySource(locations = "/application-test.properties")
+@Import(IntegrationTestConfig.class)
 class UserControllerIntegrationTest {
 
     @Autowired
@@ -27,17 +34,25 @@ class UserControllerIntegrationTest {
     @Autowired
     private ModelMapper modelMapper;
     private User user;
+    @Autowired
+    private AuthorityRepository authorityRepository;
 
     @BeforeEach
     public void setUp() {
-        user = new User(null, "user name", "phone nr", "email@email.pl", 123456,
-                true, "user", 100.00, null, null);
+        Authority authority = new Authority(null, "ROLE_ADMIN");
+        Set<Authority> authoritySet = new HashSet<>();
+        authoritySet.add(authority);
+
+        String password = "123456";
+        user = new User(null, "user name", "phone nr", "email@email.pl", password,
+                authoritySet, 1234567, true, 100.00, null, null);
         userRepository.save(user);
     }
 
     @AfterEach
     public void clearDatabase() {
         userRepository.deleteAll();
+        authorityRepository.deleteAll();
     }
 
     @Test

@@ -2,10 +2,12 @@ package com.klodnicki.Bike.v2.rest.controller;
 
 import com.klodnicki.Bike.v2.model.entity.Feedback;
 import com.klodnicki.Bike.v2.repository.FeedbackRepository;
+import configuration.IntegrationTestConfig;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Import;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
@@ -13,6 +15,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestPropertySource(locations = "/application-test.properties")
+@Import(IntegrationTestConfig.class)
 class FeedbackControllerIntegrationTest {
 
     @Autowired

@@ -1,6 +1,10 @@
 package com.klodnicki.Bike.v2.DTO.user;
 
+import com.klodnicki.Bike.v2.DTO.authority.AuthorityDTO;
+import com.klodnicki.Bike.v2.model.entity.Authority;
 import lombok.*;
+
+import java.util.Set;
 
 @Getter
 @Setter
@@ -12,5 +16,5 @@ public class UserForNormalUserResponseDTO {
     private Long id;
     private String name;
     private boolean isAccountValid;
-    private String role;
+    private Set<AuthorityDTO> authorities;
 }

@@ -1,16 +1,14 @@
 package com.klodnicki.Bike.v2.service;
 
 
+import com.klodnicki.Bike.v2.DTO.authority.AuthorityDTO;
 import com.klodnicki.Bike.v2.DTO.bike.BikeForNormalUserResponseDTO;
 import com.klodnicki.Bike.v2.DTO.rent.RentRequestDTO;
 import com.klodnicki.Bike.v2.DTO.rent.RentResponseDTO;
 import com.klodnicki.Bike.v2.DTO.user.UserForNormalUserResponseDTO;
 import com.klodnicki.Bike.v2.exception.NotFoundInDatabaseException;
 import com.klodnicki.Bike.v2.model.RentRequest;
-import com.klodnicki.Bike.v2.model.entity.Bike;
-import com.klodnicki.Bike.v2.model.entity.ChargingStation;
-import com.klodnicki.Bike.v2.model.entity.Rent;
-import com.klodnicki.Bike.v2.model.entity.User;
+import com.klodnicki.Bike.v2.model.entity.*;
 import com.klodnicki.Bike.v2.repository.RentRepository;
 import com.klodnicki.Bike.v2.service.api.*;
 import jakarta.transaction.Transactional;
@@ -18,13 +16,16 @@ import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Service;
 
 
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 @AllArgsConstructor
@@ -99,11 +100,16 @@ public class RentBikeServiceHandler implements RentBikeServiceApi {
     }
 
     private UserForNormalUserResponseDTO prepareUserDTO (Rent rent) {
+        Set<AuthorityDTO> authorityDTOs = new HashSet<>();
+        for (GrantedAuthority grantedAuthority : rent.getUser().getAuthorities()) {
+            AuthorityDTO authorityDTO = modelMapper.map(grantedAuthority, AuthorityDTO.class);
+            authorityDTOs.add(authorityDTO);
+        }
         UserForNormalUserResponseDTO userDTO = UserForNormalUserResponseDTO.builder()
                 .id(rent.getUser().getId())
                 .name(rent.getUser().getName())
                 .isAccountValid(rent.getUser().isAccountValid())
-                .role(rent.getUser().getRole())
+                .authorities(authorityDTOs)
                 .build();
         return userDTO;
     }

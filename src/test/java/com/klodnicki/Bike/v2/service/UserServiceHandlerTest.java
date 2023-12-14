@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,16 +25,16 @@ class UserServiceHandlerTest {
     private UserRepository userRepository;
     private UserServiceHandler userServiceHandler;
     private ModelMapper modelMapper;
-
     private User user;
 
     @BeforeEach
     public void setUp() {
         userRepository = mock(UserRepository.class);
         modelMapper = mock(ModelMapper.class);
-        userServiceHandler = new UserServiceHandler(userRepository, modelMapper);
+        userServiceHandler = new UserServiceHandler(userRepository, modelMapper, new BCryptPasswordEncoder());
 
         user = mock(User.class);
+        when(user.getPassword()).thenReturn("password123"); // Ensure the User object has a password
     }
 
     @Test

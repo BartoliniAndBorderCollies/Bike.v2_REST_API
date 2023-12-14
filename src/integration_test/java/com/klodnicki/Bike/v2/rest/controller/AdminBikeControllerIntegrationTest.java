@@ -7,28 +7,38 @@ import com.klodnicki.Bike.v2.DTO.station.StationForAdminResponseDTO;
 import com.klodnicki.Bike.v2.DTO.user.UserForAdminResponseDTO;
 import com.klodnicki.Bike.v2.model.BikeType;
 import com.klodnicki.Bike.v2.model.GpsCoordinates;
+import com.klodnicki.Bike.v2.model.entity.Authority;
 import com.klodnicki.Bike.v2.model.entity.Bike;
 import com.klodnicki.Bike.v2.model.entity.ChargingStation;
 import com.klodnicki.Bike.v2.model.entity.User;
+import com.klodnicki.Bike.v2.repository.AuthorityRepository;
 import com.klodnicki.Bike.v2.repository.BikeRepository;
 import com.klodnicki.Bike.v2.repository.ChargingStationRepository;
 import com.klodnicki.Bike.v2.repository.UserRepository;
+import com.klodnicki.Bike.v2.service.UserServiceHandler;
+import configuration.IntegrationTestConfig;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Import;
+import org.springframework.http.HttpHeaders;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
+import java.util.Base64;
+import java.util.HashSet;
 import java.util.ArrayList;
 import java.util.Optional;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestPropertySource(locations = "/application-test.properties")
+@Import(IntegrationTestConfig.class)
 class AdminBikeControllerIntegrationTest {
 
     @Autowired
@@ -41,15 +51,36 @@ class AdminBikeControllerIntegrationTest {
     private BikeRepository bikeRepository;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private UserServiceHandler userServiceHandler;
     private ChargingStation chargingStation;
     private Bike bike;
+    private String basicAuthHeader;
+    @Autowired
+    private AuthorityRepository authorityRepository;
+    private Authority authority;
+    private User user;
 
     @BeforeEach
     void setUp() {
+        String password = "password";
         chargingStation = new ChargingStation(null, "station name", "station address", "station city", 100, new ArrayList<>());
         chargingStationRepository.save(chargingStation);
         bike = new Bike(null, BikeType.ELECTRIC, null, null, chargingStation);
         bikeRepository.save(bike);
+
+        authority = new Authority(null, "ROLE_ADMIN");
+        Set<Authority> authoritySet = new HashSet<>();
+        authoritySet.add(authority);
+
+        user = new User(null, "test name1", "phone number", "email@email.pl", password,
+                authoritySet, 11223344, true, 100.00, null, null);
+
+        userServiceHandler.add(user);
+
+        basicAuthHeader = "Basic " + Base64.getEncoder()
+                .encodeToString((user.getEmailAddress() + ":" + password).getBytes());// I need to provide a raw password,
+        // using getPassword() would take hash coded
     }
 
     @AfterEach
@@ -57,6 +88,7 @@ class AdminBikeControllerIntegrationTest {
         bikeRepository.deleteAll();
         chargingStationRepository.deleteAll();
         userRepository.deleteAll();
+        authorityRepository.deleteAll();
     }
 
     @Test
@@ -69,6 +101,7 @@ class AdminBikeControllerIntegrationTest {
 
         webTestClient.post()
                 .uri("/api/admin/bikes/add")
+                .header(HttpHeaders.AUTHORIZATION, basicAuthHeader)
                 .bodyValue(bikeRequestDTO)
                 .exchange()
                 .expectStatus().isOk()
@@ -93,6 +126,7 @@ class AdminBikeControllerIntegrationTest {
         webTestClient.get()
 
                 .uri("/api/admin/bikes/" + bike.getId())
+                .header(HttpHeaders.AUTHORIZATION, basicAuthHeader)
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody(BikeForAdminResponseDTO.class)
@@ -112,6 +146,7 @@ class AdminBikeControllerIntegrationTest {
         webTestClient.get()
 
                 .uri("/api/admin/bikes")
+                .header(HttpHeaders.AUTHORIZATION, basicAuthHeader)
                 // tutaj możesz umieścić headery do tego URI powyżej
                 // albo np. cookies
                 .exchange()
@@ -137,6 +172,7 @@ class AdminBikeControllerIntegrationTest {
         //Act
         webTestClient.delete()
                 .uri("/api/admin/bikes/" + bike.getId())
+                .header(HttpHeaders.AUTHORIZATION, basicAuthHeader)
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody()
@@ -153,8 +189,6 @@ class AdminBikeControllerIntegrationTest {
     @Test
     void updateBikeById_ShouldUpdateBike_WhenBikeExistInDatabaseAndBikeIdAndBikeRequestDTOIsGiven() {
         //Arrange
-        User user = new User(null, "user name", "123-456-789", "email@email.pl",
-                123456678, true, "user", 100.00, null, null);
         userRepository.save(user);
         UserForAdminResponseDTO userDTO = modelMapper.map(user, UserForAdminResponseDTO.class);
 
@@ -171,6 +205,7 @@ class AdminBikeControllerIntegrationTest {
         //Act
         webTestClient.put()
                 .uri("/api/admin/bikes/" + bike.getId())
+                .header(HttpHeaders.AUTHORIZATION, basicAuthHeader)
                 .bodyValue(bikeRequestDTO)
                 .exchange()
                 .expectStatus().isOk()
