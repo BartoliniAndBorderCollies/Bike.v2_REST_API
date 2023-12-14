@@ -14,10 +14,29 @@ import org.springframework.security.web.servlet.util.matcher.MvcRequestMatcher;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
 
+/**
+ * This class is responsible for the security configuration of the application.
+ * @EnableWebSecurity: Enables Spring Security's web security support.
+ * @Configuration: Indicates that this class declares one or more @Bean methods.
+ */
 @EnableWebSecurity
 @Configuration
 public class SecurityConfig {
 
+    /**
+     * This method configures the security filter chain.
+     * It disables CSRF, which means that now the application is not protected against Cross-Site Request Forgery attacks.
+     * It authorizes all requests sent to /api/admin/**, which means that before a response is sent, the client must go through the authorization process.
+     * 'Has role' means that besides authorization, this client must also have a specific role of ADMIN.
+     * Any other request sent to other paths doesn't need to be authorized.
+     * Disabling FrameOptionsConfig enables access to the H2 console.
+     * Form login and logout means there is a basic login panel and checkout procedure.
+     * HTTP Basic enables the use of BasicAuth in client applications like Postman to be able to send requests.
+     * @param http HttpSecurity object to configure the security settings.
+     * @param mvc MvcRequestMatcher.Builder object to match the request pattern.
+     * @return SecurityFilterChain object after applying all the configurations.
+     * @throws Exception if any exception occurs during the configuration.
+     */
     @Bean
     public SecurityFilterChain securityFilterChain (HttpSecurity http, MvcRequestMatcher.Builder mvc) throws Exception {
         return http
@@ -45,6 +64,11 @@ public class SecurityConfig {
                 .build();
     }
 
+    /**
+     * This method provides a PasswordEncoder bean.
+     * BCryptPasswordEncoder is a password encoder that uses BCrypt hashing algorithm.
+     * @return PasswordEncoder object that uses BCrypt hashing algorithm.
+     */
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
