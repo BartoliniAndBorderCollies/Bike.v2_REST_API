@@ -45,7 +45,7 @@ public class AdminUserController {
      *
      * @param id This is the ID of the user to be banned.
      * @return ResponseEntity This returns the response entity after the user has been banned.
-     *
+     * @throws NotFoundInDatabaseException if user is not found in database.
      * @PutMapping("/{id}")
      */
     @PutMapping("/{id}")
@@ -57,7 +57,4 @@ public class AdminUserController {
     public void deleteUser(@PathVariable Long id) {
         userService.deleteById(id);
     }
-
-
-
 }
