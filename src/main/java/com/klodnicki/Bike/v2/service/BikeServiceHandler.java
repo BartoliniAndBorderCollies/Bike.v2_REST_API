@@ -85,7 +85,7 @@ public class BikeServiceHandler implements BikeServiceApi {
      * @param id The ID of the bike to be updated.
      * @param updatedBikeRequestDTO The BikeRequestDTO object containing the updated details of the bike.
      * @return BikeForAdminResponseDTO Returns a BikeForAdminResponseDTO object containing the details of the updated bike.
-     * TODO: add throws
+     * @throws NotFoundInDatabaseException if bike is not found in database.
      */
     @Override
     public BikeForAdminResponseDTO update(Long id, BikeRequestDTO updatedBikeRequestDTO) throws NotFoundInDatabaseException {

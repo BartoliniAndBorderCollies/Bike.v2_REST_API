@@ -48,7 +48,7 @@ public class RentBikeController {
      *
      * @param rentRequest This is a request object which contains the details of the bike to be rented.
      * @return RentResponseDTO This returns the response object with details of the rented bike.
-     * TODO: add throws
+     * @throws NotFoundInDatabaseException if a bike, user or charging station is not found in database.
      * @PostMapping("/rentals/add")
      */
     @PostMapping("/rentals/add")
@@ -63,7 +63,7 @@ public class RentBikeController {
      * @param id This is the ID of the rent to be updated.
      * @param rentRequestDTO This is a request object which contains the updated details of the rent.
      * @return RentResponseDTO This returns the response object with details of the updated rent.
-     *TODO: add throws
+     * @throws NotFoundInDatabaseException if rent is not found in database.
      * @PutMapping("/rentals/{id}")
      */
     @PutMapping("/rentals/{id}")
@@ -79,7 +79,7 @@ public class RentBikeController {
      * @param rentId This is the ID of the rent to be returned.
      * @param returnChargingStationId This is the ID of the charging station where the bike will be returned.
      * @return ResponseEntity This returns the response entity after the bike has been returned.
-     *
+     * @throws NotFoundInDatabaseException if rent, bike, user or charging station is not found in database.
      * @PutMapping("/returns/{rentId}")
      */
     @PutMapping("/returns/{rentId}")

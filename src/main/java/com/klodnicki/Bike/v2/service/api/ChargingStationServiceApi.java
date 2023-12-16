@@ -20,7 +20,7 @@ public interface ChargingStationServiceApi extends AddOperation<StationForAdminR
      * @param chargingStationId This is the ID of the charging station where the bike will be added.
      * @param bikeId This is the ID of the bike to be added to the charging station's list.
      * @return ChargingStation This returns the updated charging station object after the bike has been added.
-     * TODO: add throws
+     * @throws NotFoundInDatabaseException if a charging station or bike is not found in database.
      */
     ChargingStation addBikeToList(Long chargingStationId, Long bikeId) throws NotFoundInDatabaseException;
 }

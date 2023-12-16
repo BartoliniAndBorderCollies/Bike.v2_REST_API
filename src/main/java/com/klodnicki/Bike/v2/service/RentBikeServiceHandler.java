@@ -193,7 +193,7 @@ public class RentBikeServiceHandler implements RentBikeServiceApi {
      * @param rentId The ID of the Rent object associated with the rented vehicle.
      * @param returnChargingStationId The ID of the ChargingStation where the vehicle is being returned.
      * @return A ResponseEntity with a success message and HTTP status code.
-     * TODO: add throws
+     * @throws NotFoundInDatabaseException if a bike, rent, user or charging station is not found in database.
      */
     @Override
     @Transactional
@@ -234,7 +234,7 @@ public class RentBikeServiceHandler implements RentBikeServiceApi {
      *
      * @param rentId The ID of the Rent object for which the rental cost is to be calculated.
      * @return The calculated rental cost.
-     * TODO: add throws
+     * @throws NotFoundInDatabaseException if rent is not found in database.
      */
     private double countRentalCost(Long rentId) throws NotFoundInDatabaseException {
         Rent rent = findRentById(rentId);

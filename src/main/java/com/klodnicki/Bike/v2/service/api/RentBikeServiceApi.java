@@ -23,7 +23,7 @@ public interface RentBikeServiceApi extends RentServiceApi<RentResponseDTO, Resp
      * @param id This is the ID of the rent to be updated.
      * @param rentRequestDTO This is a request object which contains the updated details of the rent.
      * @return RentResponseDTO This returns the response object with details of the updated rent.
-     * TODO: add throws
+     * @throws NotFoundInDatabaseException if rent is not found in database.
      */
     RentResponseDTO updateRent(Long id, RentRequestDTO rentRequestDTO) throws NotFoundInDatabaseException;
 }
