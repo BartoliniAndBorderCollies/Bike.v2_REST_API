@@ -9,6 +9,11 @@ import org.springframework.security.core.GrantedAuthority;
 
 import java.util.Objects;
 
+/**
+ * Entity representing an authority granted to a user.
+ * This class includes properties specific to Authority.
+ * It is annotated with JPA annotations to map it to the database.
+ */
 @Entity
 @Getter
 @Setter
