@@ -14,11 +14,18 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * REST controller for managing bike rentals.
+ * It provides endpoints for finding available bikes, finding a bike by its ID for a normal user, renting a bike, updating a rent, and returning a bike.
+ */
 @RestController
 @RequestMapping("/api")
 @AllArgsConstructor
 public class RentBikeController {
 
+    /**
+     * Service for handling bike rental-related operations.
+     */
     private final RentBikeServiceApi rentBikeService;
 
     /**

@@ -11,6 +11,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * REST controller for managing charging stations in the admin context.
+ * It provides endpoints for adding bikes to a station's list, adding new charging stations, finding stations by ID, and retrieving all stations.
+ */
 @RestController
 @RequestMapping("/api/admin/stations")
 @AllArgsConstructor

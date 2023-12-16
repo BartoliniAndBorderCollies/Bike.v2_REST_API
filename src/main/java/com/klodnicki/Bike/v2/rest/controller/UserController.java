@@ -8,11 +8,18 @@ import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * REST controller for managing users.
+ * It provides endpoints for adding a new user and finding a user by their ID.
+ */
 @RestController
 @RequestMapping("/user")
 @AllArgsConstructor
 public class UserController {
 
+    /**
+     * Service for handling user-related operations.
+     */
     private final UserServiceApi userService;
 
     /**

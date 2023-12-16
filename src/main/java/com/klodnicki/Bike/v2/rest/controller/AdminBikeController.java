@@ -11,6 +11,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * REST controller for managing bikes in the admin context.
+ * It provides endpoints for adding, finding, deleting and updating bikes.
+ */
 @RestController
 @RequestMapping("/api/admin/bikes")
 @AllArgsConstructor
@@ -20,6 +24,9 @@ public class AdminBikeController {
 //Żeby móc podstawić różne implementacje BikeServiceHandler, nie tylko ten jeden konkretny BikeServiceHandler. Jak zrobisz klasę
 //        BetterBikeService możesz bez żadnych zmian w kontrolerze z niego korzystać od razu
 
+    /**
+     * Service for handling bike-related operations.
+     */
     private final BikeServiceApi bikeService;
 
     /**

@@ -10,11 +10,18 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * REST controller for managing feedback.
+ * It provides an endpoint for adding new feedback.
+ */
 @RestController
 @RequestMapping("/api/feedback")
 @AllArgsConstructor
 public class FeedbackController {
 
+    /**
+     * Service for handling feedback-related operations.
+     */
     private final FeedbackServiceApi feedbackService;
 
 

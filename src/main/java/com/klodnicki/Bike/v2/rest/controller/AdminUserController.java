@@ -10,13 +10,19 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * REST controller for managing users in the admin context.
+ * It provides endpoints for retrieving all users, banning a user by their ID, and deleting a user by their ID.
+ */
 @RestController
 @RequestMapping("/api/admin/users")
 @AllArgsConstructor
 public class AdminUserController {
 
+    /**
+     * Service for handling user-related operations.
+     */
     private final UserServiceApi userService;
-
 
     /**
      * This method is used to retrieve all users.
