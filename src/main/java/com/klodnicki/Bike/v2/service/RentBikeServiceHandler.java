@@ -27,6 +27,10 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * This class handles the services related to renting bikes.
+ * It implements the RentBikeServiceApi interface.
+ */
 @Service
 @AllArgsConstructor
 public class RentBikeServiceHandler implements RentBikeServiceApi {

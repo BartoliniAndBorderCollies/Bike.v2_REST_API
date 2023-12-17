@@ -15,11 +15,22 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Service class for handling bike-related operations.
+ * It provides methods for adding a new bike, finding all bikes, finding a bike by its ID, and updating a bike.
+ */
 @Service
 @AllArgsConstructor
 public class BikeServiceHandler implements BikeServiceApi {
 
+    /**
+     * Repository for handling bike data.
+     */
     private final BikeRepository bikeRepository;
+
+    /**
+     * Model mapper for converting between DTOs and entities.
+     */
     private final ModelMapper modelMapper;
 
     /**

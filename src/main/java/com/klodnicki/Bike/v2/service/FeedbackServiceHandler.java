@@ -8,6 +8,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+/**
+ * This class handles the services related to Feedback.
+ * It implements the FeedbackServiceApi interface.
+ */
 @Service
 @AllArgsConstructor
 public class FeedbackServiceHandler implements FeedbackServiceApi {

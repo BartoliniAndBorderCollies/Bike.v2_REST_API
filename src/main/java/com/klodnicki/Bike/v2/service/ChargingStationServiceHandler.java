@@ -13,6 +13,10 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This class handles the services related to Charging Stations.
+ * It implements the ChargingStationServiceApi interface.
+ */
 @Service
 @AllArgsConstructor
 public class ChargingStationServiceHandler implements ChargingStationServiceApi {

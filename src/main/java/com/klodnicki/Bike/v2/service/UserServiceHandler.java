@@ -15,6 +15,11 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This class handles the services related to User.
+ * It implements the UserServiceApi interface.
+ * It provides methods to add a user, find all users, find a user by its ID, delete a user by its ID, ban a user, and save a user.
+ */
 @Service
 @AllArgsConstructor
 public class UserServiceHandler implements UserServiceApi {
