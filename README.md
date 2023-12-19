@@ -11,23 +11,23 @@ Application has full functionality to run the renting bike buisness. It can:
 - count rental cost per minute or per days and assign it to the specific user
   
 
-  ### `User actions`
+  #### `User context actions`
 - add, delete, update user
 - add feedback how you like the application
 - add admin role with permission to get to restricted areas dedicated for admins and be able to:
 
-  ### `Admin actions`
+  #### `Admin context actions`
   - ban user
   - delete user
   - find all users
   - find specific user
   
 
-  ### `Bike actions`
+  #### `Bike context actions`
 - add, delete, update, find a specific bike, find all bikes, find available bikes
 
   
-  ### `Station actions`
+  #### `Station context actions`
 - add, delete, update, find, a specific station, find all stations add a bike to a station
 
 
