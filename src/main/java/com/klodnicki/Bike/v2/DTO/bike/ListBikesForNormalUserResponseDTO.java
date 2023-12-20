@@ -9,8 +9,8 @@ import java.util.List;
 
 /**
  * Data Transfer Object (DTO) for a list of Bike information in the context of normal user operations.
- * This class is used to transfer data between different parts of the application.
- * It includes a list of BikeForNormalUserResponseDTO objects.
+ * This was created to hold the list of Bike DTOs in one object. The content of the information is intended for normal user.
+ * It includes a list of BikeForNormalUserResponseDTO objects. It can be used both: as response and request.
  * The class is annotated with @Getter, @Setter, @AllArgsConstructor, and @NoArgsConstructor
  * from the Lombok library to automatically generate boilerplate code like getters, setters,
  * and constructors.
