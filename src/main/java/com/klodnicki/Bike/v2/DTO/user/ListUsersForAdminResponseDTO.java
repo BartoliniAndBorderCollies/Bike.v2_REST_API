@@ -9,7 +9,8 @@ import java.util.List;
 
 /**
  * A data transfer object (DTO) class that encapsulates the response data for the operation of listing users for an admin.
- * This class is used to transfer data between different parts of the application.
+ * This is a response. It was implemented to have just one object with a list of users inside. The information from the list
+ * is intended for admin.
  * It is annotated with Lombok annotations to reduce boilerplate code.
  */
 @Getter

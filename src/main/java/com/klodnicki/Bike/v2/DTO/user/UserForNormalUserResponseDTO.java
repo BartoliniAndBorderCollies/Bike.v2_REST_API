@@ -8,7 +8,7 @@ import java.util.Set;
 
 /**
  * A data transfer object (DTO) class that encapsulates the user data for a normal user.
- * This class is used to transfer data between different parts of the application.
+ * This class was designed to be a response for normal user with basic information about specific user.
  * It is annotated with Lombok annotations to reduce boilerplate code.
  */
 @Getter
