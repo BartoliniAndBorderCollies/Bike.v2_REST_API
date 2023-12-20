@@ -8,8 +8,8 @@ import lombok.*;
 import java.time.LocalDateTime;
 
 /**
- * Data Transfer Object (DTO) for Rent Response. This class is used to transfer data between
- * different parts of the application. It includes various fields related to a rent response.
+ * Data Transfer Object (DTO) for Rent Response. It holds the most important information about rent, while keeping sensitive
+ * information out of reach of any user. This was the reason for its implementation. It is used as response.
  * The class is annotated with @Getter, @Setter, @NoArgsConstructor, @AllArgsConstructor, and @Data
  * from the Lombok library to automatically generate boilerplate code like getters, setters,
  * equals, hashcode, toString methods, and constructors.
