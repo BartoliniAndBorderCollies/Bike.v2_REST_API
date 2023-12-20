@@ -9,7 +9,8 @@ import java.util.List;
 
 /**
  * Data Transfer Object (DTO) for a list of Station information in the context of Admin operations.
- * This class is used to transfer data between different parts of the application.
+ * This class was implemented to have just one object with a list of DTOs inside. The information from the list is for
+ * Admin purpose. It is used as response.
  * It includes a list of StationForAdminResponseDTO objects.
  * The class is annotated with @Getter, @Setter, @AllArgsConstructor, and @NoArgsConstructor
  * from the Lombok library to automatically generate boilerplate code like getters, setters,
