@@ -10,7 +10,8 @@ import java.time.LocalDateTime;
 
 /**
  * Data Transfer Object (DTO) for Bike information in the context of Admin operations. Since it is intended for Admin use, it holds
- * more details than a typical DTO for a normal user. It is used as response.
+ * more details than a typical DTO for a normal user. For example instead of User and Charging Station fields this class uses
+ * their DTOs, so that no sensitive data is passed further. It is used as response.
  * This class is annotated with @Data, @Builder, @AllArgsConstructor, and @NoArgsConstructor from the Lombok library to
  * automatically generate boilerplate code like getters, setters, equals, hashcode, and toString methods,
  * a builder pattern, and constructors with no arguments and all arguments.
