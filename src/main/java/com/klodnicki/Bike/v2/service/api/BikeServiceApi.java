@@ -9,8 +9,9 @@ import com.klodnicki.Bike.v2.service.api.operation.*;
 import java.util.List;
 
 /**
- * This interface defines the operations for the BikeService.
- * It extends AddOperation, FindOperation, UpdateOperation, DeleteOperation, and SaveOperation interfaces.
+ * This interface defines the operations for the BikeService, therefore it extends AddOperation, FindOperation,
+ * UpdateOperation, DeleteOperation, and SaveOperation interfaces.
+ * Above interfaces hold the information necessary to handle service logic for bike.
  */
 public interface BikeServiceApi extends AddOperation<BikeForAdminResponseDTO, BikeRequestDTO>,
         FindOperation<BikeForAdminResponseDTO, Long>,
