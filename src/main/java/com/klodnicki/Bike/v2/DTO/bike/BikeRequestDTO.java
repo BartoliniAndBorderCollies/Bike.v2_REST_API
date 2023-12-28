@@ -12,14 +12,13 @@ import lombok.Setter;
 
 
 /**
- * Data Transfer Object (DTO) for Bike Request. This class is used to transfer data between
- * different parts of the application. It is used as request. It handles information in the name of a Bike entity but only holds the most important info,
- * not the entire entity. It is used in methods where a bike is required but does not provide as much information as a Bike.
- * For example, Bike Request holds information about the user and charging station in a limited way, keeping just DTOs of these
- * instances. This ensures that crucial information is not further provided.
- * The class is annotated with @Getter, @Setter, @AllArgsConstructor, and @NoArgsConstructor
- * from the Lombok library to automatically generate boilerplate code like getters, setters,
- * and constructors.
+ * This class is used to wrap {@link com.klodnicki.Bike.v2.model.entity.Bike Bike class} as DTO, and it is used only
+ * as a request in REST API, in several methods where Bike instance is required. It was designed to wrap Bike entity and hold just the most important data
+ * so that sensitive information is not visible. It holds for example DTOs of User and Charging Station and not their entire entities.
+ * <br>
+ * This class has annotations from the Lombok library to automatically generate boilerplate code like getters, setters,
+ * equals, hashcode, and toString methods,
+ * a builder pattern, and constructors with no arguments and all arguments.
  */
 @Getter
 @Setter
