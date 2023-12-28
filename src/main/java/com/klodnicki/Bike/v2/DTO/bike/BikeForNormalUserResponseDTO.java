@@ -6,12 +6,18 @@ import lombok.*;
 import java.time.LocalDateTime;
 
 /**
- * Data Transfer Object (DTO) for Bike information in the context of normal user operations.
- * These are the most primary information suitable for normal user. It is used as response.
- * This class is annotated with @Data, @Builder, @Getter, @Setter, @AllArgsConstructor, and @NoArgsConstructor from Lombok library to
- * automatically generate boilerplate code like getters, setters, equals, hashcode and toString methods,
+ * This class is used to wrap {@link com.klodnicki.Bike.v2.model.entity.Bike Bike class} as DTO, and it is used only as
+ * a response in application REST API. This response object is dedicated to be visible for normal users without ROLE_ADMIN.
+ * It contains basic data meant to be available to users without this role.
+ * <br>
+ * In comparison to {@link BikeForAdminResponseDTO} this class holds less fields, just the basic information visible for
+ * normal users.
+ * <br>
+ * This class has annotations from the Lombok library to automatically generate boilerplate code like getters, setters,
+ * equals, hashcode, and toString methods,
  * a builder pattern, and constructors with no arguments and all arguments.
  */
+
 @Builder
 @Getter
 @Setter
