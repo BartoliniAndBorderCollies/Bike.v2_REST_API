@@ -8,12 +8,17 @@ import lombok.*;
 import java.time.LocalDateTime;
 
 /**
- * Data Transfer Object (DTO) for Rent Response. It holds the most important information about rent, while keeping sensitive
- * information out of reach of any user. This was the reason for its implementation. It is used as response.
- * The class is annotated with @Getter, @Setter, @NoArgsConstructor, @AllArgsConstructor, and @Data
- * from the Lombok library to automatically generate boilerplate code like getters, setters,
- * equals, hashcode, toString methods, and constructors.
+ * This class is used to wrap {@link com.klodnicki.Bike.v2.model.entity.Rent Rent class} as DTO, and it is used only as
+ * a response in application REST API in {@link com.klodnicki.Bike.v2.rest.controller.RentBikeController RentBikeController}
+ * during rent a vehicle and rent update procedures.
+ * This response object is dedicated to be visible for all kind of users, therefore it holds just the basic information about rent,
+ *  while keeping sensitive information out of reach of any user.
+ * <br>
+ * This class has annotations from the Lombok library to automatically generate boilerplate code like getters, setters,
+ * equals, hashcode, and toString methods,
+ * a builder pattern, and constructors with no arguments and all arguments.
  */
+
 @Getter
 @Setter
 @AllArgsConstructor
