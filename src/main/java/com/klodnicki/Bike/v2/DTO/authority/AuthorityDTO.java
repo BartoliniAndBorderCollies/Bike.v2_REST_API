@@ -8,11 +8,15 @@ import lombok.Setter;
 import java.util.Objects;
 
 /**
- * Data Transfer Object (DTO) for Authority. It holds the information of id and name, it was created to forward some information
- * to user DTO during a rent procedure.
- * This class is annotated with annotations from Lombok library to
- * automatically generate boilerplate code like getters, setters, equals, hashcode and toString methods, and constructors with no arguments and all arguments.
+ * This class is used to wrap {@link com.klodnicki.Bike.v2.model.entity.Authority Authority class} as DTO, and it is used only
+ * to prepare a DTO for normal user. It is created to provide authorities (roles) to build a user DTO instance with those roles
+ * during a rent procedure.
+ * <br>
+ * This class has annotations from the Lombok library to automatically generate boilerplate code like getters, setters,
+ * equals, hashcode, and toString methods,
+ * a builder pattern, and constructors with no arguments and all arguments.
  */
+
 @Getter
 @Setter
 @NoArgsConstructor
