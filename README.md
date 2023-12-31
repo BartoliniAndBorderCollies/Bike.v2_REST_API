@@ -59,6 +59,11 @@ The application is built using
 - Jakarta validation
 - MySQL
 - H2
+
+## License:
+I encourage you to use this application for your own purpose. If you decide to do so please contact me:
+
+bartek.klodnicki@gmail.com
   
   
 
