@@ -47,6 +47,13 @@ The application was developed by @BartoliniAndBorderCollies with mentorship from
 My mentor:
 - [Szymon Jasinski](https://github.com/JasinskiSz)
 
+## Installation:
+
+1. Download the project and import it to your IDE.
+2. Setup MySQL server and create database for integration testing.
+3. In application go to: src -> integration_test -> resources -> application-test.properties and update properties with your own data. This part is responsible for integration testing.
+4. In application go to: src -> main -> resources -> application.properties and update properties with your own data. This part is for the application by itself.
+
 ## Stack:
 
 The application is built using
