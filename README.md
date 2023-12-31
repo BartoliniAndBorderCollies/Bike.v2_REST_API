@@ -3,8 +3,6 @@
 ## Purpose: 
 The application is designed to manage a bike rental business, supporting both traditional and electric bikes. It’s built to be generic, meaning it can be adapted for other types of vehicles.
 
-This application is a RESTful application for renting bikes, both traditional and electric. The goal was to develop a generic application that can be easily adapted for other types of vehicles as well.
-
 ## Features:
 
 The application supports a range of functionalities, including renting and returning bikes, calculating rental costs, and managing users. It also has specific actions for users, admins, bikes, and stations.
