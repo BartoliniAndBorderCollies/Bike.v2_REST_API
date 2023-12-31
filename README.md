@@ -1,4 +1,4 @@
-# Bike REST API
+# Rent a Bike REST API
 
 ## Purpose: 
 The application is designed to manage a bike rental business, supporting both traditional and electric bikes. It’s built to be generic, meaning it can be adapted for other types of vehicles.
