@@ -1,58 +1,57 @@
 # Bike REST API
 
+## Purpose: 
+The application is designed to manage a bike rental business, supporting both traditional and electric bikes. It’s built to be generic, meaning it can be adapted for other types of vehicles.
+
 This application is a RESTful application for renting bikes, both traditional and electric. The goal was to develop a generic application that can be easily adapted for other types of vehicles as well.
 
-## Features
+## Features:
 
-Application has full functionality to run the renting bike buisness. It can:
+The application supports a range of functionalities, including renting and returning bikes, calculating rental costs, and managing users. It also has specific actions for users, admins, bikes, and stations.
+
+It can:
 
 - rent a bike
 - return a bike
 - count rental cost per minute or per days and assign it to the specific user
   
 
-  #### `User context actions`
+  #### `User context actions`:
 - add, delete, update user
 - add feedback how you like the application
 - add admin role with permission to get to restricted areas dedicated for admins and be able to:
 
-  #### `Admin context actions`
+  #### `Admin context actions`:
   - ban user
   - delete user
   - find all users
   - find specific user
   
 
-  #### `Bike context actions`
+  #### `Bike context actions`:
 - add, delete, update, find a specific bike, find all bikes, find available bikes
 
   
-  #### `Station context actions`
+  #### `Station context actions`:
 - add, delete, update, find, a specific station, find all stations add a bike to a station
 
 
-## Specification
+## Specification:
 
-What this application has?
+The application follows the MVC pattern and includes Java Doc documentation. It uses DTOs, Spring Security, and handles exceptions with client-readable responses. It also includes integration and unit tests, Jakarta validation, and uses MySQL for integration testing and H2 for the application database.
 
-- MVC pattern
-- it is created as generic application with easy to plug in other types of vehicles (not just bikes)
-- full documentation in Java Doc
-- DTOs
-- Spring Security
-- Exception handling with a readable response to the client
-- integration and unit tests
-- Jakarta validation
-- mySql database for integration testing and H2 database for the application itself
+## Authors:
 
-  ## Authors
+The application was developed by @BartoliniAndBorderCollies with mentorship from Szymon Jasinski.
 
 - [@BartoliniAndBorderCollies](https://www.github.com/BartoliniAndBorderCollies)
 
 My mentor:
 - [Szymon Jasinski](https://github.com/JasinskiSz)
 
-## Stack
+## Stack:
+
+The application is built using
 - Java 17.0.6
 - Spring Boot
 - Hibernate
@@ -60,7 +59,7 @@ My mentor:
 - Mockito
 - Spring Security
 - Jakarta validation
-- mySQL
+- MySQL
 - H2
   
   
