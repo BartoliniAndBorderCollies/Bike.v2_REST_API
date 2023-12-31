@@ -5,6 +5,11 @@ import lombok.*;
 
 import java.util.Set;
 
+/**
+ * A data transfer object (DTO) class that encapsulates the user data for an admin.
+ * This class was designed to be a response for Admin with broad information about specific user.
+ * It is annotated with Lombok annotations to reduce boilerplate code.
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

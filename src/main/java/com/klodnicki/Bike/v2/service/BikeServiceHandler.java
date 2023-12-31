@@ -15,13 +15,32 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Service class for handling bike-related operations.
+ * It provides methods for adding a new bike, finding all bikes, finding a bike by its ID, and updating a bike.
+ */
 @Service
 @AllArgsConstructor
 public class BikeServiceHandler implements BikeServiceApi {
 
+    /**
+     * Repository for handling bike data.
+     */
     private final BikeRepository bikeRepository;
+
+    /**
+     * Model mapper for converting between DTOs and entities.
+     */
     private final ModelMapper modelMapper;
 
+    /**
+     * This method adds a new bike to the repository. It takes {@link BikeRequestDTO} as parameter, converts it to a bike object,
+     * and save it in repo. Then again using modelMapper it converts it from  bike object into {@link BikeForAdminResponseDTO}
+     * and returns it.
+     *
+     * @param bikeRequestDTO The BikeRequestDTO object containing the details of the bike to be added.
+     * @return BikeForAdminResponseDTO Returns a BikeForAdminResponseDTO object containing the details of the saved bike.
+     */
     @Override
     public BikeForAdminResponseDTO add(@NonNull BikeRequestDTO bikeRequestDTO) {
 //        if (bikeRequestDTO == null) {
@@ -36,6 +55,12 @@ public class BikeServiceHandler implements BikeServiceApi {
         return bikeDto;
     }
 
+    /**
+     * This method retrieves all bikes from the repository, converts each bike object into a {@link BikeForAdminResponseDTO} object,
+     * and returns a list of these objects.
+     *
+     * @return List<BikeForAdminResponseDTO> Returns a list of BikeForAdminResponseDTO objects containing the details of all bikes in the repository.
+     */
     @Override
     public List<BikeForAdminResponseDTO> findAll() {
         List<BikeForAdminResponseDTO> bikeListDto = new ArrayList<>();
@@ -49,7 +74,13 @@ public class BikeServiceHandler implements BikeServiceApi {
 
         return bikeListDto;
     }
-
+    /**
+     * This method retrieves a bike from the repository by its ID, converts the bike object into a {@link BikeForAdminResponseDTO}
+     * object, and returns it.
+     *
+     * @param id The ID of the bike to be retrieved.
+     * @return BikeForAdminResponseDTO Returns a BikeForAdminResponseDTO object containing the details of the retrieved bike.
+     */
     @Override
     public BikeForAdminResponseDTO findById(Long id) throws NotFoundInDatabaseException {
         Bike savedBike = findBikeById(id);
@@ -57,6 +88,16 @@ public class BikeServiceHandler implements BikeServiceApi {
         return modelMapper.map(savedBike, BikeForAdminResponseDTO.class);
     }
 
+    /**
+     * This method updates an existing bike in the repository. It takes the ID of the bike to be updated and a {@link BikeRequestDTO} object containing the updated details.
+     * The method first retrieves the bike by its ID, then updates the bike's details if they are not null, and finally saves the updated bike in the repository.
+     * The updated bike object is then converted into a {@link BikeForAdminResponseDTO} object and returned.
+     *
+     * @param id The ID of the bike to be updated.
+     * @param updatedBikeRequestDTO The BikeRequestDTO object containing the updated details of the bike.
+     * @return BikeForAdminResponseDTO Returns a BikeForAdminResponseDTO object containing the details of the updated bike.
+     * @throws NotFoundInDatabaseException if bike is not found in database.
+     */
     @Override
     public BikeForAdminResponseDTO update(Long id, BikeRequestDTO updatedBikeRequestDTO) throws NotFoundInDatabaseException {
 
@@ -89,6 +130,13 @@ public class BikeServiceHandler implements BikeServiceApi {
         return bikeRepository.findById(id).orElseThrow(() -> new NotFoundInDatabaseException(Bike.class));
     }
 
+    /**
+     * This private method updates the details of a bike object if the values in the updatedBikeRequestDTO object are not null.
+     * It checks serial number, bike type, and GPS coordinates in the updatedBikeRequestDTO object, and if present, updates these values in the bike object.
+     *
+     * @param updatedBikeRequestDTO The {@link BikeRequestDTO} object containing the updated details of the bike.
+     * @param bike The {@link Bike} object to be updated.
+     */
     private void updateBikeIfValuesAreNotNulls(BikeRequestDTO updatedBikeRequestDTO, Bike bike) {
 
         Optional.ofNullable(updatedBikeRequestDTO.getSerialNumber()).ifPresent(bike::setSerialNumber);

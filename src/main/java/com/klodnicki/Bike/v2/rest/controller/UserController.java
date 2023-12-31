@@ -8,13 +8,30 @@ import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * REST controller for managing users.
+ * It provides endpoints for adding a new user and finding a user by their ID.
+ */
 @RestController
 @RequestMapping("/user")
 @AllArgsConstructor
 public class UserController {
 
+    /**
+     * Service for handling user-related operations.
+     */
     private final UserServiceApi userService;
 
+    /**
+     * This method is used to add a new user.
+     * It takes a User object as input and returns a UserForAdminResponseDTO object.
+     * User must fulfil some requirements since it is preceded by @Valid.
+     *
+     * @param user This is a request object which contains the details of the user to be added.
+     * @return UserForAdminResponseDTO This returns the response object with details of the added user.
+     *
+     * @PostMapping("/add")
+     */
     @PostMapping("/add")
     public UserForAdminResponseDTO add(@Valid @RequestBody User user) {
         return userService.add(user);

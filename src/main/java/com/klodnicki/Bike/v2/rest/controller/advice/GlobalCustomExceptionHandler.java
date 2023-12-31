@@ -7,9 +7,18 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+/**
+ * Global exception handler that handles exceptions across the whole application.
+ */
 @ControllerAdvice
 public class GlobalCustomExceptionHandler {
 
+    /**
+     * Handles MethodArgumentNotValidException which occurs when a method argument annotated with @Valid fails validation.
+     *
+     * @param ex The exception that was thrown.
+     * @return A ResponseEntity with a detailed error message and a BAD_REQUEST status.
+     */
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<String> handleMethodArgumentNotValidException(MethodArgumentNotValidException ex) {
         Object[] detailMessageArguments = ex.getDetailMessageArguments();
@@ -21,6 +30,12 @@ public class GlobalCustomExceptionHandler {
                 HttpStatus.BAD_REQUEST);
     }
 
+    /**
+     * Handles NotFoundInDatabaseException which occurs when an entity is not found in the database.
+     *
+     * @param e The exception that was thrown.
+     * @return A ResponseEntity with the exception's message and a NOT_FOUND status.
+     */
     @ExceptionHandler(NotFoundInDatabaseException.class)
     public ResponseEntity<?> handleNotFoundInDatabaseException(NotFoundInDatabaseException e) {
         return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);

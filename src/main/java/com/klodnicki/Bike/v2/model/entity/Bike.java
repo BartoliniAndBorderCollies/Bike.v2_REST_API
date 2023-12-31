@@ -10,6 +10,11 @@ import lombok.*;
 import java.util.Objects;
 
 
+/**
+ * An entity class that represents a Bike in the system.
+ * This class extends the RentableVehicle class and includes additional properties specific to a Bike.
+ * It is annotated with JPA annotations to map it to the database.
+ */
 @Entity
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 //@DiscriminatorValue("bike")

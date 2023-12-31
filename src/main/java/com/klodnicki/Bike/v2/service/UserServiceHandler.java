@@ -15,6 +15,11 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This class handles the services related to User.
+ * It implements the UserServiceApi interface.
+ * It provides methods to add a user, find all users, find a user by its ID, delete a user by its ID, ban a user, and save a user.
+ */
 @Service
 @AllArgsConstructor
 public class UserServiceHandler implements UserServiceApi {
@@ -23,6 +28,13 @@ public class UserServiceHandler implements UserServiceApi {
     private final ModelMapper modelMapper;
     private final PasswordEncoder passwordEncoder;
 
+    /**
+     * This method adds a new {@link User} object to the repository and returns a {@link UserForAdminResponseDTO} object.
+     * It first saves the User object to the repository, then maps the saved User object to a UserForAdminResponseDTO object using a model mapper.
+     *
+     * @param user The User object to be added to the repository.
+     * @return A UserForAdminResponseDTO object that represents the added User.
+     */
     @Override
     public UserForAdminResponseDTO add(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
@@ -30,6 +42,13 @@ public class UserServiceHandler implements UserServiceApi {
 
         return modelMapper.map(user1, UserForAdminResponseDTO.class);
     }
+
+    /**
+     * This method retrieves all {@link User} objects from the repository and returns a list of {@link UserForAdminResponseDTO} objects.
+     * It first retrieves all User objects from the repository, then iterates over each User object, maps it to a UserForAdminResponseDTO object using a model mapper, and adds it to a list.
+     *
+     * @return A list of UserForAdminResponseDTO objects that represent all the User objects in the repository.
+     */
     @Override
     public List<UserForAdminResponseDTO> findAll() {
         Iterable<User> users = userRepository.findAll();
@@ -41,6 +60,14 @@ public class UserServiceHandler implements UserServiceApi {
         }
         return listUsersDTO;
     }
+    /**
+     * This method retrieves a {@link User} object from the repository by its ID and returns a {@link UserForAdminResponseDTO} object.
+     * It first retrieves the User object using its ID, then maps the User object to a UserForAdminResponseDTO object using a model mapper.
+     *
+     * @param id The ID of the User object to be retrieved from the repository.
+     * @return A UserForAdminResponseDTO object that represents the retrieved User.
+     * @throws NotFoundInDatabaseException If no User with the given ID is found.
+     */
     @Override
     public UserForAdminResponseDTO findById(Long id) throws NotFoundInDatabaseException {
         User user = findUserById(id);
@@ -56,6 +83,15 @@ public class UserServiceHandler implements UserServiceApi {
         return userRepository.findById(id).orElseThrow(() -> new NotFoundInDatabaseException(User.class));
     }
 
+    /**
+     * This method bans a {@link User} object by setting its account validity to false.
+     * It first retrieves the User object using its ID, then sets the account validity of the User object to false, and saves the changes to the repository.
+     * It returns a ResponseEntity with a success message and HTTP status code.
+     *
+     * @param id The ID of the User object to be banned.
+     * @return A ResponseEntity with a success message and HTTP status code.
+     * @throws NotFoundInDatabaseException If no User with the given ID is found.
+     */
     @Override
     public ResponseEntity<?> banUser(Long id) throws NotFoundInDatabaseException {
         User user = findUserById(id);

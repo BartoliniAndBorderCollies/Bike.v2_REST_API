@@ -7,6 +7,16 @@ import lombok.Setter;
 
 import java.util.Objects;
 
+/**
+ * This class is used to wrap {@link com.klodnicki.Bike.v2.model.entity.Authority Authority class} as DTO, and it is used only
+ * to prepare a DTO for normal user. It is created to provide authorities (roles) to build a user DTO instance with those roles
+ * during a rent procedure.
+ * <br>
+ * This class has annotations from the Lombok library to automatically generate boilerplate code like getters, setters,
+ * equals, hashcode, and toString methods,
+ * a builder pattern, and constructors with no arguments and all arguments.
+ */
+
 @Getter
 @Setter
 @NoArgsConstructor

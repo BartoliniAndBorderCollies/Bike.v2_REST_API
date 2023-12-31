@@ -9,6 +9,11 @@ import lombok.Setter;
 
 import java.util.Objects;
 
+/**
+ * An entity class that represents a Feedback in the system.
+ * This class includes properties specific to a Feedback.
+ * It is annotated with JPA annotations to map it to the database.
+ */
 @Entity
 @Getter
 @Setter
